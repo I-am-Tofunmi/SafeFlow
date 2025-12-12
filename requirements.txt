@@ -10,3 +10,4 @@ scikit-learn
 pandas
 numpy
 httpx
+python-multipart

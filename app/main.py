@@ -28,7 +28,8 @@ def health():
 # --- SAFE ROUTER LOADING ---
 # We import inside the function to prevent "Circular Import" hangs
 def include_routers():
-    from app.api import auth, ai, transactions, trustscore, lessons, admin, contacts, webhooks, web3_attest, analytics
+    # 1. ADD 'biometrics' to the import list here:
+    from app.api import auth, ai, transactions, trustscore, lessons, admin, contacts, webhooks, web3_attest, analytics, biometrics 
     
     app.include_router(auth.router)
     app.include_router(transactions.router)
@@ -40,6 +41,9 @@ def include_routers():
     app.include_router(contacts.router)
     app.include_router(webhooks.router)
     app.include_router(analytics.router)
+    
+    # 2. INCLUDE the new biometrics router here:
+    app.include_router(biometrics.router)
 
 # Load them now
 include_routers()
