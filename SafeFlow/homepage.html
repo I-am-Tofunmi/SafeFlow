@@ -918,27 +918,7 @@
         </div>
       </main>
     </div>
-  <div id="welcomeToast" class="fixed inset-0 flex items-center justify-center bg-black/30 opacity-0 transition-opacity duration-500">
-    <div class="bg-primary text-white px-8 py-6 rounded-lg shadow-lg text-center text-lg">
-      Welcome Chidoma!
-    </div>
-  </div>
   </body>
 </html>
- <script>
-    const toast = document.getElementById('welcomeToast');
-
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        toast.classList.remove('opacity-0');
-        toast.classList.add('opacity-100');
-
-        setTimeout(() => {
-          toast.classList.add('opacity-0');
-          toast.classList.remove('opacity-100');
-        }, 3000);
-      }, 500);
-    });
-  </script>
 
 
