@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeFlow Blockchain Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #333333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 50px 30px;
+            margin-bottom: 40px;
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #e8f5e9;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2e7d32, #4caf50);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            color: #1b5e20;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666666;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .network-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        .polygon-logo {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        /* Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid #e8f5e9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #2e7d32, #4caf50);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            border-color: #c8e6c9;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: #1b5e20;
+            font-weight: 600;
+        }
+
+        .card-title .icon {
+            font-size: 1.8rem;
+            color: #4caf50;
+        }
+
+        /* Contract Info */
+        .contract-info {
+            background: #f8fdf8;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            border: 1px solid #e8f5e9;
+        }
+
+        .contract-label {
+            font-size: 0.85rem;
+            color: #666666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contract-address {
+            font-size: 0.95rem;
+            word-break: break-all;
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .contract-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        /* Forms */
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #555555;
+            font-weight: 500;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            color: #333333;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .input-group input::placeholder {
+            color: #999999;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: #4caf50;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-primary:disabled {
+            background: #c8e6c9;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background: #ffffff;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fdf8;
+            border-color: #4caf50;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Transaction Result */
+        .transaction-result {
+            background: #f8fdf8;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 25px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tx-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .tx-details {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #e8f5e9;
+        }
+
+        .tx-row {
+            display: flex;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .tx-label {
+            min-width: 120px;
+            color: #666666;
+        }
+
+        .tx-value {
+            color: #2e7d32;
+            word-break: break-all;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .explorer-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            padding: 10px 16px;
+            background: #e8f5e9;
+            border: 1px solid #c8e6c9;
+            border-radius: 8px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .explorer-link:hover {
+            background: #c8e6c9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: #f8fdf8;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e8f5e9;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+            border-color: #c8e6c9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2e7d32;
+        }
+
+        /* Demo Notice */
+        .demo-notice {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff8e1;
+            border: 1px solid #ffecb3;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #5d4037;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .demo-notice span:first-child {
+            font-size: 1.2rem;
+        }
+
+        /* Animations */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .mining-animation {
+            animation: mining 1s infinite;
+        }
+
+        @keyframes mining {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid #e8f5e9;
+            font-size: 0.9rem;
+            color: #666666;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contract-links {
+                flex-direction: column;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c8e6c9;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a5d6a7;
+        }
+
+        /* Empty state styling */
+        #emptyState {
+            color: #666666;
+        }
+
+        #emptyState div:first-child {
+            color: #4caf50;
+        }
+
+        #emptyState div:nth-child(2) {
+            color: #333333;
+        }
+
+        /* Mining status styling */
+        #miningStatus {
+            color: #666666;
+        }
+
+        #miningStatus div:first-child {
+            color: #4caf50;
+        }
+
+        #miningStatus div:nth-child(2) {
+            color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔗 SafeFlow Blockchain Trust Layer</h1>
+            <p class="subtitle">Immutable fraud reporting & trust scoring on Polygon Mumbai Testnet</p>
+            <div class="network-badge">
+                <span class="polygon-logo">Polygon</span>
+                <span>•</span>
+                <span>Mumbai Testnet</span>
+                <span>•</span>
+                <span class="pulse">● LIVE</span>
+            </div>
+        </header>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Contract Info Card -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">📄</span>
+                        <span>Smart Contract</span>
+                    </div>
+                    
+                    <div class="contract-info">
+                        <div class="contract-label">Contract Address</div>
+                        <div class="contract-address" id="contractAddress">
+                            0x7a3d8c45f9b1a3c6e8d4f2a7b9c1e5f3a8d2c9b1
+                        </div>
+                        
+                        <div class="contract-label">Network</div>
+                        <div>Polygon Mumbai Testnet (Chain ID: 80001)</div>
+                        
+                        <div class="contract-links">
+                            <a href="#" class="explorer-link" id="polygonscanLink" target="_blank">
+                                🔍 View on Polygonscan
+                            </a>
+                            <button class="btn-secondary" onclick="copyContractAddress()" style="padding: 8px 16px;">
+                                📋 Copy Address
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Fraud Card -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">⚠️</span>
+                        <span>Report Fraudulent Account</span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="phoneInput">Phone Number (hashed for privacy)</label>
+                        <input type="text" id="phoneInput" placeholder="e.g., 08123456789" value="08123456789">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="reasonSelect">Fraud Type</label>
+                        <select id="reasonSelect">
+                            <option>Fake Payment Screenshot</option>
+                            <option>Advance Fee Scam</option>
+                            <option>Phishing Link</option>
+                            <option>Impersonation Fraud</option>
+                            <option>Fake Loan Offer</option>
+                            <option>Investment Scam</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="descriptionInput">Description (Optional)</label>
+                        <input type="text" id="descriptionInput" placeholder="Brief description of the scam...">
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="reportFraud()" id="reportBtn">
+                            <span>⛏️</span>
+                            <span>Record on Blockchain</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Transaction Results -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">📊</span>
+                        <span>Live Blockchain Activity</span>
+                    </div>
+                    
+                    <div id="transactionResult" style="display: none;">
+                        <div class="transaction-result">
+                            <div class="tx-header">
+                                <span>✅</span>
+                                <span>Transaction Confirmed</span>
+                            </div>
+                            
+                            <div class="tx-details">
+                                <div class="tx-row">
+                                    <div class="tx-label">TX Hash:</div>
+                                    <div class="tx-value" id="txHash">0x...</div>
+                                </div>
+                                <div class="tx-row">
+                                    <div class="tx-label">Status:</div>
+                                    <div class="tx-value">
+                                        <span class="status-badge status-confirmed" id="txStatus">
+                                            ✅ Confirmed
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="tx-row">
+                                    <div class="tx-label">Block:</div>
+                                    <div class="tx-value" id="blockNumber">#0</div>
+                                </div>
+                                <div class="tx-row">
+                                    <div class="tx-label">Gas Used:</div>
+                                    <div class="tx-value" id="gasUsed">0 MATIC</div>
+                                </div>
+                                <div class="tx-row">
+                                    <div class="tx-label">Timestamp:</div>
+                                    <div class="tx-value" id="txTimestamp">Just now</div>
+                                </div>
+                                
+                                <a href="#" class="explorer-link" id="explorerLink" target="_blank">
+                                    🔗 View on Polygonscan Explorer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="miningStatus" style="display: none; text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 2rem; margin-bottom: 15px;">⛏️</div>
+                        <div style="font-size: 1.2rem; margin-bottom: 10px;">Mining Transaction...</div>
+                        <div style="opacity: 0.7;">This usually takes 2-5 seconds on Polygon</div>
+                    </div>
+                    
+                    <!-- Default empty state -->
+                    <div id="emptyState" style="text-align: center; padding: 40px 20px;">
+                        <div style="font-size: 3rem; margin-bottom: 15px;">🔗</div>
+                        <div style="font-size: 1.2rem; margin-bottom: 10px;">No Recent Transactions</div>
+                        <div style="opacity: 0.7;">Report fraud above to see blockchain activity</div>
+                    </div>
+                </div>
+
+                <!-- Live Stats -->
+                <div class="card">
+                    <div class="card-title">
+                        <span class="icon">📈</span>
+                        <span>Network Statistics</span>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Total Fraud Reports</div>
+                            <div class="stat-value" id="totalReports">24</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Latest Block</div>
+                            <div class="stat-value" id="latestBlock">#12,456,789</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Gas Price</div>
+                            <div class="stat-value" id="gasPrice">42.7 Gwei</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Avg. Block Time</div>
+                            <div class="stat-value" id="blockTime">2.1s</div>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="refreshStats()">
+                            🔄 Refresh Stats
+                        </button>
+                        <button class="btn btn-secondary" onclick="checkFraud()">
+                            🔍 Check Account
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Notice -->
+        <div class="demo-notice">
+            <span>💡</span>
+            <span>
+                <strong>Demo Mode:</strong> This interface simulates real blockchain interactions. 
+                SafeFlow's production system integrates with Polygon Mumbai for immutable fraud reporting.
+                Transaction hashes and blocks are simulated for demonstration purposes.
+            </span>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>SafeFlow • Financial Protection on Blockchain • Hackathon Demo v1.0</p>
+            <p>All transactions are simulated for demonstration purposes</p>
+        </div>
+    </div>
+
+    <script>
+        // Fake Blockchain Simulation
+        class FakeBlockchain {
+            constructor() {
+                this.totalReports = 24;
+                this.blockNumber = 12456789;
+                this.gasPrice = 42.7;
+                this.transactions = [];
+                this.fraudList = new Map();
+                this.contractAddress = "0x7a3d8c45f9b1a3c6e8d4f2a7b9c1e5f3a8d2c9b1";
+            }
+
+            generateFakeTxHash() {
+                const chars = "0123456789abcdef";
+                let hash = "0x";
+                for (let i = 0; i < 64; i++) {
+                    hash += chars[Math.floor(Math.random() * 16)];
+                }
+                return hash;
+            }
+
+            async simulateMining(duration = 2000) {
+                return new Promise(resolve => {
+                    setTimeout(resolve, duration);
+                });
+            }
+
+            async reportFraud(phoneNumber, reason, description = "") {
+                // Show mining animation
+                document.getElementById('miningStatus').style.display = 'block';
+                document.getElementById('emptyState').style.display = 'none';
+                document.getElementById('transactionResult').style.display = 'none';
+                document.getElementById('reportBtn').disabled = true;
+                document.getElementById('reportBtn').innerHTML = '<span class="mining-animation">⛏️</span> Mining...';
+
+                await this.simulateMining(2500);
+
+                const txHash = this.generateFakeTxHash();
+                const phoneHash = this.hashPhone(phoneNumber);
+                this.blockNumber += Math.floor(Math.random() * 3) + 1;
+                this.totalReports++;
+                this.gasPrice = (Math.random() * 20 + 30).toFixed(1);
+                
+                const transaction = {
+                    hash: txHash,
+                    phoneHash: phoneHash,
+                    reason: reason,
+                    description: description,
+                    timestamp: new Date(),
+                    block: this.blockNumber,
+                    gasUsed: (Math.random() * 0.08 + 0.02).toFixed(3),
+                    status: "confirmed"
+                };
+                
+                this.transactions.push(transaction);
+                this.fraudList.set(phoneHash, transaction);
+                
+                // Update UI
+                this.updateStats();
+                
+                return transaction;
+            }
+
+            hashPhone(phone) {
+                // Simple fake hash for demo
+                const last4 = phone.slice(-4);
+                const random = Math.random().toString(16).substring(2, 10);
+                return `0xf${last4}${random}`;
+            }
+
+            updateStats() {
+                document.getElementById('totalReports').textContent = this.totalReports;
+                document.getElementById('latestBlock').textContent = `#${this.blockNumber.toLocaleString()}`;
+                document.getElementById('gasPrice').textContent = `${this.gasPrice} Gwei`;
+                document.getElementById('blockTime').textContent = `${(Math.random() * 0.5 + 1.8).toFixed(1)}s`;
+            }
+
+            getFraudStatus(phoneNumber) {
+                const phoneHash = this.hashPhone(phoneNumber);
+                return this.fraudList.has(phoneHash);
+            }
+        }
+
+        // Initialize blockchain
+        const blockchain = new FakeBlockchain();
+
+        // DOM Elements
+        const reportBtn = document.getElementById('reportBtn');
+        const transactionResult = document.getElementById('transactionResult');
+        const miningStatus = document.getElementById('miningStatus');
+        const emptyState = document.getElementById('emptyState');
+
+        // Initialize Polygonscan link
+        const contractAddress = blockchain.contractAddress;
+        const polygonscanLink = document.getElementById('polygonscanLink');
+        polygonscanLink.href = `https://mumbai.polygonscan.com/address/${contractAddress}`;
+
+        // Main Functions
+        async function reportFraud() {
+            const phoneInput = document.getElementById('phoneInput');
+            const reasonSelect = document.getElementById('reasonSelect');
+            const descriptionInput = document.getElementById('descriptionInput');
+            
+            const phone = phoneInput.value.trim();
+            const reason = reasonSelect.value;
+            const description = descriptionInput.value.trim();
+            
+            if (!phone) {
+                alert('Please enter a phone number');
+                return;
+            }
+            
+            try {
+                const result = await blockchain.reportFraud(phone, reason, description);
+                
+                // Hide mining, show result
+                miningStatus.style.display = 'none';
+                transactionResult.style.display = 'block';
+                
+                // Update result display
+                document.getElementById('txHash').textContent = result.hash;
+                document.getElementById('blockNumber').textContent = `#${result.block.toLocaleString()}`;
+                document.getElementById('gasUsed').textContent = `${result.gasUsed} MATIC`;
+                document.getElementById('txTimestamp').textContent = result.timestamp.toLocaleTimeString();
+                
+                // Update explorer link
+                const explorerLink = document.getElementById('explorerLink');
+                explorerLink.href = `https://mumbai.polygonscan.com/tx/${result.hash}`;
+                
+                // Reset button
+                reportBtn.disabled = false;
+                reportBtn.innerHTML = '<span>✅</span><span>Recorded! Report Another</span>';
+                
+                // Change phone number for next demo
+                const lastDigit = parseInt(phone.slice(-1)) + 1;
+                phoneInput.value = phone.slice(0, -1) + lastDigit;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error reporting fraud. Please try again.');
+                
+                // Reset button
+                reportBtn.disabled = false;
+                reportBtn.innerHTML = '<span>⛏️</span><span>Record on Blockchain</span>';
+                miningStatus.style.display = 'none';
+                emptyState.style.display = 'block';
+            }
+        }
+
+        function refreshStats() {
+            blockchain.updateStats();
+            
+            // Add some visual feedback
+            const stats = document.querySelectorAll('.stat-value');
+            stats.forEach(stat => {
+                stat.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    stat.style.transform = 'scale(1)';
+                }, 300);
+            });
+        }
+
+        function checkFraud() {
+            const phone = document.getElementById('phoneInput').value.trim();
+            if (!phone) {
+                alert('Enter a phone number to check');
+                return;
+            }
+            
+            const isFraud = blockchain.getFraudStatus(phone);
+            if (isFraud) {
+                alert(`⚠️ This number has been reported for fraud!`);
+            } else {
+                alert(`✅ This number is not in our fraud database.`);
+            }
+        }
+
+        function copyContractAddress() {
+            const address = document.getElementById('contractAddress').textContent;
+            navigator.clipboard.writeText(address)
+                .then(() => {
+                    // Visual feedback
+                    const originalText = reportBtn.innerHTML;
+                    reportBtn.innerHTML = '<span>📋</span><span>Copied!</span>';
+                    reportBtn.style.background = '#2e7d32';
+                    
+                    setTimeout(() => {
+                        reportBtn.innerHTML = originalText;
+                        reportBtn.style.background = '#4caf50';
+                    }, 1500);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        }
+
+        // Initialize
+        blockchain.updateStats();
+        
+        // Add some initial visual effects
+        setTimeout(() => {
+            document.querySelector('.pulse').style.animation = 'none';
+            setTimeout(() => {
+                document.querySelector('.pulse').style.animation = 'pulse 2s infinite';
+            }, 10);
+        }, 5000);
+
+        // Auto-refresh stats every 30 seconds
+        setInterval(() => {
+            blockchain.gasPrice = (Math.random() * 20 + 30).toFixed(1);
+            blockchain.blockNumber += Math.floor(Math.random() * 5) + 1;
+            blockchain.updateStats();
+        }, 30000);
+    </script>
+</body>
+</html>
