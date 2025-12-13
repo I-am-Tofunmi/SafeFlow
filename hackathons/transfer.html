@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SafeFlow - Credibility Check</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
+              surface: "#ffffff",
+              "dark-surface": "#1e293b",
+              primary: "#000000",
+              "dark-primary": "#ffffff",
+              secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
+              border: "#e5e7eb",
+              "dark-border": "#334155",
+              brand: {
+                DEFAULT: "#059669",
+                dark: "#064e3b",
+                light: "#d1fae5",
+              },
+              risk: {
+                low: "#10b981",
+                medium: "#f59e0b",
+                high: "#ef4444",
+              },
+              accent: {
+                blue: "#1e40af",
+                orange: "#ea580c",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        transition: background-color 0.3s ease;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .theme-transition * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+      .pulse-animation {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .scam-alert {
+        animation: alert-pulse 1.5s infinite;
+      }
+      @keyframes alert-pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+        }
+      }
+      .spinner {
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body class="">
+    <div class="flex h-screen w-full">
+        <div class="flex flex-col h-full p-4">
+          <div class="flex items-center gap-3 mb-10 px-2 mt-2">
+            <div
+              class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20"
+            >
+              <span class="material-symbols-outlined">security</span>
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight"
+              >
+                SafeFlow
+              </h1>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">
+                Financial Ecosystem
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1.5 flex-1">
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="homepage.html"
+            >
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >dashboard</span
+              >
+              <p class="text-sm font-medium">Dashboard</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transaction.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >receipt_long</span
+              >
+              <p class="text-sm font-medium">Transactions</p>
+            </a>
+         
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="trustcore.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >trending_up</span
+              >
+              <p class="text-sm font-medium">Trust Score</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white group transition-all shadow-md shadow-brand/20"
+              href="transfer.html"
+            >
+              <span class="material-symbols-outlined" data-weight="fill"
+                >shield_lock</span
+              >
+              <p class="text-sm font-semibold">Transfer</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="securitycenter.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >trending_up</span
+              >
+              <p class="text-sm font-medium">Security Center</p>
+            </a>
+          </nav>
+          <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
+            <div
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+            >
+              <div
+                class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo');
+                "
+              ></div>
+              <div class="flex flex-col">
+                <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs">Premium Member</p>
+              </div>
+              <span
+                class="material-symbols-outlined text-gray-400 ml-auto text-sm"
+                >expand_more</span
+              >
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main
+        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background"
+      >
+        <header
+          class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+        >
+          <div>
+            <h2 class="text-gray-900 dark:text-dark-primary text-2xl font-bold tracking-tight">
+              SafeFlow Scam Detection
+            </h2>
+            <div class="flex items-center gap-2 mt-1">
+              <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+              <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                Real-time Nigerian scam detection before you transfer
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-brand transition-colors"
+            >
+              <span class="material-symbols-outlined">visibility_off</span>
+            </button>
+            <button
+              class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-brand transition-colors relative"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-dark-surface"
+              ></span>
+            </button>
+          </div>
+        </header>
+        <div class="flex-1 overflow-y-auto p-8 scroll-smooth">
+          <div class="max-w-[1200px] w-full mx-auto">
+            <!-- Main Scam Detection Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+              <!-- Input Section -->
+              <div class="lg:col-span-2">
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft">
+                  <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-brand-light dark:bg-brand-dark p-2.5 rounded-lg">
+                      <span class="material-symbols-outlined text-brand text-[24px]">
+                        fingerprint
+                      </span>
+                    </div>
+                    <div>
+                      <h2 class="text-gray-900 dark:text-dark-primary text-xl font-bold">
+                        Nigerian Scam Detector
+                      </h2>
+                      <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                        Check account for Yahoo-Yahoo, Maga No Pay, and other Nigerian scam patterns
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="space-y-6">
+                    <!-- Account Input -->
+                    <div>
+                      <label class="block text-gray-700 dark:text-dark-secondary text-sm font-medium mb-2">
+                        Enter Account Number to Check
+                      </label>
+                      <div class="flex gap-3">
+                        <input
+                          type="text"
+                          id="accountInput"
+                          placeholder="Enter 10-digit account number"
+                          maxlength="10"
+                          class="flex-1 px-4 py-3 border border-border dark:border-dark-border rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+                        />
+                        <button
+                          id="checkButton"
+                          class="bg-brand hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-brand/20"
+                        >
+                          <span class="material-symbols-outlined">search</span>
+                          Detect Scams
+                        </button>
+                      </div>
+                      <p class="text-gray-400 dark:text-gray-500 text-xs mt-2">
+                        We'll analyze transaction patterns for Nigerian scam behaviors
+                      </p>
+                    </div>
+
+                    <!-- Amount Input -->
+                    <div>
+                      <label class="block text-gray-700 dark:text-dark-secondary text-sm font-medium mb-2">
+                        Transfer Amount
+                      </label>
+                      <div class="flex items-center gap-2">
+                        <span class="text-gray-900 dark:text-dark-primary font-bold">₦</span>
+                        <input
+                          type="number"
+                          id="amountInput"
+                          placeholder="0.00"
+                          min="0"
+                          class="flex-1 px-4 py-3 border border-border dark:border-dark-border rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+                        />
+                        <select class="px-4 py-3 border border-border dark:border-dark-border rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
+                          <option>NGN</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Scam Detection Results -->
+                    <div id="scamDetection" class="hidden mt-6 p-5 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-slate-800/50">
+                      <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-gray-900 dark:text-dark-primary font-bold">
+                          <span class="material-symbols-outlined text-brand mr-2">shield</span>
+                          Scam Detection Results
+                        </h3>
+                        <span id="scamRiskBadge" class="px-3 py-1 rounded-full text-xs font-bold"></span>
+                      </div>
+                      
+                      <div id="scamAnalysisResults">
+                        <!-- Analysis will appear here -->
+                      </div>
+                      
+                      <div id="highRiskWarning" class="hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg scam-alert">
+                        <div class="flex items-start">
+                          <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-3">warning</span>
+                          <div>
+                            <h4 class="font-bold text-red-800 dark:text-red-300">🚨 HIGH RISK SCAM ACCOUNT DETECTED</h4>
+                            <p id="warningDetails" class="text-red-700 dark:text-red-400 text-sm mt-1"></p>
+                            <div class="mt-3">
+                              <button id="proceedAnyway" class="text-xs px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 mr-2">
+                                I Understand, Proceed Anyway
+                              </button>
+                              <button id="cancelTransfer" class="text-xs px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+                                Cancel Transfer
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Demo Accounts -->
+                    <div>
+                      <p class="text-gray-700 dark:text-dark-secondary text-sm font-medium mb-3">
+                        Test with demo accounts:
+                      </p>
+                      <div class="flex flex-wrap gap-2">
+                        <button class="demo-account px-3 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-xs text-gray-700 dark:text-dark-secondary transition-colors" data-account="1234567890">
+                          <span class="material-symbols-outlined text-green-600 text-[14px] mr-1">check_circle</span>
+                          1234567890 (Safe Account)
+                        </button>
+                        <button class="demo-account px-3 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-xs text-gray-700 dark:text-dark-secondary transition-colors" data-account="9876543210">
+                          <span class="material-symbols-outlined text-red-600 text-[14px] mr-1">warning</span>
+                          9876543210 (Yahoo Yahoo Scammer)
+                        </button>
+                        <button class="demo-account px-3 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-xs text-gray-700 dark:text-dark-secondary transition-colors" data-account="5555555555">
+                          <span class="material-symbols-outlined text-yellow-600 text-[14px] mr-1">trending_up</span>
+                          5555555555 (Business - Medium Risk)
+                        </button>
+                        <button class="demo-account px-3 py-2 bg-gray-100 dark:bg-slate-700 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-lg text-xs text-gray-700 dark:text-dark-secondary transition-colors" data-account="1111111111">
+                          <span class="material-symbols-outlined text-red-600 text-[14px] mr-1">dangerous</span>
+                          1111111111 (Ponzi Scheme)
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Transfer Button -->
+                    <div class="mt-6">
+                      <button
+                        id="transferButton"
+                        class="w-full bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 font-bold py-3.5 px-4 rounded-lg shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                        disabled
+                      >
+                        <span class="material-symbols-outlined">lock</span>
+                        Verify Account to Enable Transfer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Results Panel -->
+              <div class="lg:col-span-1">
+                <div id="resultsPanel" class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft h-full">
+                  <div class="flex items-center gap-3 mb-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/30 p-2.5 rounded-lg">
+                      <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[24px]">
+                        analytics
+                      </span>
+                    </div>
+                    <div>
+                      <h2 class="text-gray-900 dark:text-dark-primary text-xl font-bold">
+                        Risk Analysis
+                      </h2>
+                      <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                        Real-time scam pattern detection
+                      </p>
+                    </div>
+                  </div>
+
+                  <div id="initialState" class="text-center py-8">
+                    <div class="text-gray-300 dark:text-gray-600 mb-4">
+                      <span class="material-symbols-outlined text-[48px]">
+                        search
+                      </span>
+                    </div>
+                    <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                      Enter an account number to detect Nigerian scam patterns
+                    </p>
+                    <p class="text-gray-400 dark:text-gray-600 text-xs mt-2">
+                      Detects: Yahoo-Yahoo, Maga No Pay, Fake Alerts, Money Mules
+                    </p>
+                  </div>
+
+                  <div id="resultsContent" class="hidden fade-in space-y-6">
+                    <!-- Risk Score -->
+                    <div class="text-center">
+                      <div class="inline-block relative">
+                        <div class="w-32 h-32 rounded-full border-8 border-gray-200 dark:border-gray-700 flex items-center justify-center">
+                          <div id="riskScore" class="text-3xl font-bold">--</div>
+                        </div>
+                        <div id="riskIndicator" class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold">
+                          ANALYZING
+                        </div>
+                      </div>
+                      <p class="text-gray-500 dark:text-dark-secondary text-sm mt-6">
+                        Scam Risk Assessment
+                      </p>
+                    </div>
+
+                    <!-- Recommendations -->
+                    <div id="recommendations" class="space-y-3">
+                      <!-- Will be filled by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Analysis Details -->
+            <div id="analysisDetails" class="hidden fade-in">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Scam Patterns Detected -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft">
+                  <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold mb-4">
+                    Nigerian Scam Patterns Detected
+                  </h3>
+                  <div id="patternAnalysis" class="space-y-4">
+                    <!-- Will be filled by JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Risk Factors -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft">
+                  <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold mb-4">
+                    Risk Factor Breakdown
+                  </h3>
+                  <div id="riskFactors" class="space-y-4">
+                    <!-- Will be filled by JavaScript -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recent Transactions -->
+              <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft mb-8">
+                <div class="flex items-center justify-between mb-6">
+                  <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold">
+                    Simulated Transaction History Analysis
+                  </h3>
+                  <span class="text-xs text-gray-500 dark:text-dark-secondary">Pattern detection based on 30-day history</span>
+                </div>
+                <div id="transactionHistory" class="space-y-3">
+                  <!-- Will be filled by JavaScript -->
+                </div>
+              </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft">
+              <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold mb-6">
+                How We Detect Nigerian Scams
+              </h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="space-y-3">
+                  <div class="bg-red-50 dark:bg-red-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-red-600 dark:text-red-400">emergency</span>
+                  </div>
+                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Emergency Scams</h4>
+                  <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                    Detects "Yahoo Yahoo" patterns with emergency keywords like "hospital", "urgent help"
+                  </p>
+                </div>
+                <div class="space-y-3">
+                  <div class="bg-yellow-50 dark:bg-yellow-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-400">trending_up</span>
+                  </div>
+                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Investment Scams</h4>
+                  <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                    Identifies "Maga No Pay" patterns with promises of quick returns and doubling money
+                  </p>
+                </div>
+                <div class="space-y-3">
+                  <div class="bg-orange-50 dark:bg-orange-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-orange-600 dark:text-orange-400">sync_alt</span>
+                  </div>
+                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Money Mules</h4>
+                  <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                    Spots accounts receiving from many but sending to few (common in fraud networks)
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- JavaScript for Nigerian Scam Detection -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        const savedTheme = localStorage.getItem('safeflow-theme') || 'light';
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+          themeIcon.textContent = 'light_mode';
+        } else {
+          document.documentElement.classList.remove('dark');
+          themeIcon.textContent = 'dark_mode';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('safeflow-theme', 'light');
+            themeIcon.textContent = 'dark_mode';
+          } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('safeflow-theme', 'dark');
+            themeIcon.textContent = 'light_mode';
+          }
+        });
+
+        // ================================================
+        // NIGERIAN SCAM DETECTION SYSTEM
+        // ================================================
+        
+        const accountInput = document.getElementById('accountInput');
+        const checkButton = document.getElementById('checkButton');
+        const demoButtons = document.querySelectorAll('.demo-account');
+        const resultsPanel = document.getElementById('resultsPanel');
+        const resultsContent = document.getElementById('resultsContent');
+        const initialState = document.getElementById('initialState');
+        const analysisDetails = document.getElementById('analysisDetails');
+        const riskScore = document.getElementById('riskScore');
+        const riskIndicator = document.getElementById('riskIndicator');
+        const recommendations = document.getElementById('recommendations');
+        const patternAnalysis = document.getElementById('patternAnalysis');
+        const riskFactors = document.getElementById('riskFactors');
+        const transactionHistory = document.getElementById('transactionHistory');
+        const transferButton = document.getElementById('transferButton');
+
+        // KNOWN NIGERIAN SCAMMER DATABASE
+        const nigerianScammerDB = {
+          '9876543210': {
+            name: 'Yahoo Yahoo Scammer',
+            bank: 'Multiple Banks',
+            accountType: 'Current',
+            accountAge: '4 months',
+            riskScore: 92,
+            riskLevel: 'very-high',
+            scamType: 'Romance/Investment Scam',
+            transactionPatterns: [
+              { type: 'Emergency Scam', risk: 'very-high', description: 'Frequent "emergency" transactions with urgent requests' },
+              { type: 'Test Transactions', risk: 'high', description: 'Small test amounts before large requests' },
+              { type: 'Money Mule', risk: 'high', description: 'Receives from many, sends to few accounts' }
+            ],
+            riskFactors: [
+              { factor: 'Emergency Keywords', score: 95, status: 'very-high' },
+              { factor: 'Transaction Velocity', score: 88, status: 'high' },
+              { factor: 'Account Age', score: 25, status: 'high' },
+              { factor: 'Night Activity', score: 90, status: 'very-high' }
+            ],
+            recentTransactions: [
+              { date: 'Today', description: 'URGENT: Hospital emergency for my brother', amount: 50000, type: 'credit' },
+              { date: 'Today', description: 'Test transaction pls confirm', amount: 500, type: 'credit' },
+              { date: 'Yesterday', description: 'Need urgent help for medicine', amount: 25000, type: 'credit' },
+              { date: 'Yesterday', description: 'Transfer to savings', amount: -75000, type: 'debit' },
+              { date: '2 days ago', description: 'Investment returns doubling', amount: 100000, type: 'credit' }
+            ]
+          },
+          
+          '1111111111': {
+            name: 'Ponzi Scheme Operator',
+            bank: 'Unknown',
+            accountType: 'Multiple',
+            accountAge: '3 months',
+            riskScore: 85,
+            riskLevel: 'high',
+            scamType: 'Ponzi/Investment Scam',
+            transactionPatterns: [
+              { type: 'Investment Scam', risk: 'high', description: 'Promises of high returns and quick money' },
+              { type: 'Pyramid Pattern', risk: 'very-high', description: 'Geometric progression of deposits' },
+              { type: 'Round Amounts', risk: 'medium', description: 'Consistent round-number transactions' }
+            ],
+            riskFactors: [
+              { factor: 'Investment Keywords', score: 90, status: 'high' },
+              { factor: 'Amount Consistency', score: 85, status: 'high' },
+              { factor: 'Sender Diversity', score: 30, status: 'very-high' },
+              { factor: 'Quick Transfers', score: 80, status: 'high' }
+            ],
+            recentTransactions: [
+              { date: 'Today', description: 'Investment doubling in 24hrs', amount: 50000, type: 'credit' },
+              { date: 'Today', description: 'Quick money opportunity', amount: 50000, type: 'credit' },
+              { date: 'Yesterday', description: 'ROI payment for investor', amount: -25000, type: 'debit' },
+              { date: '2 days ago', description: 'Business investment', amount: 100000, type: 'credit' },
+              { date: '3 days ago', description: 'Transfer to offshore', amount: -150000, type: 'debit' }
+            ]
+          },
+          
+          '1234567890': {
+            name: 'Adeola Johnson',
+            bank: 'First Bank',
+            accountType: 'Savings',
+            accountAge: '3 years',
+            riskScore: 15,
+            riskLevel: 'low',
+            scamType: 'None',
+            transactionPatterns: [
+              { type: 'Regular Salary', risk: 'low', description: 'Consistent monthly salary deposits' },
+              { type: 'Utility Bills', risk: 'low', description: 'Regular bill payments' },
+              { type: 'Savings', risk: 'low', description: 'Regular savings deposits' }
+            ],
+            riskFactors: [
+              { factor: 'Transaction Consistency', score: 90, status: 'good' },
+              { factor: 'Account Age', score: 85, status: 'good' },
+              { factor: 'Pattern Stability', score: 88, status: 'good' },
+              { factor: 'Activity Hours', score: 75, status: 'good' }
+            ],
+            recentTransactions: [
+              { date: 'Today', description: 'Monthly Salary', amount: 450000, type: 'credit' },
+              { date: 'Yesterday', description: 'Ikeja Electric Bill', amount: -15000, type: 'debit' },
+              { date: '2 days ago', description: 'Supermarket Shopping', amount: -24500, type: 'debit' },
+              { date: '3 days ago', description: 'Monthly Savings', amount: -50000, type: 'debit' },
+              { date: '5 days ago', description: 'Netflix Subscription', amount: -4500, type: 'debit' }
+            ]
+          },
+          
+          '5555555555': {
+            name: 'David Business',
+            bank: 'GTBank',
+            accountType: 'Current',
+            accountAge: '1.5 years',
+            riskScore: 45,
+            riskLevel: 'medium',
+            scamType: 'None (Business Account)',
+            transactionPatterns: [
+              { type: 'Business Payments', risk: 'low', description: 'Regular client payments and supplier transactions' },
+              { type: 'High Volume', risk: 'medium', description: 'Above average transaction volume' },
+              { type: 'Mixed Timing', risk: 'low', description: 'Transactions throughout day' }
+            ],
+            riskFactors: [
+              { factor: 'Transaction Volume', score: 65, status: 'medium' },
+              { factor: 'Amount Variation', score: 60, status: 'medium' },
+              { factor: 'Recipient Diversity', score: 55, status: 'medium' },
+              { factor: 'Account Age', score: 70, status: 'good' }
+            ],
+            recentTransactions: [
+              { date: 'Today', description: 'Client Payment - Project X', amount: 125000, type: 'credit' },
+              { date: 'Yesterday', description: 'Supplier Payment - Materials', amount:
+
+

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Transaction History - SafeFlow</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              background: "#f3f4f6", // Gray 50
+              surface: "#ffffff",
+              primary: "#000000",
+              secondary: "#71717a", // Zinc 500
+              border: "#e4e4e7", // Zinc 200
+              success: "#22c55e",
+              danger: "#ef4444",
+              warning: "#f59e0b",
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-gray-900 overflow-hidden">
+    <div class="flex h-screen w-full">
+      <aside
+        class="w-64 flex-shrink-0 flex flex-col bg-surface border-r border-border h-full z-20"
+      >
+        <div class="flex flex-col h-full p-4">
+          <div class="flex items-center gap-3 mb-10 px-2 mt-2">
+            <div
+              class="bg-green-600 text-white rounded-lg p-2 flex items-center justify-center shadow-lg"
+            >
+              <span class="material-symbols-outlined">security</span>
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-green-600 text-xl font-bold leading-none tracking-tight"
+              >
+                SafeFlow
+              </h1>
+              <p class="text-gray-500 text-xs font-medium mt-0.5">
+                Financial Ecosystem
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1.5 flex-1">
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition-colors"
+              href="homepage.html"
+            >
+              <span class="material-symbols-outlined">dashboard</span>
+              <p class="text-sm font-medium">Dashboard</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg bg-green-600 text-white group transition-all shadow-md"
+              href="transaction.html"
+            >
+              <span class="material-symbols-outlined" data-weight="fill"
+                >receipt_long</span
+              >
+              <p class="text-sm font-semibold">Transactions</p>
+            </a>  
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition-colors"
+              href="#"
+            >
+              <span class="material-symbols-outlined">trending_up</span>
+              <p class="text-sm font-medium">Credit Building</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-black transition-colors"
+              href="securitycenter.html"
+            >
+              <span class="material-symbols-outlined">shield_lock</span>
+              <p class="text-sm font-medium">Security Center</p>
+            </a>
+          </nav>
+          <div class="mt-auto pt-4 border-t border-border">
+            <div
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+            >
+              <div
+                class="size-10 rounded-full bg-cover bg-center border border-gray-200"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo');
+                "
+              ></div>
+              <div class="flex flex-col">
+                <p class="text-black text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 text-xs">Premium Member</p>
+              </div>
+              <span
+                class="material-symbols-outlined text-gray-400 ml-auto text-sm"
+                >expand_more</span
+              >
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        <header
+          class="bg-surface/90 backdrop-blur-md border-b border-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+        >
+          <div>
+            <h2 class="text-green-600 text-2xl font-bold tracking-tight">
+              Transaction History
+            </h2>
+            <div class="flex items-center gap-2 mt-1">
+              <p class="text-gray-500 text-sm">
+                Track your expenses, income, and transfers.
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <button
+              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-black transition-colors"
+            >
+              <span class="material-symbols-outlined">visibility_off</span>
+            </button>
+            <button
+              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-black transition-colors relative"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
+              ></span>
+            </button>
+            <button
+              class="bg-green-600 border border-green-600 text-white text-sm font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all hover:bg-green-700 hover:border-green-700"
+            >
+              <span class="material-symbols-outlined text-[20px]"
+                >download</span
+              >
+              Export CSV
+            </button>
+          </div>
+        </header>
+        <div class="flex-1 overflow-y-auto p-8 scroll-smooth bg-gray-50">
+          <div class="max-w-[1400px] w-full mx-auto flex flex-col gap-6">
+            <div
+              class="bg-surface p-5 rounded-xl border border-border shadow-sm flex flex-col md:flex-row gap-4 justify-between items-start md:items-center"
+            >
+              <div class="relative w-full md:w-96">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-[20px]"
+                  >search</span
+                >
+                <input
+                  class="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-border rounded-lg text-sm text-black focus:ring-2 focus:ring-black focus:border-black placeholder-gray-400 outline-none transition-all"
+                  placeholder="Search by name, category, or reference..."
+                  type="text"
+                />
+              </div>
+              <div class="flex flex-wrap gap-3 w-full md:w-auto">
+                <div class="relative group">
+                  <select
+                    class="appearance-none bg-white border border-border text-gray-700 text-sm rounded-lg pl-3 pr-10 py-2.5 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer shadow-sm"
+                  >
+                    <option>Last 30 Days</option>
+                    <option>Last 90 Days</option>
+                    <option>This Year</option>
+                    <option>Custom Range</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[18px]"
+                    >calendar_today</span
+                  >
+                </div>
+                <div class="relative group">
+                  <select
+                    class="appearance-none bg-white border border-border text-gray-700 text-sm rounded-lg pl-3 pr-10 py-2.5 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer shadow-sm"
+                  >
+                    <option>All Types</option>
+                    <option>Credit (In)</option>
+                    <option>Debit (Out)</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[18px]"
+                    >filter_list</span
+                  >
+                </div>
+                <div class="relative group">
+                  <select
+                    class="appearance-none bg-white border border-border text-gray-700 text-sm rounded-lg pl-3 pr-10 py-2.5 hover:border-gray-400 focus:outline-none focus:ring-1 focus:ring-black cursor-pointer shadow-sm"
+                  >
+                    <option>All Statuses</option>
+                    <option>Successful</option>
+                    <option>Pending</option>
+                    <option>Failed</option>
+                  </select>
+                  <span
+                    class="material-symbols-outlined absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-[18px]"
+                    >expand_more</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="bg-surface rounded-xl border border-border shadow-sm overflow-hidden flex flex-col"
+            >
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-gray-50 border-b border-border">
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      >
+                        Transaction Details
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      >
+                        Category
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      >
+                        Date &amp; Time
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      >
+                        Reference ID
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      >
+                        Status
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider text-right"
+                      >
+                        Amount
+                      </th>
+                      <th
+                        class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider"
+                      ></th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-100">
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >movie</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Netflix Subscription</span
+                            >
+                            <span class="text-xs text-gray-500"
+                              >Card Payment ••4592</span
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Entertainment</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 24, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">09:41 AM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >TRX-882910</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-green-500"
+                          ></span>
+                          Success
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-gray-900"
+                          >- ₦ 4,500.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >person</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Transfer from Kemi A.</span
+                            >
+                            <span class="text-xs text-gray-500"
+                              >Bank Transfer - GTB</span
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Transfer</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 24, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">02:30 PM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >TRX-882555</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-green-500"
+                          ></span>
+                          Success
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-green-600"
+                          >+ ₦ 50,000.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >shopping_cart</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Shoprite Lagos</span
+                            >
+                            <span class="text-xs text-gray-500"
+                              >POS Payment</span
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Groceries</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 23, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">05:20 PM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >POS-221099</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-green-500"
+                          ></span>
+                          Success
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-gray-900"
+                          >- ₦ 24,350.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >electric_bolt</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Ikeja Electric</span
+                            >
+                            <span class="text-xs text-gray-500"
+                              >Bill Payment</span
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Utilities</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 23, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">10:00 AM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >BIL-992011</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-50 text-yellow-700 border border-yellow-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-yellow-500 animate-pulse"
+                          ></span>
+                          Pending
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-gray-900"
+                          >- ₦ 15,000.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >call</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >MTN Airtime</span
+                            >
+                            <span class="text-xs text-gray-500">Recharge</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Airtime &amp; Data</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 22, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">08:15 PM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >AIR-771239</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-100"
+                        >
+                          <span class="size-1.5 rounded-full bg-red-500"></span>
+                          Failed
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span
+                          class="text-sm font-bold text-gray-400 line-through decoration-gray-400 decoration-2"
+                          >- ₦ 2,000.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >qr_code</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Jumia Online</span
+                            >
+                            <span class="text-xs text-gray-500"
+                              >E-commerce Payment</span
+                            >
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Shopping</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 21, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">11:45 AM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >WEB-223190</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-green-500"
+                          ></span>
+                          Success
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-gray-900"
+                          >- ₦ 18,900.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50 transition-colors group">
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center gap-4">
+                          <div
+                            class="size-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 flex-shrink-0"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >savings</span
+                            >
+                          </div>
+                          <div class="flex flex-col">
+                            <span class="text-sm font-bold text-gray-900"
+                              >Cowrywise Deposit</span
+                            >
+                            <span class="text-xs text-gray-500">Auto-Save</span>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200"
+                          >Savings</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex flex-col">
+                          <span class="text-sm text-gray-900 font-medium"
+                            >Oct 20, 2023</span
+                          >
+                          <span class="text-xs text-gray-500">06:00 AM</span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-sm text-gray-500 font-mono"
+                          >SAV-001293</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap">
+                        <span
+                          class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-50 text-green-700 border border-green-100"
+                        >
+                          <span
+                            class="size-1.5 rounded-full bg-green-500"
+                          ></span>
+                          Success
+                        </span>
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <span class="text-sm font-bold text-gray-900"
+                          >- ₦ 10,000.00</span
+                        >
+                      </td>
+                      <td class="px-6 py-4 whitespace-nowrap text-right">
+                        <button
+                          class="text-gray-400 hover:text-black transition-colors p-1 rounded hover:bg-gray-200"
+                        >
+                          <span class="material-symbols-outlined text-[20px]"
+                            >more_vert</span
+                          >
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                class="flex items-center justify-between px-6 py-4 border-t border-border bg-gray-50"
+              >
+                <div class="text-xs text-gray-500">
+                  Showing <span class="font-bold text-gray-900">1</span> to
+                  <span class="font-bold text-gray-900">7</span> of
+                  <span class="font-bold text-gray-900">142</span> transactions
+                </div>
+                <div class="flex items-center gap-2">
+                  <button
+                    class="p-2 rounded-lg bg-white border border-gray-200 text-gray-400 hover:text-black hover:border-gray-300 disabled:opacity-50 transition-all"
+                  >
+                    <span class="material-symbols-outlined text-[16px]"
+                      >chevron_left</span
+                    >
+                  </button>
+                  <div class="flex items-center gap-1">
+                    <button
+                      class="w-8 h-8 rounded-lg bg-black text-white text-xs font-bold flex items-center justify-center"
+                    >
+                      1
+                    </button>
+                    <button
+                      class="w-8 h-8 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-bold flex items-center justify-center transition-colors"
+                    >
+                      2
+                    </button>
+                    <button
+                      class="w-8 h-8 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-bold flex items-center justify-center transition-colors"
+                    >
+                      3
+                    </button>
+                    <span class="text-gray-400 text-xs px-1">...</span>
+                    <button
+                      class="w-8 h-8 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 text-xs font-bold flex items-center justify-center transition-colors"
+                    >
+                      12
+                    </button>
+                  </div>
+                  <button
+                    class="p-2 rounded-lg bg-white border border-gray-200 text-black hover:border-gray-300 transition-all"
+                  >
+                    <span class="material-symbols-outlined text-[16px]"
+                      >chevron_right</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
