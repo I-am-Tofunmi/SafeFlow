@@ -110,7 +110,7 @@
         </div>
       </div>
       <div class="relative z-20 text-sm text-slate-400">
-        ©️ 2024 SafeFlow Nigeria. Licensed by CBN.
+        © 2024 SafeFlow Nigeria. Licensed by CBN.
       </div>
     </div>
     <div class="w-full lg:w-1/2 flex flex-col h-full bg-white overflow-y-auto">
@@ -134,7 +134,7 @@
               Start your journey to financial freedom.
             </p>
           </div>
-          <form class="space-y-6">
+          <form action="https://safeflow-backend-p8g2.onrender.com/api/auth/signup" class="space-y-6" method="post">
             <div>
               <label
                 class="block text-sm font-semibold text-text-main mb-2"
@@ -189,14 +189,13 @@
                   type="password"
                   required
                 />
-              </div>
-              <!-- FIXED: Password toggle moved outside -->
-              <div
-                id="togglePassword"
-                class="mt-2 flex items-center gap-1 cursor-pointer text-slate-400 hover:text-slate-600 text-sm"
-              >
-                <span class="material-symbols-outlined text-[18px]">visibility_off</span>
-                <span>Show password</span>
+                <div
+                  class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-slate-400 hover:text-slate-600"
+                >
+                  <span class="material-symbols-outlined text-[20px]"
+                    >visibility_off</span
+                  >
+                </div>
               </div>
               <p class="mt-2 text-xs text-slate-500">
                 Must be at least 8 characters with 1 special character.
@@ -228,13 +227,13 @@
                 >
               </div>
             </div>
-            <button
-              type="submit"
-              class="flex w-full justify-center items-center gap-2 rounded-lg bg-primary px-3 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-primary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all transform active:scale-[0.98]"
-            >
-              Create Account
-              <span class="material-symbols-outlined text-sm">arrow_forward</span>
-            </button>
+      <button id="text" type="submit"
+      class="flex w-full justify-center items-center gap-2 rounded-lg bg-primary px-3 py-3.5 text-sm font-bold text-white shadow-sm hover:bg-primary-dark focus-visible:outline
+      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all transform active:scale-[0.98]"
+        >
+        Create Account
+        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
           </form>
           <div class="mt-8">
             <div class="relative">
@@ -312,188 +311,8 @@
       <div
         class="lg:hidden p-6 border-t border-gray-100 text-center text-xs text-slate-400"
       >
-        ©️ 2024 SafeFlow Nigeria
+        © 2024 SafeFlow Nigeria
       </div>
     </div>
-
-<script>
-  (function() {
-    'use strict';
-    
-    const API_BASE_URL = 'https://safeflow-backend-p8g2.onrender.com';
-    
-    document.addEventListener('DOMContentLoaded', function() {
-      console.log('🚀 Page loaded');
-      
-      // Password toggle
-      const togglePassword = document.getElementById('togglePassword');
-      if (togglePassword) {
-        togglePassword.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          
-          const passwordInput = document.getElementById('password');
-          if (!passwordInput) return;
-          
-          const icon = this.querySelector('.material-symbols-outlined');
-          const text = this.querySelector('span:last-child');
-          
-          if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            if (icon) icon.textContent = 'visibility';
-            if (text) text.textContent = 'Hide password';
-          } else {
-            passwordInput.type = 'password';
-            if (icon) icon.textContent = 'visibility_off';
-            if (text) text.textContent = 'Show password';
-          }
-          
-          return false;
-        }, true);
-      }
-      
-      // Form submission
-      const form = document.querySelector('form');
-      if (form) {
-        const newForm = form.cloneNode(true);
-        form.parentNode.replaceChild(newForm, form);
-        
-        newForm.addEventListener('submit', function(e) {
-          console.log('📝 Form submit triggered');
-          e.preventDefault();
-          e.stopImmediatePropagation();
-          
-          const phoneElem = document.getElementById('phone');
-          const emailElem = document.getElementById('email');
-          const passwordElem = document.getElementById('password');
-          
-          if (!phoneElem || !emailElem || !passwordElem) {
-            console.error('❌ Form elements not found');
-            return false;
-          }
-          
-          const phone = phoneElem.value || '';
-          const email = emailElem.value || '';
-          const password = passwordElem.value || '';
-          
-          console.log('📤 Data:', { phone, email, password });
-          
-          if (!phone.trim() || !email.trim() || !password.trim()) {
-            console.error('❌ Missing fields');
-            showMessage('All fields are required.', 'error');
-            return false;
-          }
-          
-          const submitBtn = this.querySelector('button[type="submit"]');
-          const originalHTML = submitBtn ? submitBtn.innerHTML : '';
-          if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = 'Creating...';
-          }
-          
-          fetch(`${API_BASE_URL}/auth/signup`, {
-            method: 'POST',
-            headers: { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({
-              phone: phone.replace(/\s/g, ''),
-              email: email,
-              password: password
-            })
-          })
-          .then(response => {
-            console.log('✅ Response status:', response.status);
-            return response.text().then(text => ({ response, text }));
-          })
-          .then(({ response, text }) => {
-            console.log('📥 Response text:', text);
-            
-            let data;
-            try {
-              data = JSON.parse(text);
-            } catch {
-              data = { raw: text };
-            }
-            
-            if (response.ok) {
-              console.log('🎉 Success:', data);
-              showMessage('Account created successfully!', 'success');
-              setTimeout(() => {
-                window.location.href = 'homepage.html';
-              }, 2000);
-            } else {
-              console.error('❌ Error:', data);
-              const errorMsg =
-                (typeof data.message === 'string' && data.message) ||
-                (typeof data.detail === 'string' && data.detail) ||
-                (data.error && data.error.message) ||
-                data.raw ||
-                'Signup failed';
-              showMessage('Error: ' + errorMsg, 'error');
-            }
-          })
-          .catch(error => {
-            console.error('🚨 Network error:', error);
-            showMessage('Network error. Check console.', 'error');
-          })
-          .finally(() => {
-            if (submitBtn) {
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = originalHTML;
-            }
-          });
-          
-          return false;
-        }, true);
-      }
-      
-      function showMessage(message, type) {
-        console.log('💬 Message:', type, message);
-        
-        const existingMsg = document.getElementById('custom-message');
-        if (existingMsg) existingMsg.remove();
-        
-        const msgDiv = document.createElement('div');
-        msgDiv.id = 'custom-message';
-        msgDiv.className = type === 'success' 
-          ? 'p-4 mb-4 rounded-lg bg-green-50 border border-green-200 text-green-700' 
-          : 'p-4 mb-4 rounded-lg bg-red-50 border border-red-200 text-red-700';
-        
-        msgDiv.innerHTML = `
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : 'error'}</span>
-            <span class="font-medium">${message}</span>
-          </div>
-        `;
-        
-        const title = document.querySelector('h2.text-3xl');
-        if (title && title.parentNode) {
-          title.parentNode.insertBefore(msgDiv, title.nextElementSibling);
-        }
-        
-        if (type === 'success') {
-          setTimeout(() => {
-            if (msgDiv.parentNode) {
-              msgDiv.remove();
-            }
-          }, 5000);
-        }
-      }
-      
-      console.log('✅ Event listeners set up');
-    });
-    
-    window.addEventListener('click', function(e) {
-      if (e.target.closest('form') || e.target.closest('#togglePassword')) {
-        e.stopImmediatePropagation();
-      }
-    }, true);
-    
-    console.log('🛡️ Script loaded and protected');
-  })();
-</script>
-
   </body>
 </html>
