@@ -126,7 +126,7 @@
         background: #ffffff;
         border-radius: 12px;
         padding: 30px;
-        max-width: 400px;
+        max-width: 500px;
         width: 90%;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         transform: scale(0.95);
@@ -138,6 +138,39 @@
       .dark .popup-content {
         background: #1e293b;
         color: #ffffff;
+      }
+      .face-verification-alert {
+        animation: alert-pulse 2s infinite;
+      }
+      @keyframes alert-pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+        }
+      }
+      .face-preview {
+        width: 150px;
+        height: 150px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 3px solid #e5e7eb;
+      }
+      .dark .face-preview {
+        border-color: #4b5563;
+      }
+      .face-match {
+        border-color: #10b981 !important;
+      }
+      .face-mismatch {
+        border-color: #ef4444 !important;
+        animation: shake 0.5s ease-in-out;
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
       }
     </style>
   </head>
@@ -211,10 +244,21 @@
             >
             <p class="text-sm font-medium">Security Center</p>
           </a>
+          <a
+            class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+            href="education.html"
+          >
+            <span
+              class="material-symbols-outlined group-hover:text-brand transition-colors"
+              >trending_up</span
+            >
+            <p class="text-sm font-medium">Education</p>
+          </a>
         </nav>
         <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
           <div
             class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+            id="biometricToggle"
           >
             <div
               class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
@@ -228,7 +272,7 @@
             </div>
             <span
               class="material-symbols-outlined text-gray-400 ml-auto text-sm"
-              >expand_more</span
+              >fingerprint</span
             >
           </div>
         </div>
@@ -525,6 +569,104 @@
       </main>
     </div>
 
+    <!-- Biometric Popup -->
+    <div id="biometricPopup" class="popup-overlay">
+      <div class="popup-content">
+        <div class="flex items-center justify-between mb-6">
+          <div class="flex items-center gap-3">
+            <div class="bg-brand-light dark:bg-brand-dark p-2 rounded-lg">
+              <span class="material-symbols-outlined text-brand">fingerprint</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-dark-primary">Face Verification</h3>
+          </div>
+          <button id="closeBiometricPopup" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+            <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">close</span>
+          </button>
+        </div>
+
+        <div id="biometricAlert" class="hidden mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg face-verification-alert">
+          <div class="flex items-start">
+            <span class="material-symbols-outlined text-red-600 dark:text-red-400 mr-3">warning</span>
+            <div>
+              <h4 class="font-bold text-red-800 dark:text-red-300">🚨 FACE MISMATCH DETECTED</h4>
+              <p id="faceMismatchDetails" class="text-red-700 dark:text-red-400 text-sm mt-1"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-gray-700 dark:text-dark-secondary text-sm font-medium mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              id="userNameInput"
+              placeholder="Enter your username"
+              class="w-full px-4 py-3 border border-border dark:border-dark-border rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-dark-primary focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-all"
+            />
+          </div>
+
+          <div>
+            <label class="block text-gray-700 dark:text-dark-secondary text-sm font-medium mb-2">
+              Upload Face Image
+            </label>
+            <div class="flex flex-col items-center">
+              <div class="relative mb-4">
+                <img id="facePreview" src="" alt="Face Preview" class="face-preview hidden">
+                <div id="facePlaceholder" class="face-preview bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-gray-400 text-4xl">face</span>
+                </div>
+              </div>
+              <input
+                type="file"
+                id="faceUpload"
+                accept="image/*"
+                capture="user"
+                class="hidden"
+              />
+              <button
+                id="uploadFaceButton"
+                class="bg-brand hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-brand/20"
+              >
+                <span class="material-symbols-outlined">photo_camera</span>
+                Take Photo or Upload
+              </button>
+            </div>
+            <p class="text-gray-400 dark:text-gray-500 text-xs mt-2 text-center">
+              Take a clear photo of your face for verification
+            </p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <img id="storedFace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo" alt="Stored Face" class="face-preview">
+            <span class="material-symbols-outlined text-gray-400">arrow_forward</span>
+            <img id="currentFace" src="" alt="Current Face" class="face-preview hidden">
+            <div id="faceComparison" class="ml-4 hidden">
+              <span id="faceMatchIcon" class="material-symbols-outlined text-green-600 text-2xl">check_circle</span>
+              <p id="faceMatchText" class="text-sm font-medium text-green-600">Face Matched</p>
+            </div>
+          </div>
+
+          <div class="flex gap-3 mt-6">
+            <button
+              id="verifyFaceButton"
+              class="flex-1 bg-brand hover:bg-brand-dark text-white font-bold py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled
+            >
+              Verify Identity
+            </button>
+            <button
+              id="cancelBiometric"
+              class="flex-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-300 font-bold py-3 rounded-lg transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="verifyPopup" class="popup-overlay">
       <div class="popup-content text-center">
         <span class="material-symbols-outlined text-brand text-6xl mb-4">verified_user</span>
@@ -552,7 +694,175 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // ================================================
-        // NIGERIAN SCAM DETECTION SYSTEM
+        // BIOMETRIC FACE VERIFICATION SYSTEM
+        // ================================================
+        
+        const biometricToggle = document.getElementById('biometricToggle');
+        const biometricPopup = document.getElementById('biometricPopup');
+        const closeBiometricPopup = document.getElementById('closeBiometricPopup');
+        const cancelBiometric = document.getElementById('cancelBiometric');
+        const userNameInput = document.getElementById('userNameInput');
+        const faceUpload = document.getElementById('faceUpload');
+        const uploadFaceButton = document.getElementById('uploadFaceButton');
+        const facePreview = document.getElementById('facePreview');
+        const facePlaceholder = document.getElementById('facePlaceholder');
+        const verifyFaceButton = document.getElementById('verifyFaceButton');
+        const biometricAlert = document.getElementById('biometricAlert');
+        const faceMismatchDetails = document.getElementById('faceMismatchDetails');
+        const currentFace = document.getElementById('currentFace');
+        const faceComparison = document.getElementById('faceComparison');
+        const faceMatchIcon = document.getElementById('faceMatchIcon');
+        const faceMatchText = document.getElementById('faceMatchText');
+
+        // Store original face image URL and username
+        const originalFace = 'https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo';
+        let storedUserName = 'Chinedu O.';
+        let uploadedFaceUrl = null;
+        let currentUserName = '';
+        let isFaceMismatchDetected = false;
+
+        // Open biometric popup
+        biometricToggle.addEventListener('click', () => {
+          biometricPopup.classList.add('active');
+          userNameInput.value = storedUserName;
+          uploadedFaceUrl = null;
+          facePreview.classList.add('hidden');
+          facePlaceholder.classList.remove('hidden');
+          verifyFaceButton.disabled = true;
+          biometricAlert.classList.add('hidden');
+          currentFace.classList.add('hidden');
+          faceComparison.classList.add('hidden');
+          isFaceMismatchDetected = false;
+        });
+
+        // Close biometric popup
+        closeBiometricPopup.addEventListener('click', () => {
+          biometricPopup.classList.remove('active');
+        });
+
+        cancelBiometric.addEventListener('click', () => {
+          biometricPopup.classList.remove('active');
+        });
+
+        // Trigger file upload when button is clicked
+        uploadFaceButton.addEventListener('click', () => {
+          faceUpload.click();
+        });
+
+        // Handle face image upload
+        faceUpload.addEventListener('change', (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              uploadedFaceUrl = e.target.result;
+              facePreview.src = uploadedFaceUrl;
+              facePreview.classList.remove('hidden');
+              facePlaceholder.classList.add('hidden');
+              
+              // Check if username matches but face is different
+              currentUserName = userNameInput.value.trim();
+              
+              if (currentUserName === storedUserName && uploadedFaceUrl) {
+                // Simple face mismatch detection (in real app, this would use AI)
+                // For demo: Detect if uploaded image is NOT the original face
+                if (uploadedFaceUrl.includes('data:image') && !uploadedFaceUrl.includes(originalFace)) {
+                  isFaceMismatchDetected = true;
+                  biometricAlert.classList.remove('hidden');
+                  faceMismatchDetails.textContent = `Username "${currentUserName}" does not match uploaded face. This may indicate identity fraud.`;
+                  
+                  // Show both faces for comparison
+                  currentFace.src = uploadedFaceUrl;
+                  currentFace.classList.remove('hidden');
+                  faceComparison.classList.remove('hidden');
+                  faceMatchIcon.textContent = 'gpp_bad';
+                  faceMatchIcon.className = 'material-symbols-outlined text-red-600 text-2xl';
+                  faceMatchText.textContent = 'Face Mismatch';
+                  faceMatchText.className = 'text-sm font-medium text-red-600';
+                  
+                  // Visual feedback
+                  currentFace.classList.add('face-mismatch');
+                } else {
+                  isFaceMismatchDetected = false;
+                  biometricAlert.classList.add('hidden');
+                  
+                  // Show face match
+                  currentFace.src = uploadedFaceUrl;
+                  currentFace.classList.remove('hidden');
+                  faceComparison.classList.remove('hidden');
+                  faceMatchIcon.textContent = 'check_circle';
+                  faceMatchIcon.className = 'material-symbols-outlined text-green-600 text-2xl';
+                  faceMatchText.textContent = 'Face Matched';
+                  faceMatchText.className = 'text-sm font-medium text-green-600';
+                  
+                  // Visual feedback
+                  currentFace.classList.remove('face-mismatch');
+                  currentFace.classList.add('face-match');
+                }
+              }
+              
+              verifyFaceButton.disabled = false;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Username input validation
+        userNameInput.addEventListener('input', () => {
+          currentUserName = userNameInput.value.trim();
+          
+          if (uploadedFaceUrl && currentUserName === storedUserName) {
+            // Check for face mismatch when username is correct
+            if (uploadedFaceUrl.includes('data:image') && !uploadedFaceUrl.includes(originalFace)) {
+              isFaceMismatchDetected = true;
+              biometricAlert.classList.remove('hidden');
+              faceMismatchDetails.textContent = `Username "${currentUserName}" does not match uploaded face. This may indicate identity fraud.`;
+              
+              currentFace.classList.remove('face-match');
+              currentFace.classList.add('face-mismatch');
+              faceMatchIcon.textContent = 'gpp_bad';
+              faceMatchIcon.className = 'material-symbols-outlined text-red-600 text-2xl';
+              faceMatchText.textContent = 'Face Mismatch';
+              faceMatchText.className = 'text-sm font-medium text-red-600';
+            } else {
+              isFaceMismatchDetected = false;
+              biometricAlert.classList.add('hidden');
+              
+              currentFace.classList.remove('face-mismatch');
+              currentFace.classList.add('face-match');
+              faceMatchIcon.textContent = 'check_circle';
+              faceMatchIcon.className = 'material-symbols-outlined text-green-600 text-2xl';
+              faceMatchText.textContent = 'Face Matched';
+              faceMatchText.className = 'text-sm font-medium text-green-600';
+            }
+          }
+        });
+
+        // Verify face button
+        verifyFaceButton.addEventListener('click', () => {
+          if (isFaceMismatchDetected) {
+            alert('🚨 FACE MISMATCH ALERT: Username matches but face does not match stored profile. This transaction has been flagged for review.');
+            
+            // Log this as a security event (in real app, this would go to backend)
+            console.log('SECURITY EVENT: Face mismatch detected for user:', storedUserName);
+          } else {
+            alert('✅ Identity verified successfully! Face matches username.');
+            
+            // Update user profile with new face if different from original
+            if (uploadedFaceUrl && uploadedFaceUrl !== originalFace) {
+              const profilePic = document.querySelector('.size-10.rounded-full');
+              profilePic.style.backgroundImage = `url(${uploadedFaceUrl})`;
+              
+              // Store new face as original for future checks
+              // originalFace = uploadedFaceUrl; // In real app, this would update database
+            }
+          }
+          
+          biometricPopup.classList.remove('active');
+        });
+
+        // ================================================
+        // NIGERIAN SCAM DETECTION SYSTEM (EXISTING CODE)
         // ================================================
         
         const accountInput = document.getElementById('accountInput');
