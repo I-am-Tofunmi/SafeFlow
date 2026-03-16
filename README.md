@@ -34,7 +34,7 @@ Most fintechs focus on fraud prevention **or** financial tracking. SafeFlow does
 - Understands local context — AI trained on Nigerian scam patterns, not generic global models
 - Educates, not just blocks — explains *why* something is risky, building long-term user awareness
 - Breaks the credit barrier — TrustScore creates a pathway to credit for millions excluded by traditional systems
-- Speaks your language — literally, with support for Pidgin, Hausa, Yoruba, and Igbo
+
 
 ---
 
