@@ -1,0 +1,149 @@
+:root {
+    /* Security-focused Color Palette */
+    --color-dark-bg: #1e293b;        /* Dark Slate/Blue for main background */
+    --color-card-bg: #334155;        /* Slightly lighter dark for cards */
+    --color-primary-btn: #4f46e5;    /* Vibrant Indigo/Blue for the main action */
+    --color-primary-hover: #6366f1;
+    --color-text-light: #f1f5f9;     /* Off-white for general text */
+    --color-text-secondary: #94a3b8; /* Lighter gray for secondary text */
+
+    /* Status Colors */
+    --color-good: #10b981;    /* Emerald Green */
+    --color-warning: #facc15; /* Yellow */
+    --color-danger: #ef4444;  /* Red */
+    --color-info: #3b82f6;    /* Blue */
+}
+
+/* Base Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-dark-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--color-text-light);
+}
+
+/* --- Container Styling --- */
+.security-report-container {
+    background-color: var(--color-card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* --- Stats Header (SHA) --- */
+.stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-dark-bg);
+}
+
+.stats-header h3 {
+    margin: 0;
+    font-size: 1.4em;
+    color: var(--color-text-light);
+}
+
+.sha-display {
+    font-size: 0.85em;
+    color: var(--color-text-secondary);
+    font-family: monospace;
+    background-color: var(--color-dark-bg);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+/* --- Statistics Grid --- */
+.security-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: var(--color-dark-bg);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-left: 5px solid transparent; /* Used for status color */
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.stat-icon {
+    font-size: 1.5em;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 0.8em;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+/* Status specific styling for stat-card */
+.stat-card.good { border-left-color: var(--color-good); color: var(--color-good); }
+.stat-card.warning { border-left-color: var(--color-warning); color: var(--color-warning); }
+.stat-card.danger { border-left-color: var(--color-danger); color: var(--color-danger); }
+.stat-card.info { border-left-color: var(--color-info); color: var(--color-info); }
+
+/* Overrides for text color inside the stat-cards */
+.stat-card.good .stat-value { color: var(--color-good); }
+.stat-card.warning .stat-value { color: var(--color-warning); }
+.stat-card.danger .stat-value { color: var(--color-danger); }
+.stat-card.info .stat-value { color: var(--color-info); }
+.stat-card .stat-label { color: var(--color-text-secondary); } /* Ensure label is always subtle */
+
+
+/* --- Generate Report Button Styling --- */
+.generate-report-btn {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-text-light);
+    background-color: var(--color-primary-btn);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, transform 0.1s;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); /* Shadow to match primary color */
+}
+
+.generate-report-btn:hover {
+    background-color: var(--color-primary-hover);
+    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.4);
+}
+
+.generate-report-btn:active {
+    transform: translateY(1px);
+}
+
+.generate-report-btn svg {
+    stroke: var(--color-text-light);
+}

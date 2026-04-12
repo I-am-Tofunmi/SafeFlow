@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Center - Change Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 25px;
+        }
+        
+        .main-content {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            height: fit-content;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #1a365d;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header h1 i {
+            color: #4a6ee0;
+            margin-right: 10px;
+        }
+        
+        .back-link {
+            color: #4a6ee0;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+        
+        .back-link i {
+            margin-right: 8px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .form-section {
+            margin-top: 20px;
+        }
+        
+        .form-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .form-title h2 {
+            color: #1a365d;
+            font-size: 22px;
+            font-weight: 600;
+        }
+        
+        .form-title .badge {
+            background-color: #ff9500;
+            color: white;
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-left: 12px;
+            font-weight: 600;
+        }
+        
+        .password-form {
+            margin-top: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a365d;
+            font-size: 15px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 14px 45px 14px 15px;
+            border: 1px solid #d1d9e6;
+            border-radius: 8px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s ease;
+            background-color: #fcfcfd;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4a6ee0;
+            box-shadow: 0 0 0 3px rgba(74, 110, 224, 0.2);
+            background-color: white;
+        }
+        
+        .form-input.error {
+            border-color: #ff3b30;
+        }
+        
+        .form-input.success {
+            border-color: #34c759;
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .input-icon:hover {
+            color: #666;
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+        }
+        
+        .strength-bar {
+            height: 6px;
+            background-color: #eaeaea;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            background-color: #ff3b30;
+            border-radius: 3px;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+        
+        .strength-text {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .form-hint {
+            font-size: 13px;
+            color: #888;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-hint i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .requirements-list {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+        
+        .requirement {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .requirement i {
+            margin-right: 8px;
+            font-size: 12px;
+        }
+        
+        .requirement.valid {
+            color: #34c759;
+        }
+        
+        .requirement.invalid {
+            color: #888;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 1px solid #eaeaea;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4a6ee0 0%, #6a8aff 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(74, 110, 224, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(74, 110, 224, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: #666;
+            border: 1px solid #d1d9e6;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .btn i {
+            margin-right: 10px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            display: none;
+            align-items: center;
+        }
+        
+        .status-message i {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        .status-message.success {
+            background-color: rgba(52, 199, 89, 0.1);
+            border-left: 4px solid #34c759;
+            color: #2a8c4a;
+            display: flex;
+        }
+        
+        .status-message.error {
+            background-color: rgba(255, 59, 48, 0.1);
+            border-left: 4px solid #ff3b30;
+            color: #cc2e25;
+            display: flex;
+        }
+        
+        .last-updated {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .last-updated i {
+            color: #4a6ee0;
+            font-size: 22px;
+            margin-right: 15px;
+        }
+        
+        .last-updated-text h3 {
+            color: #1a365d;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        
+        .last-updated-text p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Sidebar Content */
+        .sidebar h3 {
+            color: #1a365d;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .password-tips {
+            margin-top: 25px;
+        }
+        
+        .tip {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .tip i {
+            color: #4a6ee0;
+            margin-right: 12px;
+            margin-top: 3px;
+            font-size: 14px;
+        }
+        
+        .tip p {
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .security-badge {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            text-align: center;
+            border: 1px solid #d1e3ff;
+        }
+        
+        .security-badge i {
+            color: #4a6ee0;
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .security-badge h4 {
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+        
+        .security-badge p {
+            color: #666;
+            font-size: 13px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-shield-alt"></i> Security Center</h1>
+                <a href="securitycenter.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Security Dashboard
+                </a>
+            </div>
+            
+            <div class="status-message success" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <div>Your password has been updated successfully! You'll be logged out of other devices for security.</div>
+            </div>
+            
+            <div class="status-message error" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <div id="errorText">There was a problem updating your password. Please check your current password and try again.</div>
+            </div>
+            
+            <div class="last-updated">
+                <i class="fas fa-history"></i>
+                <div class="last-updated-text">
+                    <h3>Last Password Change</h3>
+                    <p>Your password was last changed <strong>3 months ago</strong>. For security, we recommend changing it every 60-90 days.</p>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-title">
+                    <h2>Change Password</h2>
+                    <div class="badge">REQUIRED</div>
+                </div>
+                
+                <form class="password-form" id="passwordForm">
+                    <div class="form-group">
+                        <label class="form-label" for="oldPassword">
+                            <i class="fas fa-lock"></i> Current Password
+                        </label>
+                        <div class="input-with-icon">
+                            <input type="password" id="oldPassword" class="form-input" placeholder="Enter your current password" required>
+                            <div class="input-icon" id="toggleOldPassword">
+                                <i class="fas fa-eye"></i>
+                            </div>
+                        </div>
+                        <div class="form-hint">
+                            <i class="fas fa-info-circle"></i> You must enter your current password to verify your identity
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="newPassword">
+                                <i class="fas fa-key"></i> New Password
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="password" id="newPassword" class="form-input" placeholder="Create a new password" required>
+                                <div class="input-icon" id="toggleNewPassword">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="password-strength">
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <div class="strength-text" id="strengthText">Password strength: Very weak</div>
+                            </div>
+                            
+                            <div class="requirements-list">
+                                <div class="requirement invalid" id="reqLength">
+                                    <i class="far fa-circle"></i> At least 12 characters
+                                </div>
+                                <div class="requirement invalid" id="reqUppercase">
+                                    <i class="far fa-circle"></i> At least one uppercase letter
+                                </div>
+                                <div class="requirement invalid" id="reqLowercase">
+                                    <i class="far fa-circle"></i> At least one lowercase letter
+                                </div>
+                                <div class="requirement invalid" id="reqNumber">
+                                    <i class="far fa-circle"></i> At least one number
+                                </div>
+                                <div class="requirement invalid" id="reqSpecial">
+                                    <i class="far fa-circle"></i> At least one special character (!@#$%^&*)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="confirmPassword">
+                                <i class="fas fa-redo"></i> Confirm New Password
+                            </label>
+                            <div class="input-with-icon">
+                                <input type="password" id="confirmPassword" class="form-input" placeholder="Re-enter your new password" required>
+                                <div class="input-icon" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                            <div class="form-hint" id="passwordMatchHint">
+                                <i class="fas fa-info-circle"></i> Passwords must match
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>
+                            <i class="fas fa-save"></i> Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <h3>Password Requirements</h3>
+            <div class="password-tips">
+                <div class="tip">
+                    <i class="fas fa-check"></i>
+                    <p>Use a <strong>minimum of 12 characters</strong> - longer passwords are harder to crack.</p>
+                </div>
+                
+                <div class="tip">
+                    <i class="fas fa-check"></i>
+                    <p>Include a <strong>mix of uppercase and lowercase letters</strong>, numbers, and symbols.</p>
+                </div>
+                
+                <div class="tip">
+                    <i class="fas fa-check"></i>
+                    <p>Avoid using <strong>personal information</strong> like your name, birthdate, or common words.</p>
+                </div>
+                
+                <div class="tip">
+                    <i class="fas fa-check"></i>
+                    <p>Don't reuse passwords from other accounts - each account should have a unique password.</p>
+                </div>
+                
+                <div class="tip">
+                    <i class="fas fa-check"></i>
+                    <p>Consider using a <strong>password manager</strong> to generate and store secure passwords.</p>
+                </div>
+            </div>
+            
+            <div class="security-badge">
+                <i class="fas fa-user-shield"></i>
+                <h4>Enhanced Security</h4>
+                <p>Changing your password regularly helps protect your account from unauthorized access and potential security breaches.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const passwordForm = document.getElementById('passwordForm');
+        const oldPasswordInput = document.getElementById('oldPassword');
+        const newPasswordInput = document.getElementById('newPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const toggleOldPassword = document.getElementById('toggleOldPassword');
+        const toggleNewPassword = document.getElementById('toggleNewPassword');
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const strengthFill = document.getElementById('strengthFill');
+        const strengthText = document.getElementById('strengthText');
+        const passwordMatchHint = document.getElementById('passwordMatchHint');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        
+        // Password requirement elements
+        const reqLength = document.getElementById('reqLength');
+        const reqUppercase = document.getElementById('reqUppercase');
+        const reqLowercase = document.getElementById('reqLowercase');
+        const reqNumber = document.getElementById('reqNumber');
+        const reqSpecial = document.getElementById('reqSpecial');
+        
+        // Toggle password visibility
+        toggleOldPassword.addEventListener('click', function() {
+            togglePasswordVisibility(oldPasswordInput, this.querySelector('i'));
+        });
+        
+        toggleNewPassword.addEventListener('click', function() {
+            togglePasswordVisibility(newPasswordInput, this.querySelector('i'));
+        });
+        
+        toggleConfirmPassword.addEventListener('click', function() {
+            togglePasswordVisibility(confirmPasswordInput, this.querySelector('i'));
+        });
+        
+        function togglePasswordVisibility(input, icon) {
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+        
+        // Check password strength
+        newPasswordInput.addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+            validateForm();
+        });
+        
+        confirmPasswordInput.addEventListener('input', validateForm);
+        oldPasswordInput.addEventListener('input', validateForm);
+        
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let color = '#ff3b30';
+            let text = 'Very weak';
+            
+            // Check password length
+            if (password.length >= 12) {
+                strength += 20;
+                reqLength.classList.remove('invalid');
+                reqLength.classList.add('valid');
+                reqLength.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                reqLength.classList.remove('valid');
+                reqLength.classList.add('invalid');
+                reqLength.querySelector('i').className = 'far fa-circle';
+            }
+            
+            // Check for uppercase letters
+            if (/[A-Z]/.test(password)) {
+                strength += 20;
+                reqUppercase.classList.remove('invalid');
+                reqUppercase.classList.add('valid');
+                reqUppercase.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                reqUppercase.classList.remove('valid');
+                reqUppercase.classList.add('invalid');
+                reqUppercase.querySelector('i').className = 'far fa-circle';
+            }
+            
+            // Check for lowercase letters
+            if (/[a-z]/.test(password)) {
+                strength += 20;
+                reqLowercase.classList.remove('invalid');
+                reqLowercase.classList.add('valid');
+                reqLowercase.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                reqLowercase.classList.remove('valid');
+                reqLowercase.classList.add('invalid');
+                reqLowercase.querySelector('i').className = 'far fa-circle';
+            }
+            
+            // Check for numbers
+            if (/[0-9]/.test(password)) {
+                strength += 20;
+                reqNumber.classList.remove('invalid');
+                reqNumber.classList.add('valid');
+                reqNumber.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                reqNumber.classList.remove('valid');
+                reqNumber.classList.add('invalid');
+                reqNumber.querySelector('i').className = 'far fa-circle';
+            }
+            
+            // Check for special characters
+            if (/[!@#$%^&*]/.test(password)) {
+                strength += 20;
+                reqSpecial.classList.remove('invalid');
+                reqSpecial.classList.add('valid');
+                reqSpecial.querySelector('i').className = 'fas fa-check-circle';
+            } else {
+                reqSpecial.classList.remove('valid');
+                reqSpecial.classList.add('invalid');
+                reqSpecial.querySelector('i').className = 'far fa-circle';
+            }
+            
+            // Determine strength level
+            if (strength >= 80) {
+                color = '#34c759';
+                text = 'Strong';
+                newPasswordInput.classList.remove('error');
+                newPasswordInput.classList.add('success');
+            } else if (strength >= 60) {
+                color = '#ff9500';
+                text = 'Moderate';
+                newPasswordInput.classList.remove('success');
+                newPasswordInput.classList.remove('error');
+            } else if (strength >= 40) {
+                color = '#ff9500';
+                text = 'Fair';
+                newPasswordInput.classList.remove('success');
+                newPasswordInput.classList.remove('error');
+            } else {
+                color = '#ff3b30';
+                text = 'Weak';
+                newPasswordInput.classList.remove('success');
+                newPasswordInput.classList.add('error');
+            }
+            
+            // Update strength indicator
+            strengthFill.style.width = strength + '%';
+            strengthFill.style.backgroundColor = color;
+            strengthText.textContent = `Password strength: ${text}`;
+            strengthText.style.color = color;
+        }
+        
+        // Validate form
+        function validateForm() {
+            const oldPassword = oldPasswordInput.value;
+            const newPassword = newPasswordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            
+            let isValid = true;
+            
+            // Check if old password is entered
+            if (oldPassword.length < 1) {
+                isValid = false;
+                oldPasswordInput.classList.add('error');
+            } else {
+                oldPasswordInput.classList.remove('error');
+            }
+            
+            // Check if new password meets requirements
+            if (newPassword.length < 12) {
+                isValid = false;
+            }
+            
+            // Check if passwords match
+            if (newPassword !== confirmPassword) {
+                isValid = false;
+                confirmPasswordInput.classList.add('error');
+                passwordMatchHint.innerHTML = '<i class="fas fa-exclamation-circle"></i> Passwords do not match';
+                passwordMatchHint.style.color = '#ff3b30';
+            } else if (confirmPassword.length > 0) {
+                confirmPasswordInput.classList.remove('error');
+                confirmPasswordInput.classList.add('success');
+                passwordMatchHint.innerHTML = '<i class="fas fa-check-circle"></i> Passwords match';
+                passwordMatchHint.style.color = '#34c759';
+            } else {
+                confirmPasswordInput.classList.remove('error');
+                confirmPasswordInput.classList.remove('success');
+                passwordMatchHint.innerHTML = '<i class="fas fa-info-circle"></i> Passwords must match';
+                passwordMatchHint.style.color = '#888';
+            }
+            
+            // Enable/disable submit button
+            submitBtn.disabled = !isValid;
+            
+            return isValid;
+        }
+        
+        // Form submission
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                showError('Please fix the errors in the form before submitting.');
+                return;
+            }
+            
+            // Simulate API call to change password
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            submitBtn.disabled = true;
+            
+            // In a real application, this would be an AJAX call to your backend
+            setTimeout(() => {
+                // Simulate successful password change
+                successMessage.style.display = 'flex';
+                errorMessage.style.display = 'none';
+                
+                // Reset form
+                passwordForm.reset();
+                submitBtn.innerHTML = '<i class="fas fa-save"></i> Update Password';
+                submitBtn.disabled = true;
+                
+                // Reset UI elements
+                strengthFill.style.width = '0%';
+                strengthText.textContent = 'Password strength: Very weak';
+                strengthText.style.color = '#666';
+                passwordMatchHint.innerHTML = '<i class="fas fa-info-circle"></i> Passwords must match';
+                passwordMatchHint.style.color = '#888';
+                
+                // Reset requirement indicators
+                const requirements = [reqLength, reqUppercase, reqLowercase, reqNumber, reqSpecial];
+                requirements.forEach(req => {
+                    req.classList.remove('valid');
+                    req.classList.add('invalid');
+                    req.querySelector('i').className = 'far fa-circle';
+                });
+                
+                // Reset input borders
+                newPasswordInput.classList.remove('success', 'error');
+                confirmPasswordInput.classList.remove('success', 'error');
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 1500);
+        });
+        
+        // Cancel button
+        cancelBtn.addEventListener('click', function() {
+            if (oldPasswordInput.value || newPasswordInput.value || confirmPasswordInput.value) {
+                if (confirm('Are you sure you want to cancel? Any changes will be lost.')) {
+                    window.location.href = '#'; // In a real app, this would navigate back
+                }
+            } else {
+                window.location.href = '#'; // In a real app, this would navigate back
+            }
+        });
+        
+        // Show error message
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.style.display = 'flex';
+            successMessage.style.display = 'none';
+            
+            // Hide error message after 5 seconds
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Initialize form validation on page load
+        validateForm();
+    </script>
+</body>
+</html>
+Features of 

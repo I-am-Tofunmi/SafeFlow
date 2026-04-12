@@ -1,0 +1,296 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+/* Layout shell */
+body {
+  min-height: 100vh;
+  background: #020617;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ============ LEFT SIDE ============ */
+
+.hero {
+  flex: 1.05;
+  position: relative;
+  color: #f9fafb;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9)),
+    url("safeflow-bg.jpg") center/cover no-repeat;
+}
+
+/* subtle abstract grid like many fintech heroes [web:44] */
+.hero::before,
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background-image:
+    linear-gradient(120deg, rgba(148, 163, 184, 0.14) 1px, transparent 1px),
+    linear-gradient(210deg, rgba(37, 99, 235, 0.18) 1px, transparent 1px);
+  background-size: 90px 90px;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.hero::after {
+  filter: blur(22px);
+  opacity: 0.45;
+}
+
+.hero-overlay {
+  position: relative;
+  inset: 0;
+  padding: 32px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hero-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 10px;
+  background: conic-gradient(from 180deg, #22c55e, #0ea5e9, #22c55e);
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+
+.hero-content {
+  max-width: 420px;
+  margin-top: 64px;
+}
+
+.hero-content h1 {
+  font-size: 32px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.hero-content p {
+  font-size: 15px;
+  color: #e5e7eb;
+}
+
+.social-proof {
+  display: flex;
+  gap: 28px;
+  margin-top: 32px;
+  align-items: center;
+}
+
+.rating .stars {
+  font-size: 16px;
+  color: #facc15;
+}
+
+.rating .label,
+.uptime .label {
+  font-size: 13px;
+  color: #cbd5f5;
+}
+
+.uptime .value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.hero-footer {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ============ RIGHT SIDE ============ */
+
+.form-pane {
+  flex: 1;
+  background: #f9fafb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px;
+}
+
+.form-wrapper h2 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+label {
+  font-size: 13px;
+  color: #374151;
+}
+
+input[type="tel"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.35);
+}
+
+.phone-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.country-pill {
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: #e5f3ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 14px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.checkbox input {
+  margin-top: 3px;
+}
+
+.primary-btn {
+  margin-top: 8px;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, #0ea5e9, #22c55e);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(15, 118, 110, 0.3);
+}
+
+.divider {
+  text-align: center;
+  font-size: 12px;
+  color: #9ca3af;
+  margin: 10px 0;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 34%;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.social-row {
+  display: flex;
+  gap: 12px;
+}
+
+.social-btn {
+  flex: 1;
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+}
+
+.signin-text {
+  font-size: 13px;
+  margin-top: 8px;
+  color: #4b5563;
+  text-align: center;
+}
+
+.signin-text a {
+  color: #0ea5e9;
+  text-decoration: none;
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 900px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .hero {
+    min-height: 260px;
+  }
+
+  .hero-content {
+    margin-top: 36px;
+  }
+}

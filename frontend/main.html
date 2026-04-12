@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SafeFlow Login</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#13c8ec",
+              "primary-dark": "#0ea5c5",
+              "background-light": "#f6f8f8",
+              "background-dark": "#101f22",
+              "surface-light": "#ffffff",
+              "surface-dark": "#182d32",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              "2xl": "1rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .material-symbols-outlined.fill {
+        font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-[#0d191b] dark:text-gray-100 antialiased overflow-hidden"
+  >
+    <div class="flex min-h-screen w-full">
+      <div
+        class="hidden lg:flex lg:w-1/2 relative bg-surface-dark overflow-hidden flex-col justify-between p-16"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center z-0"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAgtYL0uzSXbl9P68y0IyKcl6VA6DEthdVcg4eb9TDB4M2-Zw8RWNNk49aYPJLr4bMK3j1wOhBh9nuzoaT2utTXhyUW6mkJe_gftTvAR-s0jBno_BEA5av48Aoyz87ZOzI2p-USaJURN_zkEc5_L-Z7TVZM5v0BjsE-gijDgAGkaz1vY4m2TJ3tsQxC2PUAqIQtMnpg1qmbvQdlmwfqYb6kAvwpmh_iTteBQse-aFYWzGq5HmbJO_zvFvP5ezX0eySEQGFcOOPUWm8');
+          "
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-b from-[#101f22]/90 to-[#0ea5c5]/80 z-0 mix-blend-multiply"
+        ></div>
+        <div class="absolute inset-0 bg-black/20 z-0"></div>
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-8">
+            <div
+              class="size-10 text-white bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg flex items-center justify-center"
+            >
+              <span class="material-symbols-outlined text-white"
+                >shield_lock</span
+              >
+            </div>
+            <h1 class="text-2xl font-bold text-white tracking-tight">
+              SafeFlow
+            </h1>
+          </div>
+          <div class="mt-20 max-w-lg">
+            <h2 class="text-4xl font-extrabold text-white leading-tight mb-6">
+              Banking security meets financial wisdom.
+            </h2>
+            <p class="text-lg text-blue-50/90 leading-relaxed font-medium">
+              Experience the future of Nigerian finance. Real-time fraud
+              protection, tailored credit building, and smart insights all in
+              one secure place.
+            </p>
+          </div>
+        </div>
+        <div class="relative z-10">
+          <div
+            class="flex items-center gap-4 p-4 bg-white/10 backdrop-blur-md rounded-xl border border-white/10 w-fit"
+          >
+            <div class="flex -space-x-3">
+              <div
+                class="size-10 rounded-full border-2 border-primary-dark bg-cover bg-center"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEnLRnq7EYuDBHThYkbWg9-MhHf68tZXEN4iyPrl8trvwu7yFLwAa2yLQNfRs5jdYETihHQYvdRRqBY3hNTzFLtr1-TH8fae64AoZeNHwjP5bU-5p4sA5qf3WfebNwHCv-G8LjDETFwTVh2VCrLSRrCJ_uD0S3qKBZl9fwvg22dsYmjdFehPMCFJVolQjFYqrY5E9mICz3XseEjl0Fn3_EZhN8EAytZVzQOQcYcixZioo6OakOrJGLrnmlEIUppFMhu6k_WhpPdq0');
+                "
+              ></div>
+              <div
+                class="size-10 rounded-full border-2 border-primary-dark bg-cover bg-center"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBOUsyL6kpNEsssr4pD-Y5tdr2tG85TTuj0eo86InWeWfzuGNRCFg55FPDGphPexhn-_Od_zqRAlT1rp1yUUG9TP6ud0TAnZfCzNeEk7VNUFveu464GmvWnp_oBfn6Q9EWghq7fpCLijUsG3USPRpge59_hNN3jUz1dUIFsaeZL9CTpSh6oCNfqVFBAH89QyvZPPZhaM5BM_heWt68cT1GlRJxOuVqiQBNSD_rWDvD9TXr8PYB8frm-2cuZpWTll13G9MjIGfmii-Q');
+                "
+              ></div>
+              <div
+                class="size-10 rounded-full border-2 border-primary-dark bg-cover bg-center"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDplCajRmSriHI6SHzQlVmA5qmE6DEVb6HLRc8gdolrzRFLBzAZ8kLe9NAinPva4rL_lnDvSCBjDVpnKeLJlMgbn1bLMDQqikXSmaoD893cAhRLBCuI_-j8_LmkHQwlvyt-eDX2CvD4CyKPmwB6LLecUjSxJmdbC1dQgt8tWVLr7foKpz70HreyvBZeqKXW8zr3HKLEWEK-P6i92MikR65-4YJ2MRX_Z5ZUif9L8V7UpTddax-cIDGk-WlzYN2RJemfmdRvWmBDIyk');
+                "
+              ></div>
+            </div>
+            <div class="text-white">
+              <p class="text-xs font-medium text-blue-100">
+                Join our community
+              </p>
+              <p class="text-sm font-bold">500k+ Active Users</p>
+            </div>
+          </div>
+          <p class="mt-8 text-xs text-white/40">
+            © 2024 SafeFlow Financial Services. CBN Licensed.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 sm:p-12 bg-surface-light dark:bg-background-dark relative"
+      >
+        <div class="lg:hidden absolute top-6 left-6 flex items-center gap-2">
+          <div
+            class="size-8 text-primary bg-primary/10 rounded-lg flex items-center justify-center"
+          >
+            <span class="material-symbols-outlined text-primary"
+              >shield_lock</span
+            >
+          </div>
+          <span class="text-lg font-bold text-slate-900 dark:text-white"
+            >SafeFlow</span
+          >
+        </div>
+        <div class="w-full max-w-md space-y-8">
+          <div class="space-y-2">
+            <h2
+              class="text-3xl font-black text-slate-900 dark:text-white tracking-tight"
+            >
+              Welcome Back
+            </h2>
+            <p class="text-slate-500 dark:text-slate-400">
+              Securely login to your financial dashboard.
+            </p>
+          </div>
+          <form id="loginForm" class="space-y-6" >
+            <div class="space-y-1">
+              <label
+                class="block text-sm font-semibold text-slate-700 dark:text-slate-200"
+                for="phone_number"
+                >Phone Number</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <span class="material-symbols-outlined text-slate-400"
+                    >person</span
+                  >
+                </div>
+                <input
+                  class="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white bg-white dark:bg-surface-dark placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm"
+                  id="phone_number"
+                  name="phone_number"
+                  placeholder="Enter your email or phone"
+                  required=""
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <label
+                  class="block text-sm font-semibold text-slate-700 dark:text-slate-200"
+                  for="password"
+                  >Password</label
+                >
+              </div>
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <span class="material-symbols-outlined text-slate-400"
+                    >lock</span
+                  >
+                </div>
+                <input
+                  class="block w-full pl-10 pr-10 py-3 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white bg-white dark:bg-surface-dark placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm"
+                  id="password"
+                  name="password"
+                  placeholder="••••••••"
+                  required=""
+                  type="password"
+                />
+                <button
+                  class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
+                  type="button"
+                >
+                  <span class="material-symbols-outlined text-[20px]"
+                    >visibility_off</span
+                  >
+                </button>
+              </div>
+              <div class="flex justify-end pt-1">
+                <a
+                  class="text-sm font-medium text-primary hover:text-primary-dark transition-colors"
+                  href="#"
+                  >Forgot Password?</a
+                >
+              </div>
+            </div>
+            <button
+              class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform active:scale-[0.98]"
+              type="submit"
+            >
+              Log In
+            </button>
+          </form>
+          <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+              <div
+                class="w-full border-t border-slate-200 dark:border-slate-700"
+              ></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span
+                class="px-2 bg-surface-light dark:bg-background-dark text-slate-500"
+                >Or login with</span
+              >
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <button
+              class="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              type="button"
+            >
+              <img
+                alt="Google"
+                class="size-5"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBCoq7UxE5hkgDtgsVmhFTLYQaqHhW_VlCqT0GMzl-yqoDw9BW5R1pBynEPyFdKXBEwKaoDsix6LQnB9hvMFunwTHz9Khmf-y2Vbh6B8M1-IFg3p46vPFqYNa00ElR_KlEvZbn22xrsN5IvhtpmDQhKoZV3KT1NL4qL0tPk75aFFojsEzVuuHk5t7F3TQvU77MFJJ_pieDv7t-L5UDjLkw7OryZmfrOhQVoLXffOpu7a1WvFbR6qsEdU9DVqG3mUXOSJrfW4M82eE"
+              />
+              <span
+                class="text-sm font-medium text-slate-700 dark:text-slate-200"
+                >Google</span
+              >
+            </button>
+            <button
+              class="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-surface-dark hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+              type="button"
+            >
+              <span
+                class="material-symbols-outlined text-slate-900 dark:text-white text-[22px]"
+                >fingerprint</span
+              >
+              <span
+                class="text-sm font-medium text-slate-700 dark:text-slate-200"
+                >Biometrics</span
+              >
+            </button>
+          </div>
+          <p
+            class="text-center text-sm text-slate-600 dark:text-slate-400 mt-6"
+          >
+            New to SafeFlow?
+            <a
+              class="font-bold text-primary hover:text-primary-dark hover:underline"
+              href="index.html"
+              >Create an account</a
+            >
+          </p>
+        </div>
+        <div class="absolute bottom-6 w-full text-center px-6 hidden sm:block">
+          <div
+            class="flex justify-center gap-6 text-xs text-slate-400 font-medium"
+          >
+            <a
+              class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+              href="#"
+              >Privacy Policy</a
+            >
+            <span
+              class="w-px h-3 bg-slate-300 dark:bg-slate-700 self-center"
+            ></span>
+            <a
+              class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+              href="#"
+              >Terms of Service</a
+            >
+            <span
+              class="w-px h-3 bg-slate-300 dark:bg-slate-700 self-center"
+            ></span>
+            <a
+              class="hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+              href="#"
+              >Help Center</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>

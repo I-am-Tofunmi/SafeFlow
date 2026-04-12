@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.db import engine, Base
 
 # Create Tables
@@ -17,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/api")
 def root():
     return {"message": "SafeFlow API is running 🚀"}
 
@@ -25,25 +26,23 @@ def root():
 def health():
     return {"status": "ok"}
 
-# --- SAFE ROUTER LOADING ---
-# We import inside the function to prevent "Circular Import" hangs
-def include_routers():
-    # 1. ADD 'biometrics' to the import list here:
-    from app.api import auth, ai, transactions, trustscore, lessons, admin, contacts, webhooks, web3_attest, analytics, biometrics 
-    
-    app.include_router(auth.router)
-    app.include_router(transactions.router)
-    app.include_router(trustscore.router)
-    app.include_router(lessons.router)
-    app.include_router(ai.router)
-    app.include_router(web3_attest.router)
-    app.include_router(admin.router)
-    app.include_router(contacts.router)
-    app.include_router(webhooks.router)
-    app.include_router(analytics.router)
-    
-    # 2. INCLUDE the new biometrics router here:
-    app.include_router(biometrics.router)
+# --- ROUTER LOADING ---
+from app.api import auth, ai, transactions, trustscore, lessons, admin, contacts, webhooks, web3_attest, analytics, biometrics 
 
-# Load them now
-include_routers()
+app.include_router(auth.router)
+app.include_router(transactions.router)
+app.include_router(trustscore.router)
+app.include_router(lessons.router)
+app.include_router(ai.router)
+app.include_router(web3_attest.router)
+app.include_router(admin.router)
+app.include_router(contacts.router)
+app.include_router(webhooks.router)
+app.include_router(analytics.router)
+app.include_router(biometrics.router)
+
+# --- FRONTEND MOUNTING ---
+# Must be at the bottom so it doesn't shadow API routes like /auth
+import os
+frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
+app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")

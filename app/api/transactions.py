@@ -137,3 +137,11 @@ def transaction_history(user_id: int, db: Session = Depends(get_conn)):
     """
     txs = db.query(Transaction).filter(Transaction.user_id == user_id).order_by(Transaction.timestamp.desc()).all()
     return txs
+
+@router.get("/balance")
+def get_balance(user_id: int, db: Session = Depends(get_conn)):
+    """
+    Get Current Balance
+    """
+    balance = get_wallet_balance(user_id, db)
+    return {"balance": balance}
