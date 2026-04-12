@@ -29,20 +29,14 @@ def health():
 # --- ROUTER LOADING ---
 from app.api import auth, ai, transactions, trustscore, lessons, admin, contacts, webhooks, web3_attest, analytics, biometrics 
 
-app.include_router(auth.router)
-app.include_router(transactions.router)
-app.include_router(trustscore.router)
-app.include_router(lessons.router)
-app.include_router(ai.router)
-app.include_router(web3_attest.router)
-app.include_router(admin.router)
-app.include_router(contacts.router)
-app.include_router(webhooks.router)
-app.include_router(analytics.router)
-app.include_router(biometrics.router)
-
-# --- FRONTEND MOUNTING ---
-# Must be at the bottom so it doesn't shadow API routes like /auth
-import os
-frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
+app.include_router(auth.router, prefix="/api")
+app.include_router(transactions.router, prefix="/api")
+app.include_router(trustscore.router, prefix="/api")
+app.include_router(lessons.router, prefix="/api")
+app.include_router(ai.router, prefix="/api")
+app.include_router(web3_attest.router, prefix="/api")
+app.include_router(admin.router, prefix="/api")
+app.include_router(contacts.router, prefix="/api")
+app.include_router(webhooks.router, prefix="/api")
+app.include_router(analytics.router, prefix="/api")
+app.include_router(biometrics.router, prefix="/api")

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_BASE_URL = window.location.origin;
+  const API_BASE_URL = window.location.origin + "/api";
 
   // Configuration Check
   const token = localStorage.getItem("safeflow_token");
