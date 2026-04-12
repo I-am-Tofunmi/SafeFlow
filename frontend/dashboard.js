@@ -171,4 +171,83 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error(e);
     }
   }
+
+  // 5. Sidebar & Mobile Nav Toggle Logic
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const sidebar = document.getElementById("sidebar");
+  const sidebarOverlay = document.getElementById("sidebar-overlay");
+  const mobileNav = document.getElementById("mobile-nav");
+
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener("click", () => {
+      // For dashboard pages with sidebar
+      if (sidebar && sidebarOverlay) {
+        sidebar.classList.toggle("-translate-x-full");
+        sidebarOverlay.classList.toggle("hidden");
+      }
+      // For trustscore page with dropdown
+      if (mobileNav) {
+        mobileNav.classList.toggle("hidden");
+        mobileNav.classList.toggle("flex");
+      }
+    });
+
+    if (sidebarOverlay) {
+      sidebarOverlay.addEventListener("click", () => {
+        sidebar.classList.add("-translate-x-full");
+        sidebarOverlay.classList.add("hidden");
+      });
+    }
+  }
+
+  // 6. Handle "Not Functioning" Buttons
+  function showToast(message) {
+    let toast = document.getElementById("safe-flow-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "safe-flow-toast";
+      toast.className = "fixed bottom-5 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-3 rounded-full text-sm font-semibold shadow-2xl z-50 transition-opacity duration-300 flex items-center gap-2 border border-green-500/30";
+      toast.style.opacity = "0";
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `<span class="material-symbols-outlined text-[18px] text-green-400">info</span> ${message}`;
+    
+    // Trigger layout before animating opacity
+    toast.style.display = "flex";
+    setTimeout(() => { toast.style.opacity = "1"; }, 10);
+    
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      setTimeout(() => { toast.style.display = "none"; }, 300);
+    }, 3000);
+  }
+
+  const buttons = document.querySelectorAll("button");
+  const links = document.querySelectorAll("a");
+
+  const interceptList = [
+    "Quick Transfer", "View Library", "See Breakdown", "View All", 
+    "View Full Roadmap", "View Report", "View KYC Details", "Export CSV", "Update"
+  ];
+
+  buttons.forEach(btn => {
+    const text = btn.textContent.trim();
+    if (interceptList.some(i => text.includes(i)) || btn.getAttribute("href") === "#") {
+      btn.addEventListener("click", (e) => {
+        if (!btn.closest("a") || btn.closest("a").getAttribute("href") === "#") {
+          e.preventDefault();
+          showToast("Feature coming soon!");
+        }
+      });
+    }
+  });
+
+  links.forEach(link => {
+    if (link.getAttribute("href") === "#") {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        showToast("Feature coming soon!");
+      });
+    }
+  });
 });

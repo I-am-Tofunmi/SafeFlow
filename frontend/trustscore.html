@@ -79,6 +79,9 @@
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="flex h-16 items-center justify-between">
           <div class="flex items-center gap-3">
+            <button id="mobile-menu-btn" class="md:hidden p-2 -ml-2 text-gray-500 hover:bg-zinc-100 rounded-lg">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
             <div
               class="size-8 bg-green-600 rounded-lg flex items-center justify-center text-white"
             >
@@ -136,8 +139,17 @@
               <span class="material-symbols-outlined text-[20px]">logout</span>
             </button>
           </div>
+          </div>
         </div>
       </div>
+      <!-- Mobile Navigation -->
+      <nav id="mobile-nav" class="hidden absolute top-16 left-0 w-full bg-surface border-b border-border-light pb-4 flex-col gap-4 px-4 shadow-lg md:hidden">
+        <a class="text-text-muted hover:text-black text-sm font-medium pt-4" href="homepage.html">Dashboard</a>
+        <a class="text-black text-sm font-bold" href="trustscore.html">TrustScore</a>
+        <a class="text-text-muted hover:text-black text-sm font-medium" href="transaction.html">Transactions</a>
+        <a class="text-text-muted hover:text-black text-sm font-medium" href="#">Savings</a>
+        <a class="text-text-muted hover:text-black text-sm font-medium" href="securitycenter.html">Security</a>
+      </nav>
     </header>
     <main class="flex-1 py-10">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
