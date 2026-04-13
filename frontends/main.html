@@ -48,6 +48,7 @@
         font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
       }
     </style>
+    <script src="theme.js"></script>
   </head>
   <body
     class="bg-background-light dark:bg-background-dark font-display text-[#0d191b] dark:text-gray-100 antialiased overflow-hidden"
@@ -202,10 +203,11 @@
                   type="password"
                 />
                 <button
+                  id="togglePassword"
                   class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
                   type="button"
                 >
-                  <span class="material-symbols-outlined text-[20px]"
+                  <span id="passwordIcon" class="material-symbols-outlined text-[20px]"
                     >visibility_off</span
                   >
                 </button>
@@ -306,6 +308,19 @@
           </div>
         </div>
       </div>
-    </div>
+    <script>
+        // Password Visibility Toggle
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        if (togglePassword && passwordInput && passwordIcon) {
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                passwordIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+            });
+        }
+    </script>
   </body>
 </html>

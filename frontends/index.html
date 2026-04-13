@@ -142,11 +142,25 @@
               Start your journey to financial freedom.
             </p>
           </div>
-          <form action="https://safeflow-backend-p8g2.onrender.com/api/auth/signup" class="space-y-6" method="post">
+          <form id="signupForm" class="space-y-4">
+            <div id="formError" class="hidden p-3 rounded-lg bg-red-50 text-red-600 text-xs font-semibold border border-red-100"></div>
+            
+            <div>
+              <label class="block text-sm font-semibold text-text-main mb-2" for="full_name">Full Name</label>
+              <input
+                class="block w-full rounded-lg border-0 py-3 px-4 text-text-main shadow-sm ring-1 ring-inset ring-border-light placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-slate-50/50"
+                id="full_name"
+                name="full_name"
+                placeholder="Enter your full name"
+                type="text"
+                required
+              />
+            </div>
+
             <div>
               <label
                 class="block text-sm font-semibold text-text-main mb-2"
-                for="phone"
+                for="phone_number"
                 >Phone Number</label
               >
               <div class="relative rounded-lg shadow-sm">
@@ -159,8 +173,8 @@
                 </div>
                 <input
                   class="block w-full rounded-lg border-0 py-3 pl-24 text-text-main shadow-sm ring-1 ring-inset ring-border-light placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-slate-50/50"
-                  id="phone"
-                  name="phone"
+                  id="phone_number"
+                  name="phone_number"
                   placeholder="801 234 5678"
                   type="tel"
                   required
@@ -198,9 +212,10 @@
                   required
                 />
                 <div
+                  id="togglePassword"
                   class="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer text-slate-400 hover:text-slate-600"
                 >
-                  <span class="material-symbols-outlined text-[20px]"
+                  <span id="passwordIcon" class="material-symbols-outlined text-[20px]"
                     >visibility_off</span
                   >
                 </div>
@@ -345,6 +360,19 @@
 
         // Sync on load
         updateTheme();
+
+        // Password Visibility Toggle
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordIcon = document.getElementById('passwordIcon');
+
+        if (togglePassword && passwordInput && passwordIcon) {
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                passwordIcon.textContent = type === 'password' ? 'visibility_off' : 'visibility';
+            });
+        }
     </script>
   </body>
 </html>
