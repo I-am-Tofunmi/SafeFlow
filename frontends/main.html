@@ -152,12 +152,12 @@
               Securely login to your financial dashboard.
             </p>
           </div>
-          <form id="loginForm" class="space-y-6" >
+          <form action="homepage.html" class="space-y-6" >
             <div class="space-y-1">
               <label
                 class="block text-sm font-semibold text-slate-700 dark:text-slate-200"
-                for="phone_number"
-                >Phone Number</label
+                for="identity"
+                >Email or Phone Number</label
               >
               <div class="relative">
                 <div
@@ -169,8 +169,8 @@
                 </div>
                 <input
                   class="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-900 dark:text-white bg-white dark:bg-surface-dark placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all sm:text-sm"
-                  id="phone_number"
-                  name="phone_number"
+                  id="identity"
+                  name="identity"
                   placeholder="Enter your email or phone"
                   required=""
                   type="text"
@@ -220,7 +220,7 @@
             </div>
             <button
               class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform active:scale-[0.98]"
-              type="submit"
+              type="submit" href="homepage.html"
             >
               Log In
             </button>
@@ -307,6 +307,5 @@
         </div>
       </div>
     </div>
-    <script src="index.js"></script>
   </body>
 </html>

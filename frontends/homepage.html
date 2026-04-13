@@ -13,24 +13,24 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script>
-      // Auth Check
-      if (!localStorage.getItem("safeflow_token")) {
-        window.location.href = "main.html";
-      }
-    </script>
     <script id="tailwind-config">
       tailwind.config = {
+        darkMode: 'class',
         theme: {
           extend: {
             colors: {
-              background: "#F3F4F6", // Lighter, standard dashboard gray
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
               surface: "#ffffff",
+              "dark-surface": "#1e293b",
               primary: "#000000",
+              "dark-primary": "#ffffff",
               secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
               border: "#e5e7eb",
+              "dark-border": "#334155",
               brand: {
-                DEFAULT: "#059669", // Emerald green, common in Nigerian fintech/trust
+                DEFAULT: "#059669",
                 dark: "#064e3b",
                 light: "#d1fae5",
               },
@@ -44,6 +44,7 @@
             },
             boxShadow: {
               soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
             },
           },
         },
@@ -52,6 +53,7 @@
     <style>
       body {
         font-family: "Inter", sans-serif;
+        transition: background-color 0.3s ease;
       }
       .hide-scrollbar::-webkit-scrollbar {
         display: none;
@@ -60,14 +62,37 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
       }
+      .theme-transition * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
     </style>
+    <script src="theme.js"></script>
   </head>
-  <body class="bg-background text-gray-900 overflow-hidden">
+  <body class="bg-background text-gray-900 overflow-hidden theme-transition">
     <div class="flex h-screen w-full">
-      <aside id="sidebar"
-        class="w-64 flex-shrink-0 flex flex-col bg-surface border-r border-border h-full z-40 shadow-sm fixed md:static inset-y-0 left-0 transition-transform -translate-x-full md:translate-x-0"
+      <!-- Theme Toggle Button (Desktop/Tablet) -->
+      <div class="fixed top-6 right-8 z-50 hidden lg:block">
+        <button
+          id="theme-toggle"
+          class="p-3 rounded-full bg-surface dark:bg-dark-surface shadow-lg hover:shadow-xl transition-all duration-300 border border-border dark:border-dark-border flex items-center justify-center"
+          aria-label="Toggle theme"
+        >
+          <span id="theme-icon" class="material-symbols-outlined text-gray-700 dark:text-dark-secondary">
+            dark_mode
+          </span>
+        </button>
+      </div>
+
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static"
       >
         <div class="flex flex-col h-full p-4">
+          <!-- Mobile Close Button -->
+          <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-brand">
+            <span class="material-symbols-outlined">close</span>
+          </button>
           <div class="flex items-center gap-3 mb-10 px-2 mt-2">
             <div
               class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20"
@@ -76,11 +101,11 @@
             </div>
             <div class="flex flex-col">
               <h1
-                class="text-gray-900 text-xl font-bold leading-none tracking-tight"
+                class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight"
               >
                 SafeFlow
               </h1>
-              <p class="text-gray-500 text-xs font-medium mt-0.5">
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">
                 Financial Ecosystem
               </p>
             </div>
@@ -96,7 +121,7 @@
               <p class="text-sm font-semibold">Dashboard</p>
             </a>
             <a
-              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand transition-colors group"
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
               href="transaction.html"
             >
               <span
@@ -106,18 +131,8 @@
               <p class="text-sm font-medium">Transactions</p>
             </a>
             <a
-              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand transition-colors group"
-              href="#"
-            >
-              <span
-                class="material-symbols-outlined group-hover:text-brand transition-colors"
-                >trending_up</span
-              >
-              <p class="text-sm font-medium">Credit Building</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand transition-colors group"
-              href="trustscore.html"
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="trustcore.html"
             >
               <span
                 class="material-symbols-outlined group-hover:text-brand transition-colors"
@@ -126,7 +141,7 @@
               <p class="text-sm font-medium">Trust Score</p>
             </a>
             <a
-              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-brand transition-colors group"
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
               href="securitycenter.html"
             >
               <span
@@ -135,10 +150,30 @@
               >
               <p class="text-sm font-medium">Security Center</p>
             </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transfer.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >shield_lock</span
+              >
+              <p class="text-sm font-medium">Quick Transfer</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="education.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >shield_lock</span
+              >
+              <p class="text-sm font-medium">Education</p>
+            </a>
           </nav>
-          <div class="mt-auto pt-4 border-t border-border">
+          <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
             <div
-              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors"
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
             >
               <div
                 class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
@@ -147,8 +182,8 @@
                 "
               ></div>
               <div class="flex flex-col">
-                <p class="text-gray-900 text-sm font-bold ui-user-short-name">Loading...</p>
-                <p class="text-gray-500 text-xs">Premium Member</p>
+                <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs">Premium Member</p>
               </div>
               <span
                 class="material-symbols-outlined text-gray-400 ml-auto text-sm"
@@ -158,59 +193,53 @@
           </div>
         </div>
       </aside>
-      <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
       <main
-        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background"
+        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background"
       >
         <header
-          class="bg-surface/90 backdrop-blur-md border-b border-border px-4 md:px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+          class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
         >
-          <div class="flex items-center gap-3">
-            <button id="mobile-menu-btn" class="md:hidden p-2 -ml-2 text-gray-500 hover:bg-gray-100 rounded-lg">
+          <div class="flex items-center gap-4">
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="lg:hidden p-2 text-gray-600 dark:text-dark-secondary">
               <span class="material-symbols-outlined">menu</span>
             </button>
             <div>
-              <h2 class="text-gray-900 text-lg md:text-2xl font-bold tracking-tight">
-              Welcome back, <span class="ui-user-short-name">...</span>
-            </h2>
-            <div class="flex items-center gap-2 mt-1">
-              <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
-              <p class="text-gray-500 text-sm">
-                System Secure. 0 Active Threats.
-              </p>
+              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">
+                Welcome back, Chinedu
+              </h2>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">
+                  System Secure. 0 Active Threats.
+                </p>
+              </div>
             </div>
           </div>
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2 md:gap-4">
+            <!-- Theme Toggle Mobile -->
             <button
-              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand transition-colors"
+              class="theme-toggle-btn p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors lg:hidden"
             >
-              <span class="material-symbols-outlined">visibility_off</span>
+              <span class="material-symbols-outlined">dark_mode</span>
             </button>
             <button
-              class="p-2 rounded-full text-gray-500 hover:bg-gray-100 hover:text-brand transition-colors relative"
+              class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-brand transition-colors relative"
             >
               <span class="material-symbols-outlined">notifications</span>
               <span
-                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"
+                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-dark-surface"
               ></span>
-            </button>
-            <button
-              class="bg-brand text-white text-sm font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 transition-all hover:bg-brand-dark shadow-lg shadow-brand/20"
-            >
-              <span class="material-symbols-outlined text-[20px]"
-                >swap_horiz</span
-              >
-              Quick Transfer
             </button>
           </div>
         </header>
-        <div class="flex-1 overflow-y-auto p-4 md:p-8 scroll-smooth">
+        <div class="flex-1 overflow-y-auto p-8 scroll-smooth">
           <div class="max-w-[1400px] w-full mx-auto flex flex-col gap-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
               <div class="lg:col-span-8 flex flex-col gap-6">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div
-                    class="bg-surface p-5 rounded-xl border border-border shadow-soft hover:shadow-md transition-all group relative overflow-hidden"
+                    class="bg-surface dark:bg-dark-surface p-5 rounded-xl border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft hover:shadow-md transition-all group relative overflow-hidden"
                   >
                     <div
                       class="absolute top-0 left-0 w-full h-1 bg-brand"
@@ -231,18 +260,18 @@
                     </div>
                     <div>
                       <p
-                        class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1"
+                        class="text-gray-500 dark:text-dark-secondary text-xs font-semibold uppercase tracking-wider mb-1"
                       >
                         Main Account
                       </p>
                       <p
-                        class="text-gray-900 text-2xl font-black tracking-tight ui-balance"
+                        class="text-gray-900 dark:text-dark-primary text-2xl font-black tracking-tight"
                       >
-                        ₦ 0.00
+                        ₦ 1,450,200
                       </p>
                     </div>
                     <div
-                      class="mt-4 flex items-center gap-1 text-brand text-xs font-bold bg-brand-light w-fit px-2 py-1 rounded-full"
+                      class="mt-4 flex items-center gap-1 text-brand text-xs font-bold bg-brand-light dark:bg-brand-dark w-fit px-2 py-1 rounded-full"
                     >
                       <span class="material-symbols-outlined text-[14px]"
                         >trending_up</span
@@ -251,13 +280,13 @@
                     </div>
                   </div>
                   <div
-                    class="bg-surface p-5 rounded-xl border border-border shadow-soft hover:shadow-md transition-all group relative overflow-hidden"
+                    class="bg-surface dark:bg-dark-surface p-5 rounded-xl border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft hover:shadow-md transition-all group relative overflow-hidden"
                   >
                     <div
                       class="absolute top-0 left-0 w-full h-1 bg-accent-blue"
                     ></div>
                     <div class="flex justify-between items-start mb-4">
-                      <div class="p-2 bg-blue-50 text-accent-blue rounded-lg">
+                      <div class="p-2 bg-blue-50 dark:bg-blue-900/30 text-accent-blue rounded-lg">
                         <span class="material-symbols-outlined text-[20px]"
                           >savings</span
                         >
@@ -272,18 +301,18 @@
                     </div>
                     <div>
                       <p
-                        class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1"
+                        class="text-gray-500 dark:text-dark-secondary text-xs font-semibold uppercase tracking-wider mb-1"
                       >
                         SafeSavings
                       </p>
                       <p
-                        class="text-gray-900 text-2xl font-black tracking-tight"
+                        class="text-gray-900 dark:text-dark-primary text-2xl font-black tracking-tight"
                       >
                         ₦ 500,000
                       </p>
                     </div>
                     <div
-                      class="mt-4 flex items-center gap-1 text-accent-blue text-xs font-bold bg-blue-50 w-fit px-2 py-1 rounded-full"
+                      class="mt-4 flex items-center gap-1 text-accent-blue text-xs font-bold bg-blue-50 dark:bg-blue-900/30 w-fit px-2 py-1 rounded-full"
                     >
                       <span class="material-symbols-outlined text-[14px]"
                         >percent</span
@@ -292,14 +321,14 @@
                     </div>
                   </div>
                   <div
-                    class="bg-surface p-5 rounded-xl border border-border shadow-soft hover:shadow-md transition-all group relative overflow-hidden"
+                    class="bg-surface dark:bg-dark-surface p-5 rounded-xl border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft hover:shadow-md transition-all group relative overflow-hidden"
                   >
                     <div
                       class="absolute top-0 left-0 w-full h-1 bg-accent-orange"
                     ></div>
                     <div class="flex justify-between items-start mb-4">
                       <div
-                        class="p-2 bg-orange-50 text-accent-orange rounded-lg"
+                        class="p-2 bg-orange-50 dark:bg-orange-900/30 text-accent-orange rounded-lg"
                       >
                         <span class="material-symbols-outlined text-[20px]"
                           >credit_score</span
@@ -315,18 +344,18 @@
                     </div>
                     <div>
                       <p
-                        class="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-1"
+                        class="text-gray-500 dark:text-dark-secondary text-xs font-semibold uppercase tracking-wider mb-1"
                       >
                         Loan Status
                       </p>
                       <p
-                        class="text-gray-900 text-2xl font-black tracking-tight"
+                        class="text-gray-900 dark:text-dark-primary text-2xl font-black tracking-tight"
                       >
                         Active
                       </p>
                     </div>
                     <div
-                      class="mt-4 flex items-center gap-1 text-gray-500 text-xs font-medium bg-gray-100 w-fit px-2 py-1 rounded-full border border-gray-200"
+                      class="mt-4 flex items-center gap-1 text-gray-500 dark:text-dark-secondary text-xs font-medium bg-gray-100 dark:bg-slate-700 w-fit px-2 py-1 rounded-full border border-gray-200 dark:border-dark-border"
                     >
                       <span class="material-symbols-outlined text-[14px]"
                         >calendar_today</span
@@ -358,7 +387,7 @@
                         <h3
                           class="text-white text-3xl font-black tracking-tight"
                         >
-                          TrustScore: <span class="ui-trust-score">---</span>
+                          TrustScore: 720
                         </h3>
                       </div>
                       <div
@@ -460,51 +489,51 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface rounded-xl p-6 border border-border shadow-soft"
+                  class="bg-surface dark:bg-dark-surface rounded-xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft"
                 >
                   <div class="flex items-center justify-between mb-6">
                     <div>
-                      <h3 class="text-gray-900 text-lg font-bold">
+                      <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold">
                         Financial Literacy Modules
                       </h3>
-                      <p class="text-gray-500 text-sm mt-1">
+                      <p class="text-gray-500 dark:text-dark-secondary text-sm mt-1">
                         Personalized bite-sized lessons in your local language.
                       </p>
                     </div>
                     <button
-                      class="text-brand-dark hover:bg-brand-50 text-xs font-bold uppercase tracking-wider transition-colors border border-brand-light px-4 py-2 rounded-lg"
+                      class="text-brand-dark hover:bg-brand-50 dark:hover:bg-brand-dark text-xs font-bold uppercase tracking-wider transition-colors border border-brand-light px-4 py-2 rounded-lg"
                     >
                       View Library
                     </button>
                   </div>
                   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div
-                      class="bg-white p-4 rounded-xl border border-border hover:border-brand-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
+                      class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-border dark:border-dark-border hover:border-brand-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
                     >
                       <div class="flex justify-between items-start mb-3">
                         <div
-                          class="bg-brand-50 text-brand p-2 rounded-lg border border-brand-100 shadow-sm"
+                          class="bg-brand-50 dark:bg-brand-dark text-brand p-2 rounded-lg border border-brand-100 shadow-sm"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >savings</span
                           >
                         </div>
                         <span
-                          class="bg-orange-100 text-orange-800 text-[10px] font-bold px-2 py-1 rounded border border-orange-200"
+                          class="bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 text-[10px] font-bold px-2 py-1 rounded border border-orange-200 dark:border-orange-800"
                           >YORUBA</span
                         >
                       </div>
                       <h4
-                        class="text-gray-900 font-bold text-sm mb-1 leading-tight group-hover:text-brand transition-colors"
+                        class="text-gray-900 dark:text-dark-primary font-bold text-sm mb-1 leading-tight group-hover:text-brand transition-colors"
                       >
                         Ifowopamọ Essentials
                       </h4>
-                      <p class="text-gray-500 text-xs mb-4 line-clamp-2">
+                      <p class="text-gray-500 dark:text-dark-secondary text-xs mb-4 line-clamp-2">
                         Master the art of daily savings (Ajo) and digital wealth
                         preservation.
                       </p>
                       <div
-                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100"
+                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 dark:border-dark-border"
                       >
                         <div class="flex items-center gap-1.5 text-gray-400">
                           <span class="material-symbols-outlined text-[14px]"
@@ -523,32 +552,32 @@
                       </div>
                     </div>
                     <div
-                      class="bg-white p-4 rounded-xl border border-border hover:border-brand-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
+                      class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-border dark:border-dark-border hover:border-blue-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
                     >
                       <div class="flex justify-between items-start mb-3">
                         <div
-                          class="bg-blue-50 text-blue-600 p-2 rounded-lg border border-blue-100 shadow-sm"
+                          class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 p-2 rounded-lg border border-blue-100 shadow-sm"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >shield</span
                           >
                         </div>
                         <span
-                          class="bg-yellow-100 text-yellow-800 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200"
+                          class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-[10px] font-bold px-2 py-1 rounded border border-yellow-200 dark:border-yellow-800"
                           >PIDGIN</span
                         >
                       </div>
                       <h4
-                        class="text-gray-900 font-bold text-sm mb-1 leading-tight group-hover:text-blue-600 transition-colors"
+                        class="text-gray-900 dark:text-dark-primary font-bold text-sm mb-1 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors"
                       >
                         No Fall Manga!
                       </h4>
-                      <p class="text-gray-500 text-xs mb-4 line-clamp-2">
+                      <p class="text-gray-500 dark:text-dark-secondary text-xs mb-4 line-clamp-2">
                         Shine your eyes! How to spot 419 scams and fake bank
                         alerts instantly.
                       </p>
                       <div
-                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100"
+                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 dark:border-dark-border"
                       >
                         <div class="flex items-center gap-1.5 text-gray-400">
                           <span class="material-symbols-outlined text-[14px]"
@@ -559,7 +588,7 @@
                           >
                         </div>
                         <span
-                          class="text-[10px] text-blue-600 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                          class="text-[10px] text-blue-600 dark:text-blue-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                         >
                           Watch
                           <span class="material-symbols-outlined text-[12px]"
@@ -569,32 +598,32 @@
                       </div>
                     </div>
                     <div
-                      class="bg-white p-4 rounded-xl border border-border hover:border-brand-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
+                      class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-border dark:border-dark-border hover:border-purple-300 transition-all cursor-pointer group flex flex-col h-full hover:shadow-md"
                     >
                       <div class="flex justify-between items-start mb-3">
                         <div
-                          class="bg-purple-50 text-purple-600 p-2 rounded-lg border border-purple-100 shadow-sm"
+                          class="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 p-2 rounded-lg border border-purple-100 shadow-sm"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >trending_up</span
                           >
                         </div>
                         <span
-                          class="bg-green-100 text-green-800 text-[10px] font-bold px-2 py-1 rounded border border-green-200"
+                          class="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-[10px] font-bold px-2 py-1 rounded border border-green-200 dark:border-green-800"
                           >HAUSA</span
                         >
                       </div>
                       <h4
-                        class="text-gray-900 font-bold text-sm mb-1 leading-tight group-hover:text-purple-600 transition-colors"
+                        class="text-gray-900 dark:text-dark-primary font-bold text-sm mb-1 leading-tight group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors"
                       >
                         Kasuwanci 101
                       </h4>
-                      <p class="text-gray-500 text-xs mb-4 line-clamp-2">
+                      <p class="text-gray-500 dark:text-dark-secondary text-xs mb-4 line-clamp-2">
                         Understanding credit scores and how to get loans for
                         your business.
                       </p>
                       <div
-                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100"
+                        class="mt-auto flex items-center justify-between pt-3 border-t border-gray-100 dark:border-dark-border"
                       >
                         <div class="flex items-center gap-1.5 text-gray-400">
                           <span class="material-symbols-outlined text-[14px]"
@@ -603,7 +632,7 @@
                           <span class="text-[10px] font-medium">4 min</span>
                         </div>
                         <span
-                          class="text-[10px] text-purple-600 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
+                          class="text-[10px] text-purple-600 dark:text-purple-400 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform"
                         >
                           Start
                           <span class="material-symbols-outlined text-[12px]"
@@ -615,25 +644,25 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface rounded-xl p-6 border border-border shadow-soft"
+                  class="bg-surface dark:bg-dark-surface rounded-xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft"
                 >
                   <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-gray-900 text-lg font-bold">
+                    <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold">
                       Recent Activity
                     </h3>
                     <button
-                      class="text-gray-500 hover:text-brand text-sm font-medium transition-colors"
+                      class="text-gray-500 dark:text-dark-secondary hover:text-brand text-sm font-medium transition-colors"
                     >
                       View All
                     </button>
                   </div>
-                  <div id="ui-recent-tx-list" class="space-y-1">
+                  <div class="space-y-1">
                     <div
-                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group border border-transparent hover:border-gray-100"
+                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer group border border-transparent hover:border-gray-100 dark:hover:border-dark-border"
                     >
                       <div class="flex items-center gap-4">
                         <div
-                          class="size-10 rounded-full bg-white border border-gray-100 flex items-center justify-center overflow-hidden p-1 shadow-sm"
+                          class="size-10 rounded-full bg-white dark:bg-slate-700 border border-gray-100 dark:border-dark-border flex items-center justify-center overflow-hidden p-1 shadow-sm"
                         >
                           <img
                             alt="Netflix Logo"
@@ -642,13 +671,13 @@
                           />
                         </div>
                         <div class="flex flex-col">
-                          <p class="text-gray-900 font-semibold text-sm">
+                          <p class="text-gray-900 dark:text-dark-primary font-semibold text-sm">
                             Netflix Subscription
                           </p>
                           <div class="flex items-center gap-2">
-                            <p class="text-gray-500 text-xs">Today, 9:41 AM</p>
+                            <p class="text-gray-500 dark:text-dark-secondary text-xs">Today, 9:41 AM</p>
                             <span
-                              class="flex items-center gap-0.5 text-[10px] text-brand-dark bg-brand-50 px-1.5 py-0.5 rounded"
+                              class="flex items-center gap-0.5 text-[10px] text-brand-dark dark:text-brand-light bg-brand-50 dark:bg-brand-dark px-1.5 py-0.5 rounded"
                             >
                               <span
                                 class="material-symbols-outlined text-[10px]"
@@ -659,55 +688,55 @@
                           </div>
                         </div>
                       </div>
-                      <p class="text-gray-900 font-bold text-sm">
+                      <p class="text-gray-900 dark:text-dark-primary font-bold text-sm">
                         - ₦ 4,500.00
                       </p>
                     </div>
                     <div
-                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group border border-transparent hover:border-gray-100"
+                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer group border border-transparent hover:border-gray-100 dark:hover:border-dark-border"
                     >
                       <div class="flex items-center gap-4">
                         <div
-                          class="size-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-600"
+                          class="size-10 rounded-full bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >shopping_cart</span
                           >
                         </div>
                         <div class="flex flex-col">
-                          <p class="text-gray-900 font-semibold text-sm">
+                          <p class="text-gray-900 dark:text-dark-primary font-semibold text-sm">
                             Shoprite Lagos
                           </p>
                           <div class="flex items-center gap-2">
-                            <p class="text-gray-500 text-xs">
+                            <p class="text-gray-500 dark:text-dark-secondary text-xs">
                               Yesterday, 5:20 PM
                             </p>
                           </div>
                         </div>
                       </div>
-                      <p class="text-gray-900 font-bold text-sm">
+                      <p class="text-gray-900 dark:text-dark-primary font-bold text-sm">
                         - ₦ 24,350.00
                       </p>
                     </div>
                     <div
-                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group border border-transparent hover:border-gray-100"
+                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer group border border-transparent hover:border-gray-100 dark:hover:border-dark-border"
                     >
                       <div class="flex items-center gap-4">
                         <div
-                          class="size-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600"
+                          class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >person</span
                           >
                         </div>
                         <div class="flex flex-col">
-                          <p class="text-gray-900 font-semibold text-sm">
+                          <p class="text-gray-900 dark:text-dark-primary font-semibold text-sm">
                             Transfer from Kemi A.
                           </p>
                           <div class="flex items-center gap-2">
-                            <p class="text-gray-500 text-xs">Oct 24, 2:30 PM</p>
+                            <p class="text-gray-500 dark:text-dark-secondary text-xs">Oct 24, 2:30 PM</p>
                             <span
-                              class="flex items-center gap-0.5 text-[10px] text-blue-800 bg-blue-50 px-1.5 py-0.5 rounded"
+                              class="flex items-center gap-0.5 text-[10px] text-blue-800 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30 px-1.5 py-0.5 rounded"
                             >
                               <span
                                 class="material-symbols-outlined text-[10px]"
@@ -721,28 +750,28 @@
                       <p class="text-brand font-bold text-sm">+ ₦ 50,000.00</p>
                     </div>
                     <div
-                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer group border border-transparent hover:border-gray-100"
+                      class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer group border border-transparent hover:border-gray-100 dark:hover:border-dark-border"
                     >
                       <div class="flex items-center gap-4">
                         <div
-                          class="size-10 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-600"
+                          class="size-10 rounded-full bg-yellow-50 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400"
                         >
                           <span class="material-symbols-outlined text-[20px]"
                             >electric_bolt</span
                           >
                         </div>
                         <div class="flex flex-col">
-                          <p class="text-gray-900 font-semibold text-sm">
+                          <p class="text-gray-900 dark:text-dark-primary font-semibold text-sm">
                             Ikeja Electric
                           </p>
                           <div class="flex items-center gap-2">
-                            <p class="text-gray-500 text-xs">
+                            <p class="text-gray-500 dark:text-dark-secondary text-xs">
                               Oct 23, 10:00 AM
                             </p>
                           </div>
                         </div>
                       </div>
-                      <p class="text-gray-900 font-bold text-sm">
+                      <p class="text-gray-900 dark:text-dark-primary font-bold text-sm">
                         - ₦ 15,000.00
                       </p>
                     </div>
@@ -796,12 +825,12 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface rounded-xl border border-border shadow-soft flex flex-col h-fit"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft flex flex-col h-fit"
                 >
                   <div
-                    class="p-5 border-b border-border flex justify-between items-center bg-gray-50 rounded-t-xl"
+                    class="p-5 border-b border-border dark:border-dark-border flex justify-between items-center bg-gray-50 dark:bg-slate-800 rounded-t-xl"
                   >
-                    <h3 class="text-gray-900 font-bold text-sm">
+                    <h3 class="text-gray-900 dark:text-dark-primary font-bold text-sm">
                       Alerts &amp; Notifications
                     </h3>
                     <span
@@ -809,28 +838,28 @@
                       >3 New</span
                     >
                   </div>
-                  <div class="flex flex-col divide-y divide-gray-100">
+                  <div class="flex flex-col divide-y divide-gray-100 dark:divide-dark-border">
                     <div
-                      class="p-4 hover:bg-red-50/30 transition-colors cursor-pointer border-l-4 border-transparent hover:border-red-500 group"
+                      class="p-4 hover:bg-red-50/30 dark:hover:bg-red-900/20 transition-colors cursor-pointer border-l-4 border-transparent hover:border-red-500 group"
                     >
                       <div class="flex gap-3">
                         <div
-                          class="mt-0.5 text-red-500 bg-red-100 p-1 rounded h-fit"
+                          class="mt-0.5 text-red-500 bg-red-100 dark:bg-red-900/30 p-1 rounded h-fit"
                         >
                           <span class="material-symbols-outlined text-[18px]"
                             >warning</span
                           >
                         </div>
                         <div class="flex flex-col gap-1">
-                          <p class="text-gray-900 text-sm font-semibold">
+                          <p class="text-gray-900 dark:text-dark-primary text-sm font-semibold">
                             Unusual Login Attempt
                           </p>
-                          <p class="text-gray-500 text-xs leading-relaxed">
+                          <p class="text-gray-500 dark:text-dark-secondary text-xs leading-relaxed">
                             We blocked a login attempt from a new device in
                             Abuja.
                           </p>
                           <p
-                            class="text-red-600 text-[10px] font-bold mt-1 uppercase tracking-wide"
+                            class="text-red-600 dark:text-red-400 text-[10px] font-bold mt-1 uppercase tracking-wide"
                           >
                             Review Now
                           </p>
@@ -838,21 +867,21 @@
                       </div>
                     </div>
                     <div
-                      class="p-4 hover:bg-gray-50 transition-colors cursor-pointer border-l-4 border-transparent hover:border-gray-400 group"
+                      class="p-4 hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors cursor-pointer border-l-4 border-transparent hover:border-gray-400 dark:hover:border-slate-500 group"
                     >
                       <div class="flex gap-3">
                         <div
-                          class="mt-0.5 text-gray-700 bg-gray-100 p-1 rounded h-fit"
+                          class="mt-0.5 text-gray-700 dark:text-dark-secondary bg-gray-100 dark:bg-slate-700 p-1 rounded h-fit"
                         >
                           <span class="material-symbols-outlined text-[18px]"
                             >info</span
                           >
                         </div>
                         <div class="flex flex-col gap-1">
-                          <p class="text-gray-900 text-sm font-semibold">
+                          <p class="text-gray-900 dark:text-dark-primary text-sm font-semibold">
                             Statement Available
                           </p>
-                          <p class="text-gray-500 text-xs leading-relaxed">
+                          <p class="text-gray-500 dark:text-dark-secondary text-xs leading-relaxed">
                             Your October account statement is ready for
                             download.
                           </p>
@@ -860,21 +889,21 @@
                       </div>
                     </div>
                     <div
-                      class="p-4 hover:bg-blue-50/30 transition-colors cursor-pointer border-l-4 border-transparent hover:border-blue-500 group"
+                      class="p-4 hover:bg-blue-50/30 dark:hover:bg-blue-900/20 transition-colors cursor-pointer border-l-4 border-transparent hover:border-blue-500 group"
                     >
                       <div class="flex gap-3">
                         <div
-                          class="mt-0.5 text-blue-500 bg-blue-100 p-1 rounded h-fit"
+                          class="mt-0.5 text-blue-500 bg-blue-100 dark:bg-blue-900/30 p-1 rounded h-fit"
                         >
                           <span class="material-symbols-outlined text-[18px]"
                             >school</span
                           >
                         </div>
                         <div class="flex flex-col gap-1">
-                          <p class="text-gray-900 text-sm font-semibold">
+                          <p class="text-gray-900 dark:text-dark-primary text-sm font-semibold">
                             New Lesson Unlocked
                           </p>
-                          <p class="text-gray-500 text-xs leading-relaxed">
+                          <p class="text-gray-500 dark:text-dark-secondary text-xs leading-relaxed">
                             "Understanding Interest Rates" is now available in
                             Education.
                           </p>
@@ -883,17 +912,17 @@
                     </div>
                   </div>
                   <div
-                    class="p-3 border-t border-gray-100 bg-gray-50 rounded-b-xl"
+                    class="p-3 border-t border-gray-100 dark:border-dark-border bg-gray-50 dark:bg-slate-800 rounded-b-xl"
                   >
                     <button
-                      class="text-center w-full text-xs text-gray-500 hover:text-brand font-medium transition-colors py-1"
+                      class="text-center w-full text-xs text-gray-500 dark:text-dark-secondary hover:text-brand font-medium transition-colors py-1"
                     >
                       View All Notifications
                     </button>
                   </div>
                 </div>
                 <div
-                  class="rounded-xl overflow-hidden relative group cursor-pointer h-40 border border-border shadow-soft"
+                  class="rounded-xl overflow-hidden relative group cursor-pointer h-40 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft"
                 >
                   <div
                     class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
@@ -929,8 +958,44 @@
         </div>
       </main>
     </div>
-    <script src="dashboard.js"></script>
+
+    <script>
+      // Navigation & Sidebar Functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const overlay = document.createElement('div');
+        
+        overlay.className = 'fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300 opacity-0';
+        document.body.appendChild(overlay);
+
+        function toggleSidebar(show) {
+          if (show) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            document.body.style.overflow = 'hidden';
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+          }
+        }
+
+        mobileToggle.addEventListener('click', () => toggleSidebar(true));
+        closeSidebar.addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // Close sidebar on link click (mobile)
+        const sidebarLinks = sidebar.querySelectorAll('nav a');
+        sidebarLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) toggleSidebar(false);
+          });
+        });
+      });
+    </script>
   </body>
 </html>
-
-

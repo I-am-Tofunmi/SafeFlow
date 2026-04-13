@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SafeFlow - TrustScore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#22c55e", // Green from the logo/text
+                        "primary-dark": "#16a34a",
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#334155",
+                        "text-light": "#1e293b",
+                        "text-dark": "#f8fafc",
+                        "text-muted-light": "#64748b",
+                        "text-muted-dark": "#94a3b8",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="theme.js"></script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-body antialiased transition-colors duration-200 overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<aside id="sidebar" class="fixed inset-y-0 left-0 w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex flex-col justify-between h-full shadow-sm z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static">
+<div>
+<div class="h-16 flex items-center px-6 border-b border-border-light dark:border-border-dark relative">
+    <!-- Mobile Close Button -->
+    <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-primary">
+        <span class="material-icons-outlined text-xl">close</span>
+    </button>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-icons-outlined text-xl">security</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">SafeFlow</span>
+</div>
+</div>
+<nav class="p-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="homepage.html">
+<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary dark:text-primary transition-colors" href="trustcore.html">
+<span class="material-icons-outlined text-2xl">verified_user</span>
+<span class="font-medium">TrustScore</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="transaction.html">
+<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">receipt_long</span>
+<span class="font-medium">Transactions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="transfer.html">
+<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">swap_horiz</span>
+<span class="font-medium">Quick Transfer</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="education.html">
+<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">swap_horiz</span>
+<span class="font-medium">Education</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-border-light dark:border-border-dark">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
+<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold border border-orange-200">
+                        CN
+                    </div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-900 dark:text-white truncate">Chinedu</p>
+<p class="text-xs text-green-600 dark:text-green-400 truncate">BVN Verified</p>
+</div>
+<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+<span class="material-icons-outlined text-xl">logout</span>
+</button>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
+<header class="h-16 flex items-center justify-between px-8 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-20">
+<div class="flex items-center gap-3">
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-menu-toggle" class="lg:hidden p-2 text-gray-500 hover:text-primary">
+        <span class="material-icons-outlined">menu</span>
+    </button>
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
+            <span class="material-icons-outlined text-xl">security</span>
+        </div>
+        <span class="font-bold text-lg hidden md:block">SafeFlow</span>
+    </div>
+</div>
+<div class="flex items-center gap-4">
+    <button class="theme-toggle-btn p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span class="material-icons-outlined">dark_mode</span>
+    </button>
+    <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span class="material-icons-outlined">notifications</span>
+    </button>
+</div>
+</header>
+<div class="p-8 max-w-6xl mx-auto w-full">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-12">
+<div class="max-w-2xl">
+<h1 class="text-4xl font-extrabold text-primary mb-4 tracking-tight">Your Financial Health</h1>
+<p class="text-lg text-text-muted-light dark:text-text-muted-dark leading-relaxed">
+                            Track your TrustScore, understand your credit potential, and unlock new financial opportunities. Stay on top of your game with real-time insights.
+                        </p>
+</div>
+<div class="flex-shrink-0">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full shadow-sm">
+<span class="material-icons-outlined text-primary text-xl">verified</span>
+<span class="font-semibold text-sm text-gray-900 dark:text-white">BVN Verified</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-border-light dark:border-border-dark flex flex-col items-center justify-center text-center col-span-1 md:col-span-1 min-h-[300px]">
+<div class="relative w-40 h-40 mb-6">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-gray-100 dark:text-gray-700" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
+<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-4xl font-bold text-gray-900 dark:text-white">720</span>
+<span class="text-sm text-text-muted-light dark:text-text-muted-dark font-medium">Good</span>
+</div>
+</div>
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">TrustScore</h3>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark px-4">
+                            Your score is healthy. Keep up the good work to unlock lower interest rates.
+                        </p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-border-light dark:border-border-dark col-span-1 md:col-span-2">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-gray-900 dark:text-white">Credit Potential</h3>
+<button class="text-primary hover:text-primary-dark font-medium text-sm">View Details</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-4 rounded-xl bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark">
+<div class="flex items-start justify-between mb-2">
+<div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-icons-outlined">account_balance_wallet</span>
+</div>
+<span class="text-xs font-semibold px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">+12%</span>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Max Loan Amount</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">₦ 2,500,000</p>
+</div>
+<div class="p-4 rounded-xl bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark">
+<div class="flex items-start justify-between mb-2">
+<div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+<span class="material-icons-outlined">trending_down</span>
+</div>
+<span class="text-xs font-semibold px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">Low</span>
+</div>
+<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Interest Rate</p>
+<p class="text-2xl font-bold text-gray-900 dark:text-white">3.5% <span class="text-sm font-normal text-text-muted-light dark:text-text-muted-dark">/mo</span></p>
+</div>
+</div>
+<div class="mt-6">
+<h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Improvement Tips</h4>
+<ul class="space-y-3">
+<li class="flex items-center gap-3 text-sm text-text-muted-light dark:text-text-muted-dark">
+<span class="material-icons-outlined text-green-500 text-lg">check_circle</span>
+                                     Pay bills on time to boost your consistency score.
+                                 </li>
+<li class="flex items-center gap-3 text-sm text-text-muted-light dark:text-text-muted-dark">
+<span class="material-icons-outlined text-green-500 text-lg">check_circle</span>
+                                     Maintain a balance above ₦50,000 for 3 months.
+                                 </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Financial Opportunities</h3>
+<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm">
+<thead class="bg-gray-50 dark:bg-gray-800/50 text-text-muted-light dark:text-text-muted-dark font-medium border-b border-border-light dark:border-border-dark">
+<tr>
+<th class="px-6 py-4">Opportunity</th>
+<th class="px-6 py-4">Type</th>
+<th class="px-6 py-4">Benefit</th>
+<th class="px-6 py-4 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light dark:divide-border-dark">
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400">
+<span class="material-icons-outlined text-sm">savings</span>
+</div>
+                                             High Yield Savings
+                                         </td>
+<td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark">Investment</td>
+<td class="px-6 py-4 text-green-600 dark:text-green-400 font-medium">15% p.a.</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-dark font-medium">Explore</button>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+<span class="material-icons-outlined text-sm">credit_card</span>
+</div>
+                                             Platinum Credit Card
+                                         </td>
+<td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark">Credit</td>
+<td class="px-6 py-4 text-green-600 dark:text-green-400 font-medium">No Annual Fee</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:text-primary-dark font-medium">Apply</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+    <script src="theme.js"></script>
+    <script>
+      // Navigation & Sidebar Functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const overlay = document.createElement('div');
+        
+        overlay.className = 'fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300 opacity-0';
+        document.body.appendChild(overlay);
+
+        function toggleSidebar(show) {
+          if (show) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            document.body.style.overflow = 'hidden';
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+          }
+        }
+
+        mobileToggle.addEventListener('click', () => toggleSidebar(true));
+        closeSidebar.addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // Close sidebar on link click (mobile)
+        const sidebarLinks = sidebar.querySelectorAll('nav a');
+        sidebarLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) toggleSidebar(false);
+          });
+        });
+      });
+    </script>
+</body></html>
