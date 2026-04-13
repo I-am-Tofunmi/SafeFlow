@@ -1,151 +1,299 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Cards | Payment Manager</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="card.css">
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <h1><i class="fas fa-credit-card"></i> Manage Your Cards</h1>
-            <p>Add, edit, or remove your payment methods</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SafeFlow - Manage Cards</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
+              surface: "#ffffff",
+              "dark-surface": "#1e293b",
+              primary: "#000000",
+              "dark-primary": "#ffffff",
+              secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
+              border: "#e5e7eb",
+              "dark-border": "#334155",
+              brand: {
+                DEFAULT: "#059669",
+                dark: "#064e3b",
+                light: "#d1fae5",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body { font-family: "Inter", sans-serif; }
+      .hide-scrollbar::-webkit-scrollbar { display: none; }
+      .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      .credit-card {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .credit-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(5, 150, 105, 0.1) 0%, transparent 70%);
+        transform: rotate(45deg);
+      }
+    </style>
+    <script src="theme.js"></script>
+  </head>
+  <body class="bg-background dark:bg-dark-background text-gray-900 dark:text-gray-100 overflow-hidden">
+    <div class="flex h-screen w-full">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static">
+        <div class="flex flex-col h-full p-4">
+          <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-brand">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+          <div class="flex items-center gap-3 mb-10 px-2 mt-2">
+            <div class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20">
+              <span class="material-symbols-outlined">security</span>
+            </div>
+            <div class="flex flex-col">
+              <h1 class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight">SafeFlow</h1>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">Financial Ecosystem</p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1.5 flex-1 overflow-y-auto hide-scrollbar">
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="homepage.html">
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors">dashboard</span>
+              <p class="text-sm font-medium">Dashboard</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="transaction.html">
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors">receipt_long</span>
+              <p class="text-sm font-medium">Transactions</p>
+            </a>
+             <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="trustcore.html">
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors">trending_up</span>
+              <p class="text-sm font-medium">Trust Score</p>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white shadow-md shadow-brand/20 group transition-all" href="securitycenter.html">
+              <span class="material-symbols-outlined" data-weight="fill">shield_lock</span>
+              <p class="text-sm font-semibold">Security Center</p>
+            </a>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background">
+        <header class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0">
+          <div class="flex items-center gap-4">
+             <a href="securitycenter.html" class="p-2 text-gray-500 hover:text-brand transition-colors">
+              <span class="material-symbols-outlined">arrow_back</span>
+            </a>
+            <div>
+              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">Payment Methods</h2>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">Manage your secure wallet & cards.</p>
+            </div>
+          </div>
+          <button id="add-card-btn" class="bg-brand text-white px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-brand-dark transition-all shadow-lg shadow-brand/20">
+             Add New Card
+          </button>
         </header>
 
-        <main class="main-content">
-            <!-- Current Cards Section -->
-            <section class="current-cards">
-                <h2>Your Cards</h2>
-                <div class="cards-container">
-                    <!-- Card 1 -->
-                    <div class="card-item primary">
-                        <div class="card-header">
-                            <div class="card-type">
-                                <i class="fab fa-cc-visa"></i>
-                                <span>Visa</span>
-                            </div>
-                            <span class="default-badge">Default</span>
-                        </div>
-                        <div class="card-number">**** **** **** 4512</div>
-                        <div class="card-details">
-                            <div class="cardholder">John A. Smith</div>
-                            <div class="expiry">Exp: 08/26</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn-remove"><i class="fas fa-trash-alt"></i> Remove</button>
-                        </div>
-                    </div>
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 hide-scrollbar">
+           <!-- Cards List -->
+           <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Replaced by JS -->
+           </div>
 
-                    <!-- Card 2 -->
-                    <div class="card-item">
-                        <div class="card-header">
-                            <div class="card-type">
-                                <i class="fab fa-cc-mastercard"></i>
-                                <span>Mastercard</span>
-                            </div>
-                        </div>
-                        <div class="card-number">**** **** **** 8921</div>
-                        <div class="card-details">
-                            <div class="cardholder">John A. Smith</div>
-                            <div class="expiry">Exp: 03/25</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-set-default"><i class="fas fa-star"></i> Set as Default</button>
-                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn-remove"><i class="fas fa-trash-alt"></i> Remove</button>
-                        </div>
-                    </div>
+           <!-- Empty State -->
+           <div id="empty-state" class="hidden flex flex-col items-center justify-center py-20 text-center space-y-4">
+              <div class="size-20 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-gray-400">
+                 <span class="material-symbols-outlined text-4xl">credit_card_off</span>
+              </div>
+              <div>
+                 <h3 class="text-gray-900 dark:text-white font-bold">No Cards Added</h3>
+                 <p class="text-gray-500 dark:text-dark-secondary text-sm">Add a card to enable quick transfers and budget monitoring.</p>
+              </div>
+           </div>
+        </div>
 
-                    <!-- Card 3 -->
-                    <div class="card-item">
-                        <div class="card-header">
-                            <div class="card-type">
-                                <i class="fab fa-cc-amex"></i>
-                                <span>American Express</span>
-                            </div>
-                        </div>
-                        <div class="card-number">**** **** **** 7345</div>
-                        <div class="card-details">
-                            <div class="cardholder">John A. Smith</div>
-                            <div class="expiry">Exp: 12/27</div>
-                        </div>
-                        <div class="card-actions">
-                            <button class="btn-set-default"><i class="fas fa-star"></i> Set as Default</button>
-                            <button class="btn-edit"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn-remove"><i class="fas fa-trash-alt"></i> Remove</button>
-                        </div>
+        <!-- Add/Edit Card Modal -->
+        <div id="card-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+           <div class="bg-surface dark:bg-dark-surface w-full max-w-md rounded-3xl shadow-2xl border border-border dark:border-dark-border overflow-hidden animate-in zoom-in duration-300">
+              <div class="p-6 border-b border-border dark:border-dark-border flex justify-between items-center">
+                 <h3 id="modal-title" class="text-gray-900 dark:text-white font-black uppercase tracking-widest text-sm">Add New Card</h3>
+                 <button id="close-modal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                 </button>
+              </div>
+              <form id="card-form" class="p-6 space-y-4">
+                 <input type="hidden" id="card-id">
+                 <div class="space-y-1.5">
+                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-1">Card Number</label>
+                    <input type="text" id="card-num" required maxlength="19" class="w-full bg-gray-50 dark:bg-slate-800/50 border border-border dark:border-dark-border rounded-xl px-4 py-3 text-sm font-mono tracking-widest" placeholder="1234 5678 9012 3456">
+                 </div>
+                 <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1.5">
+                       <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-1">Expiry</label>
+                       <input type="text" id="card-exp" required maxlength="5" class="w-full bg-gray-50 dark:bg-slate-800/50 border border-border dark:border-dark-border rounded-xl px-4 py-3 text-sm font-medium" placeholder="MM/YY">
                     </div>
-                </div>
-            </section>
-
-            <!-- Add New Card Section -->
-            <section class="add-card">
-                <h2>Add New Card</h2>
-                <form class="card-form">
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="card-number"><i class="fas fa-credit-card"></i> Card Number</label>
-                            <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
-                        </div>
+                    <div class="space-y-1.5">
+                       <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-1">CVV</label>
+                       <input type="password" id="card-cvv" required maxlength="3" class="w-full bg-gray-50 dark:bg-slate-800/50 border border-border dark:border-dark-border rounded-xl px-4 py-3 text-sm font-medium" placeholder="•••">
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="cardholder"><i class="fas fa-user"></i> Cardholder Name</label>
-                            <input type="text" id="cardholder" placeholder="John A. Smith">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="expiry-date"><i class="fas fa-calendar-alt"></i> Expiry Date</label>
-                            <input type="text" id="expiry-date" placeholder="MM/YY" maxlength="5">
-                        </div>
-                        <div class="form-group">
-                            <label for="cvv"><i class="fas fa-lock"></i> CVV</label>
-                            <input type="password" id="cvv" placeholder="123" maxlength="4">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="card-type"><i class="fas fa-tag"></i> Card Type</label>
-                            <select id="card-type">
-                                <option value="">Select card type</option>
-                                <option value="visa">Visa</option>
-                                <option value="mastercard">Mastercard</option>
-                                <option value="amex">American Express</option>
-                                <option value="discover">Discover</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-checkbox">
-                        <input type="checkbox" id="set-default">
-                        <label for="set-default">Set as default payment method</label>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-submit">
-                            <i class="fas fa-plus-circle"></i> Add Card
-                        </button>
-                        <button type="button" class="btn-cancel">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                    </div>
-                </form>
-            </section>
-        </main>
-
-        <footer class="footer">
-            <p><i class="fas fa-shield-alt"></i> Your payment information is secure and encrypted</p>
-            <p class="help-link"><i class="fas fa-question-circle"></i> <a href="#">Need help? Contact support</a></p>
-        </footer>
+                 </div>
+                 <div class="space-y-1.5">
+                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest pl-1">Holder Name</label>
+                    <input type="text" id="card-name" required class="w-full bg-gray-50 dark:bg-slate-800/50 border border-border dark:border-dark-border rounded-xl px-4 py-3 text-sm font-bold capitalize" placeholder="John Doe">
+                 </div>
+                 <button type="submit" class="w-full bg-brand text-white py-3.5 rounded-xl font-bold mt-4 shadow-lg shadow-brand/20">
+                    Confirm & Link Card
+                 </button>
+              </form>
+           </div>
+        </div>
+      </main>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+         const cardsGrid = document.getElementById('cards-grid');
+         const emptyState = document.getElementById('empty-state');
+         const modal = document.getElementById('card-modal');
+         const form = document.getElementById('card-form');
+         const addBtn = document.getElementById('add-card-btn');
+         const closeBtn = document.getElementById('close-modal');
+         
+         let cards = JSON.parse(localStorage.getItem('safeflow_cards') || '[]');
+
+         function save() {
+            localStorage.setItem('safeflow_cards', JSON.stringify(cards));
+            render();
+         }
+
+         function render() {
+            if(cards.length === 0) {
+               cardsGrid.classList.add('hidden');
+               emptyState.classList.remove('hidden');
+               return;
+            }
+            cardsGrid.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            cardsGrid.innerHTML = cards.map(c => `
+               <div class="credit-card p-6 rounded-3xl shadow-xl space-y-12 group">
+                  <div class="flex justify-between items-start">
+                     <span class="material-symbols-outlined text-brand text-4xl">contactless</span>
+                     <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onclick="editCard('${c.id}')" class="size-8 bg-white/20 text-white rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                           <span class="material-symbols-outlined text-sm">edit</span>
+                        </button>
+                        <button onclick="deleteCard('${c.id}')" class="size-8 bg-red-500/80 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                           <span class="material-symbols-outlined text-sm">delete</span>
+                        </button>
+                     </div>
+                  </div>
+                  <div>
+                     <p class="text-white font-mono tracking-widest text-xl mb-4">${c.number.replace(/\d{4}(?=.)/g, '$& ')}</p>
+                     <div class="flex justify-between items-end">
+                        <div>
+                           <p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Holder</p>
+                           <p class="text-white font-bold text-sm uppercase">${c.name}</p>
+                        </div>
+                        <div class="text-right">
+                           <p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Expires</p>
+                           <p class="text-white font-bold text-sm">${c.expiry}</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            `).join('');
+         }
+
+         window.deleteCard = (id) => {
+            if(confirm("Are you sure you want to remove this card?")) {
+               cards = cards.filter(c => c.id !== id);
+               save();
+            }
+         };
+
+         window.editCard = (id) => {
+            const c = cards.find(x => x.id === id);
+            document.getElementById('card-id').value = c.id;
+            document.getElementById('card-num').value = c.number;
+            document.getElementById('card-exp').value = c.expiry;
+            document.getElementById('card-cvv').value = c.cvv;
+            document.getElementById('card-name').value = c.name;
+            document.getElementById('modal-title').innerText = "Edit Card Details";
+            modal.classList.remove('hidden');
+         };
+
+         addBtn.addEventListener('click', () => {
+            form.reset();
+            document.getElementById('card-id').value = "";
+            document.getElementById('modal-title').innerText = "Add New Card";
+            modal.classList.remove('hidden');
+         });
+
+         closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+
+         form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('card-id').value || Date.now().toString();
+            const data = {
+               id,
+               number: document.getElementById('card-num').value,
+               expiry: document.getElementById('card-exp').value,
+               cvv: document.getElementById('card-cvv').value,
+               name: document.getElementById('card-name').value
+            };
+
+            const idx = cards.findIndex(c => c.id === id);
+            if(idx > -1) cards[idx] = data;
+            else cards.push(data);
+
+            save();
+            modal.classList.add('hidden');
+         });
+
+         // Simple formatting for card number
+         document.getElementById('card-num').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+         });
+         document.getElementById('card-exp').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').replace(/(\d{2})(?=\d)/g, '$1/').trim();
+         });
+
+        // Sidebar Fix
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        mobileToggle?.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+        closeSidebar?.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+
+        render();
+      });
+    </script>
+  </body>
 </html>

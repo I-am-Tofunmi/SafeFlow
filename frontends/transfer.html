@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -237,7 +237,6 @@
             >
             <p class="text-sm font-medium">Transactions</p>
           </a>
-        
           <a
             class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
             href="trustcore.html"
@@ -249,23 +248,21 @@
             <p class="text-sm font-medium">Trust Score</p>
           </a>
           <a
-            class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white group transition-all shadow-md shadow-brand/20"
-            href="transfer.html"
-          >
-            <span class="material-symbols-outlined" data-weight="fill"
-              >shield_lock</span
-            >
-            <p class="text-sm font-semibold">Transfer</p>
-          </a>
-          <a
             class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
             href="securitycenter.html"
           >
             <span
               class="material-symbols-outlined group-hover:text-brand transition-colors"
-              >trending_up</span
+              >shield_lock</span
             >
             <p class="text-sm font-medium">Security Center</p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white shadow-md shadow-brand/20 group"
+            href="transfer.html"
+          >
+            <span class="material-symbols-outlined fill">send</span>
+            <p class="text-sm font-semibold">Quick Transfer</p>
           </a>
           <a
             class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
@@ -273,7 +270,7 @@
           >
             <span
               class="material-symbols-outlined group-hover:text-brand transition-colors"
-              >trending_up</span
+              >school</span
             >
             <p class="text-sm font-medium">Education</p>
           </a>
@@ -509,7 +506,7 @@
                       Enter an account number to detect Nigerian scam patterns
                     </p>
                     <p class="text-gray-400 dark:text-gray-600 text-xs mt-2">
-                      Detects: Yahoo-Yahoo, Maga No Pay, Fake Alerts, Money Mules
+                      Detects: Yahoo-Yahoo, Maga No Pay, Phishing Links, Fake Alerts
                     </p>
                   </div>
 
@@ -570,23 +567,32 @@
               <h3 class="text-gray-900 dark:text-dark-primary text-lg font-bold mb-6">
                 How We Detect Nigerian Scams
               </h3>
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="space-y-3">
                   <div class="bg-red-50 dark:bg-red-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
                     <span class="material-symbols-outlined text-red-600 dark:text-red-400">emergency</span>
                   </div>
                   <h4 class="text-gray-900 dark:text-dark-primary font-bold">Emergency Scams</h4>
                   <p class="text-gray-500 dark:text-dark-secondary text-sm">
-                    Detects "Yahoo Yahoo" patterns with emergency keywords like "hospital", "urgent help"
+                    Detects "Yahoo Yahoo" patterns with emergency keywords.
+                  </p>
+                </div>
+                <div class="space-y-3">
+                  <div class="bg-blue-50 dark:bg-blue-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-blue-600 dark:text-blue-400">link_off</span>
+                  </div>
+                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Phishing Links</h4>
+                  <p class="text-gray-500 dark:text-dark-secondary text-sm">
+                    Flags suspicious bit.ly or spoofed bank login URLs instantly.
                   </p>
                 </div>
                 <div class="space-y-3">
                   <div class="bg-yellow-50 dark:bg-yellow-900/30 w-12 h-12 rounded-lg flex items-center justify-center">
                     <span class="material-symbols-outlined text-yellow-600 dark:text-yellow-400">trending_up</span>
                   </div>
-                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Investment Scams</h4>
+                  <h4 class="text-gray-900 dark:text-dark-primary font-bold">Investment</h4>
                   <p class="text-gray-500 dark:text-dark-secondary text-sm">
-                    Identifies "Maga No Pay" patterns with promises of quick returns and doubling money
+                    Identifies "Maga No Pay" patterns and Ponzi schemes.
                   </p>
                 </div>
                 <div class="space-y-3">
@@ -595,7 +601,7 @@
                   </div>
                   <h4 class="text-gray-900 dark:text-dark-primary font-bold">Money Mules</h4>
                   <p class="text-gray-500 dark:text-dark-secondary text-sm">
-                    Spots accounts receiving from many but sending to few (common in fraud networks)
+                    Spots high-velocity accounts receiving from fraud networks.
                   </p>
                 </div>
               </div>

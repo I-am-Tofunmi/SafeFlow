@@ -9,7 +9,7 @@
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -120,32 +120,30 @@
             </a>
             <a
               class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-black dark:hover:text-white transition-colors"
-              href="transfer.html"
-            >
-              <span class="material-symbols-outlined">receipt_long</span>
-              <p class="text-sm font-medium">Transfer</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-black dark:hover:text-white transition-colors"
               href="trustcore.html"
             >
-              <span class="material-symbols-outlined">dashboard</span>
+              <span class="material-symbols-outlined">trending_up</span>
               <p class="text-sm font-medium">Trust Score</p>
             </a>
             <a
               class="flex items-center gap-3 px-3 py-3 rounded-lg bg-green-600 text-white group transition-all shadow-md"
               href="securitycenter.html"
             >
-              <span class="material-symbols-outlined" data-weight="fill"
-                >shield_lock</span
-              >
+              <span class="material-symbols-outlined fill">shield_lock</span>
               <p class="text-sm font-semibold">Security Center</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-black dark:hover:text-white transition-colors"
+              href="transfer.html"
+            >
+              <span class="material-symbols-outlined">send</span>
+              <p class="text-sm font-medium">Quick Transfer</p>
             </a>
             <a
               class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-black dark:hover:text-white transition-colors"
               href="education.html"
             >
-              <span class="material-symbols-outlined">dashboard</span>
+              <span class="material-symbols-outlined">school</span>
               <p class="text-sm font-medium">Education</p>
             </a>
           </nav>
@@ -538,6 +536,50 @@
               </div>
               <div class="lg:col-span-4 flex flex-col gap-6">
                 <div
+                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden theme-transition"
+                >
+                  <div class="px-5 py-4 border-b border-border-light dark:border-border-dark bg-blue-100/50 dark:bg-blue-900/40 flex justify-between items-center">
+                    <div class="flex items-center gap-2">
+                       <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[18px]">verified_user</span>
+                       <h4 class="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Live Protection Feed</h4>
+                    </div>
+                    <span class="flex items-center gap-1.5 px-2 py-0.5 bg-white dark:bg-slate-800 rounded-full text-[10px] font-bold text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                      <span class="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"></span>
+                      MONITORING
+                    </span>
+                  </div>
+                  <div class="divide-y divide-border-light dark:divide-border-dark">
+                    <div class="p-4 flex items-start gap-3">
+                      <div class="mt-0.5 text-blue-500">
+                        <span class="material-symbols-outlined text-[18px]">sms</span>
+                      </div>
+                      <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                          <p class="text-[11px] font-bold text-gray-900 dark:text-white">SMS Scan: Nigerian Bank</p>
+                          <span class="text-[9px] text-gray-400 italic">2 mins ago</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5 line-clamp-1">"Your account is blocked. Click bit.ly/unblock-safe..."</p>
+                        <div class="mt-2 flex items-center gap-1.5 text-[10px] font-bold text-red-600 dark:text-red-400">
+                          <span class="material-symbols-outlined text-[14px]">gpp_bad</span>
+                          PHISHING LINK FLAGGED & BLOCKED
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-4 flex items-start gap-3">
+                      <div class="mt-0.5 text-green-500">
+                        <span class="material-symbols-outlined text-[18px]">lock_reset</span>
+                      </div>
+                      <div class="flex-1">
+                         <div class="flex justify-between items-start">
+                          <p class="text-[11px] font-bold text-gray-900 dark:text-white">Behavioural AI Check</p>
+                          <span class="text-[9px] text-gray-400 italic">15 mins ago</span>
+                        </div>
+                        <p class="text-[10px] text-gray-500 dark:text-gray-400 mt-0.5">Predictive login pattern consistent with owner device.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
                   class="bg-red-50 dark:bg-red-900/20 rounded-xl p-6 border border-red-100 dark:border-red-800/50 shadow-sm relative overflow-hidden theme-transition"
                 >
                   <div class="absolute -right-4 -top-4 opacity-10">
@@ -675,7 +717,7 @@
                           USSD Access
                         </h4>
                         <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-                          Allow transfers via *919#
+                          Dial *723# for offline banking
                         </p>
                       </div>
                     </div>

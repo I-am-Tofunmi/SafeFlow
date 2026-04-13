@@ -1,243 +1,378 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>SafeFlow - TrustScore</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
-<script>
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        primary: "#22c55e", // Green from the logo/text
-                        "primary-dark": "#16a34a",
-                        "background-light": "#f8fafc",
-                        "background-dark": "#0f172a",
-                        "surface-light": "#ffffff",
-                        "surface-dark": "#1e293b",
-                        "border-light": "#e2e8f0",
-                        "border-dark": "#334155",
-                        "text-light": "#1e293b",
-                        "text-dark": "#f8fafc",
-                        "text-muted-light": "#64748b",
-                        "text-muted-dark": "#94a3b8",
-                    },
-                    fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                        body: ["Inter", "sans-serif"],
-                    },
-                    borderRadius: {
-                        DEFAULT: "0.5rem",
-                    },
-                },
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SafeFlow - TrustScore Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
+              surface: "#ffffff",
+              "dark-surface": "#1e293b",
+              primary: "#000000",
+              "dark-primary": "#ffffff",
+              secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
+              border: "#e5e7eb",
+              "dark-border": "#334155",
+              brand: {
+                DEFAULT: "#059669",
+                dark: "#064e3b",
+                light: "#d1fae5",
+              },
+              accent: {
+                blue: "#1e40af",
+                orange: "#ea580c",
+              },
             },
-        };
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
+            },
+          },
+        },
+      };
     </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        transition: background-color 0.3s ease;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .theme-transition * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
+    </style>
     <script src="theme.js"></script>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-body antialiased transition-colors duration-200 overflow-hidden">
-<div class="flex h-screen w-full overflow-hidden">
-<aside id="sidebar" class="fixed inset-y-0 left-0 w-64 flex-shrink-0 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark flex flex-col justify-between h-full shadow-sm z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static">
-<div>
-<div class="h-16 flex items-center px-6 border-b border-border-light dark:border-border-dark relative">
-    <!-- Mobile Close Button -->
-    <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-primary">
-        <span class="material-icons-outlined text-xl">close</span>
-    </button>
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
-<span class="material-icons-outlined text-xl">security</span>
-</div>
-<span class="text-xl font-bold tracking-tight text-gray-900 dark:text-white">SafeFlow</span>
-</div>
-</div>
-<nav class="p-4 space-y-1">
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="homepage.html">
-<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">dashboard</span>
-<span class="font-medium">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-primary dark:text-primary transition-colors" href="trustcore.html">
-<span class="material-icons-outlined text-2xl">verified_user</span>
-<span class="font-medium">TrustScore</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="transaction.html">
-<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">receipt_long</span>
-<span class="font-medium">Transactions</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="transfer.html">
-<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">swap_horiz</span>
-<span class="font-medium">Quick Transfer</span>
-</a>
-<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-muted-light dark:text-text-muted-dark hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary dark:hover:text-primary transition-colors group" href="education.html">
-<span class="material-icons-outlined text-2xl group-hover:text-primary dark:group-hover:text-primary">swap_horiz</span>
-<span class="font-medium">Education</span>
-</a>
-</nav>
-</div>
-<div class="p-4 border-t border-border-light dark:border-border-dark">
-<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer transition-colors">
-<div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold border border-orange-200">
-                        CN
-                    </div>
-<div class="flex-1 min-w-0">
-<p class="text-sm font-semibold text-gray-900 dark:text-white truncate">Chinedu</p>
-<p class="text-xs text-green-600 dark:text-green-400 truncate">BVN Verified</p>
-</div>
-<button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-<span class="material-icons-outlined text-xl">logout</span>
-</button>
-</div>
-</div>
-</aside>
-<main class="flex-1 flex flex-col h-full overflow-y-auto bg-background-light dark:bg-background-dark relative">
-<header class="h-16 flex items-center justify-between px-8 bg-surface-light dark:bg-surface-dark border-b border-border-light dark:border-border-dark sticky top-0 z-20">
-<div class="flex items-center gap-3">
-    <!-- Mobile Menu Toggle -->
-    <button id="mobile-menu-toggle" class="lg:hidden p-2 text-gray-500 hover:text-primary">
-        <span class="material-icons-outlined">menu</span>
-    </button>
-    <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white">
-            <span class="material-icons-outlined text-xl">security</span>
+  </head>
+  <body class="bg-background dark:bg-dark-background text-gray-900 dark:text-gray-100 overflow-hidden theme-transition">
+    <div class="flex h-screen w-full">
+      <!-- Theme Toggle Button (Desktop/Tablet) -->
+      <div class="fixed top-6 right-8 z-50 hidden lg:block">
+        <button
+          id="theme-toggle"
+          class="p-3 rounded-full bg-surface dark:bg-dark-surface shadow-lg hover:shadow-xl transition-all duration-300 border border-border dark:border-dark-border flex items-center justify-center"
+          aria-label="Toggle theme"
+        >
+          <span id="theme-icon" class="material-symbols-outlined text-gray-700 dark:text-dark-secondary">
+            dark_mode
+          </span>
+        </button>
+      </div>
+
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static"
+      >
+        <div class="flex flex-col h-full p-4">
+          <!-- Mobile Close Button -->
+          <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-brand">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+          <div class="flex items-center gap-3 mb-10 px-2 mt-2">
+            <div
+              class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20"
+            >
+              <span class="material-symbols-outlined">security</span>
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight"
+              >
+                SafeFlow
+              </h1>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">
+                Financial Ecosystem
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1.5 flex-1 overflow-y-auto hide-scrollbar">
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="homepage.html"
+            >
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >dashboard</span
+              >
+              <p class="text-sm font-medium">Dashboard</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transaction.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >receipt_long</span
+              >
+              <p class="text-sm font-medium">Transactions</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white shadow-md shadow-brand/20 group transition-all"
+              href="trustcore.html"
+            >
+              <span class="material-symbols-outlined" data-weight="fill"
+                >trending_up</span
+              >
+              <p class="text-sm font-semibold">Trust Score</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="securitycenter.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >shield_lock</span
+              >
+              <p class="text-sm font-medium">Security Center</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transfer.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >send</span
+              >
+              <p class="text-sm font-medium">Quick Transfer</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="education.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >school</span
+              >
+              <p class="text-sm font-medium">Education</p>
+            </a>
+          </nav>
+          <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
+            <div
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+            >
+              <div
+                class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo');
+                "
+              ></div>
+              <div class="flex flex-col">
+                <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs">Premium Member</p>
+              </div>
+              <span
+                class="material-symbols-outlined text-gray-400 ml-auto text-sm"
+                >expand_more</span
+              >
+            </div>
+          </div>
         </div>
-        <span class="font-bold text-lg hidden md:block">SafeFlow</span>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background">
+        <header
+          class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+        >
+          <div class="flex items-center gap-4">
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="lg:hidden p-2 text-gray-600 dark:text-dark-secondary">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div>
+              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">
+                Trust Score
+              </h2>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">
+                  Alternative credit scoring built for the community.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <button class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <span class="material-symbols-outlined">notifications</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 space-y-8 hide-scrollbar">
+          <!-- Main TrustScore Section -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+               <div class="bg-surface dark:bg-dark-surface p-8 rounded-2xl shadow-soft dark:shadow-dark-soft border border-border dark:border-dark-border">
+                  <div class="flex flex-col md:flex-row justify-between gap-8">
+                     <div class="flex flex-col justify-center items-center md:items-start text-center md:text-left">
+                        <h3 class="text-gray-500 dark:text-dark-secondary font-bold uppercase tracking-widest text-xs mb-2">Overall TrustScore</h3>
+                        <div class="relative size-48 flex items-center justify-center my-4">
+                           <svg class="size-full transform -rotate-90">
+                              <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent" class="text-gray-100 dark:text-slate-800" />
+                              <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="12" fill="transparent" stroke-dasharray="552.92" stroke-dashoffset="154.8" stroke-linecap="round" class="text-brand transition-all duration-1000" />
+                           </svg>
+                           <div class="absolute flex flex-col items-center">
+                              <span class="text-5xl font-black text-gray-900 dark:text-white tracking-tighter">720</span>
+                              <span class="text-xs font-bold text-brand uppercase tracking-widest">Good</span>
+                           </div>
+                        </div>
+                        <p class="text-gray-500 dark:text-dark-secondary text-sm max-w-xs mt-2 font-medium">
+                           Your score is healthy. Keep up the good work to unlock lower interest rates.
+                        </p>
+                     </div>
+                     <div class="flex-1 space-y-6 flex flex-col justify-center">
+                        <div class="grid grid-cols-2 gap-4">
+                           <div class="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-border dark:border-dark-border">
+                              <p class="text-gray-500 dark:text-dark-secondary text-[10px] font-bold uppercase mb-1">Max Loan</p>
+                              <p class="text-gray-900 dark:text-dark-primary text-xl font-black tracking-tight">₦ 2.5M</p>
+                              <span class="text-[10px] text-brand font-bold flex items-center mt-1">
+                                 <span class="material-symbols-outlined text-[12px] mr-1">trending_up</span>+12%
+                              </span>
+                           </div>
+                           <div class="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-xl border border-border dark:border-dark-border">
+                              <p class="text-gray-500 dark:text-dark-secondary text-[10px] font-bold uppercase mb-1">Interest Rate</p>
+                              <p class="text-gray-900 dark:text-dark-primary text-xl font-black tracking-tight">3.5%</p>
+                              <span class="text-[10px] text-gray-400 font-bold flex items-center mt-1">
+                                 Fixed / mo
+                              </span>
+                           </div>
+                        </div>
+                        <div class="space-y-3">
+                           <h4 class="text-gray-900 dark:text-dark-primary font-bold text-sm">Improvement Tips</h4>
+                           <ul class="space-y-2">
+                              <li class="flex items-center gap-2 text-xs text-gray-500 dark:text-dark-secondary">
+                                 <span class="material-symbols-outlined text-brand text-[18px]">check_circle</span>
+                                 Pay bills on time to boost your consistency score.
+                              </li>
+                              <li class="flex items-center gap-2 text-xs text-gray-500 dark:text-dark-secondary">
+                                 <span class="material-symbols-outlined text-brand text-[18px]">check_circle</span>
+                                 Get 3+ community endorsements from verified members.
+                              </li>
+                           </ul>
+                        </div>
+                        <button class="w-full bg-brand text-white py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
+                           Full Analysis Report
+                        </button>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- Financial Opportunities -->
+               <div class="bg-surface dark:bg-dark-surface rounded-2xl border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft overflow-hidden">
+                  <div class="p-6 border-b border-border dark:border-dark-border flex justify-between items-center">
+                     <h3 class="text-gray-900 dark:text-dark-primary font-bold">Financial Marketplace</h3>
+                     <span class="text-brand text-xs font-bold cursor-pointer hover:underline">View All</span>
+                  </div>
+                  <div class="overflow-x-auto">
+                     <table class="w-full text-left">
+                        <thead class="bg-gray-50 dark:bg-slate-800/50 text-[10px] font-bold text-gray-500 dark:text-dark-secondary uppercase tracking-widest border-b border-border dark:border-dark-border">
+                           <tr>
+                              <th class="px-6 py-4">Opportunity</th>
+                              <th class="px-6 py-4 text-center">Benefit</th>
+                              <th class="px-6 py-4 text-right">Action</th>
+                           </tr>
+                        </thead>
+                        <tbody class="divide-y divide-border dark:divide-dark-border">
+                           <tr class="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors group">
+                              <td class="px-6 py-4">
+                                 <div class="flex items-center gap-3">
+                                    <div class="size-10 bg-brand/10 text-brand rounded-lg flex items-center justify-center">
+                                       <span class="material-symbols-outlined">account_balance</span>
+                                    </div>
+                                    <div>
+                                       <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">FairMoney Lender</p>
+                                       <p class="text-gray-400 text-[10px]">Lender</p>
+                                    </div>
+                                 </div>
+                              </td>
+                              <td class="px-6 py-4 text-center">
+                                 <span class="text-brand font-bold text-sm">₦ 500k Instantly</span>
+                              </td>
+                              <td class="px-6 py-4 text-right">
+                                 <button class="bg-gray-900 dark:bg-white text-white dark:text-black text-xs font-bold px-4 py-2 rounded-lg hover:shadow-lg transition-all">Explore</button>
+                              </td>
+                           </tr>
+                           <tr class="hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors group">
+                              <td class="px-6 py-4">
+                                 <div class="flex items-center gap-3">
+                                    <div class="size-10 bg-accent-blue/10 text-accent-blue rounded-lg flex items-center justify-center">
+                                       <span class="material-symbols-outlined">health_and_safety</span>
+                                    </div>
+                                    <div>
+                                       <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Leadway Life</p>
+                                       <p class="text-gray-400 text-[10px]">Insurer</p>
+                                    </div>
+                                 </div>
+                              </td>
+                              <td class="px-6 py-4 text-center">
+                                 <span class="text-accent-blue font-bold text-sm">₦ 1M Coverage</span>
+                              </td>
+                              <td class="px-6 py-4 text-right">
+                                 <button class="bg-gray-900 dark:bg-white text-white dark:text-black text-xs font-bold px-4 py-2 rounded-lg hover:shadow-lg transition-all">Explore</button>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="space-y-6">
+               <div class="bg-surface dark:bg-dark-surface p-6 rounded-2xl shadow-soft dark:shadow-dark-soft border border-border dark:border-dark-border">
+                  <h3 class="text-gray-900 dark:text-dark-primary font-bold text-sm mb-4">Verification Status</h3>
+                  <div class="space-y-4">
+                     <div class="flex items-center justify-between p-3 bg-brand/5 dark:bg-brand/10 border border-brand/20 rounded-xl">
+                        <div class="flex items-center gap-3">
+                           <div class="size-8 bg-brand text-white rounded-lg flex items-center justify-center">
+                              <span class="material-symbols-outlined text-[16px]">verified</span>
+                           </div>
+                           <p class="text-brand text-xs font-bold uppercase">BVN Linked</p>
+                        </div>
+                        <span class="material-symbols-outlined text-brand text-[20px]">check_circle</span>
+                     </div>
+                     <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800/50 border border-border dark:border-dark-border rounded-xl opacity-60">
+                        <div class="flex items-center gap-3 text-gray-400">
+                           <div class="size-8 bg-gray-200 dark:bg-slate-700 rounded-lg flex items-center justify-center">
+                              <span class="material-symbols-outlined text-[16px]">add_task</span>
+                           </div>
+                           <p class="text-xs font-bold uppercase">NIN Verified</p>
+                        </div>
+                        <span class="text-[10px] font-bold text-gray-400">PENDING</span>
+                     </div>
+                  </div>
+                  <button class="w-full mt-6 py-2.5 border-2 border-gray-100 dark:border-slate-800 text-gray-500 dark:text-gray-400 text-xs font-bold rounded-xl hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                     Increase Verification
+                  </button>
+               </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-</div>
-<div class="flex items-center gap-4">
-    <button class="theme-toggle-btn p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <span class="material-icons-outlined">dark_mode</span>
-    </button>
-    <button class="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <span class="material-icons-outlined">notifications</span>
-    </button>
-</div>
-</header>
-<div class="p-8 max-w-6xl mx-auto w-full">
-<div class="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-12">
-<div class="max-w-2xl">
-<h1 class="text-4xl font-extrabold text-primary mb-4 tracking-tight">Your Financial Health</h1>
-<p class="text-lg text-text-muted-light dark:text-text-muted-dark leading-relaxed">
-                            Track your TrustScore, understand your credit potential, and unlock new financial opportunities. Stay on top of your game with real-time insights.
-                        </p>
-</div>
-<div class="flex-shrink-0">
-<div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark rounded-full shadow-sm">
-<span class="material-icons-outlined text-primary text-xl">verified</span>
-<span class="font-semibold text-sm text-gray-900 dark:text-white">BVN Verified</span>
-</div>
-</div>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-border-light dark:border-border-dark flex flex-col items-center justify-center text-center col-span-1 md:col-span-1 min-h-[300px]">
-<div class="relative w-40 h-40 mb-6">
-<svg class="w-full h-full transform -rotate-90">
-<circle class="text-gray-100 dark:text-gray-700" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="12"></circle>
-<circle class="text-primary" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-dasharray="440" stroke-dashoffset="110" stroke-linecap="round" stroke-width="12"></circle>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center">
-<span class="text-4xl font-bold text-gray-900 dark:text-white">720</span>
-<span class="text-sm text-text-muted-light dark:text-text-muted-dark font-medium">Good</span>
-</div>
-</div>
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">TrustScore</h3>
-<p class="text-sm text-text-muted-light dark:text-text-muted-dark px-4">
-                            Your score is healthy. Keep up the good work to unlock lower interest rates.
-                        </p>
-</div>
-<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-border-light dark:border-border-dark col-span-1 md:col-span-2">
-<div class="flex items-center justify-between mb-6">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white">Credit Potential</h3>
-<button class="text-primary hover:text-primary-dark font-medium text-sm">View Details</button>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-<div class="p-4 rounded-xl bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark">
-<div class="flex items-start justify-between mb-2">
-<div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-<span class="material-icons-outlined">account_balance_wallet</span>
-</div>
-<span class="text-xs font-semibold px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">+12%</span>
-</div>
-<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Max Loan Amount</p>
-<p class="text-2xl font-bold text-gray-900 dark:text-white">₦ 2,500,000</p>
-</div>
-<div class="p-4 rounded-xl bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark">
-<div class="flex items-start justify-between mb-2">
-<div class="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-<span class="material-icons-outlined">trending_down</span>
-</div>
-<span class="text-xs font-semibold px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full">Low</span>
-</div>
-<p class="text-sm text-text-muted-light dark:text-text-muted-dark mb-1">Interest Rate</p>
-<p class="text-2xl font-bold text-gray-900 dark:text-white">3.5% <span class="text-sm font-normal text-text-muted-light dark:text-text-muted-dark">/mo</span></p>
-</div>
-</div>
-<div class="mt-6">
-<h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">Improvement Tips</h4>
-<ul class="space-y-3">
-<li class="flex items-center gap-3 text-sm text-text-muted-light dark:text-text-muted-dark">
-<span class="material-icons-outlined text-green-500 text-lg">check_circle</span>
-                                     Pay bills on time to boost your consistency score.
-                                 </li>
-<li class="flex items-center gap-3 text-sm text-text-muted-light dark:text-text-muted-dark">
-<span class="material-icons-outlined text-green-500 text-lg">check_circle</span>
-                                     Maintain a balance above ₦50,000 for 3 months.
-                                 </li>
-</ul>
-</div>
-</div>
-</div>
-<div class="mt-8">
-<h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Financial Opportunities</h3>
-<div class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-border-light dark:border-border-dark overflow-hidden">
-<div class="overflow-x-auto">
-<table class="w-full text-left text-sm">
-<thead class="bg-gray-50 dark:bg-gray-800/50 text-text-muted-light dark:text-text-muted-dark font-medium border-b border-border-light dark:border-border-dark">
-<tr>
-<th class="px-6 py-4">Opportunity</th>
-<th class="px-6 py-4">Type</th>
-<th class="px-6 py-4">Benefit</th>
-<th class="px-6 py-4 text-right">Action</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
-<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-yellow-600 dark:text-yellow-400">
-<span class="material-icons-outlined text-sm">savings</span>
-</div>
-                                             High Yield Savings
-                                         </td>
-<td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark">Investment</td>
-<td class="px-6 py-4 text-green-600 dark:text-green-400 font-medium">15% p.a.</td>
-<td class="px-6 py-4 text-right">
-<button class="text-primary hover:text-primary-dark font-medium">Explore</button>
-</td>
-</tr>
-<tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-gray-900 dark:text-white flex items-center gap-3">
-<div class="w-8 h-8 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
-<span class="material-icons-outlined text-sm">credit_card</span>
-</div>
-                                             Platinum Credit Card
-                                         </td>
-<td class="px-6 py-4 text-text-muted-light dark:text-text-muted-dark">Credit</td>
-<td class="px-6 py-4 text-green-600 dark:text-green-400 font-medium">No Annual Fee</td>
-<td class="px-6 py-4 text-right">
-<button class="text-primary hover:text-primary-dark font-medium">Apply</button>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</main>
-</div>
-    <script src="theme.js"></script>
+
     <script>
       // Navigation & Sidebar Functionality
       document.addEventListener('DOMContentLoaded', () => {
@@ -265,7 +400,7 @@
 
         mobileToggle.addEventListener('click', () => toggleSidebar(true));
         closeSidebar.addEventListener('click', () => toggleSidebar(false));
-        overlay.addEventListener('click', () => toggleSidebar(false));
+         overlay.addEventListener('click', () => toggleSidebar(false));
 
         // Close sidebar on link click (mobile)
         const sidebarLinks = sidebar.querySelectorAll('nav a');
@@ -276,4 +411,5 @@
         });
       });
     </script>
-</body></html>
+  </body>
+</html>
