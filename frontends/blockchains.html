@@ -1,724 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeFlow Blockchain Demo</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>SafeFlow Report</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0..1,0"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
+              surface: "#ffffff",
+              "dark-surface": "#1e293b",
+              primary: "#000000",
+              "dark-primary": "#ffffff",
+              secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
+              border: "#e5e7eb",
+              "dark-border": "#334155",
+              brand: {
+                DEFAULT: "#059669",
+                dark: "#064e3b",
+                light: "#d1fae5",
+              },
+              accent: {
+                blue: "#1e40af",
+                orange: "#ea580c",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
+            },
+          },
+        },
+      };
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, sans-serif;
-        }
-
-        body {
-            background: #ffffff;
-            color: #333333;
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            padding: 50px 30px;
-            margin-bottom: 40px;
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid #e8f5e9;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #2e7d32, #4caf50);
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            color: #1b5e20;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: #666666;
-            margin-bottom: 25px;
-            font-weight: 400;
-        }
-
-        .network-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            color: #2e7d32;
-            font-weight: 500;
-        }
-
-        .polygon-logo {
-            color: #4caf50;
-            font-weight: bold;
-        }
-
-        /* Layout */
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Cards */
-        .card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 30px;
-            border: 1px solid #e8f5e9;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #2e7d32, #4caf50);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            border-color: #c8e6c9;
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            color: #1b5e20;
-            font-weight: 600;
-        }
-
-        .card-title .icon {
-            font-size: 1.8rem;
-            color: #4caf50;
-        }
-
-        /* Contract Info */
-        .contract-info {
-            background: #f8fdf8;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            border: 1px solid #e8f5e9;
-        }
-
-        .contract-label {
-            font-size: 0.85rem;
-            color: #666666;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .contract-address {
-            font-size: 0.95rem;
-            word-break: break-all;
-            color: #2e7d32;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .contract-links {
-            display: flex;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        /* Forms */
-        .input-group {
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            color: #555555;
-            font-weight: 500;
-        }
-
-        .input-group input,
-        .input-group select {
-            width: 100%;
-            padding: 14px 16px;
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            color: #333333;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus,
-        .input-group select:focus {
-            outline: none;
-            border-color: #4caf50;
-            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
-        }
-
-        .input-group input::placeholder {
-            color: #999999;
-        }
-
-        /* Buttons */
-        .btn {
-            padding: 16px 24px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: #4caf50;
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary:hover {
-            background: #388e3c;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
-        }
-
-        .btn-primary:disabled {
-            background: #c8e6c9;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            background: #ffffff;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-
-        .btn-secondary:hover {
-            background: #f8fdf8;
-            border-color: #4caf50;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        /* Transaction Result */
-        .transaction-result {
-            background: #f8fdf8;
-            border: 1px solid #c8e6c9;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 25px;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tx-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            color: #2e7d32;
-            font-weight: 600;
-        }
-
-        .tx-details {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.9rem;
-            border: 1px solid #e8f5e9;
-        }
-
-        .tx-row {
-            display: flex;
-            margin-bottom: 8px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .tx-label {
-            min-width: 120px;
-            color: #666666;
-        }
-
-        .tx-value {
-            color: #2e7d32;
-            word-break: break-all;
-            font-weight: 500;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .status-confirmed {
-            background: #e8f5e9;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-
-        .explorer-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 15px;
-            padding: 10px 16px;
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-            border-radius: 8px;
-            color: #2e7d32;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .explorer-link:hover {
-            background: #c8e6c9;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .stat-item {
-            background: #f8fdf8;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e8f5e9;
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-3px);
-            border-color: #c8e6c9;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .stat-label {
-            font-size: 0.85rem;
-            color: #666666;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #2e7d32;
-        }
-
-        /* Demo Notice */
-        .demo-notice {
-            margin-top: 30px;
-            padding: 20px;
-            background: #fff8e1;
-            border: 1px solid #ffecb3;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            color: #5d4037;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-
-        .demo-notice span:first-child {
-            font-size: 1.2rem;
-        }
-
-        /* Animations */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.6; }
-            100% { opacity: 1; }
-        }
-
-        .mining-animation {
-            animation: mining 1s infinite;
-        }
-
-        @keyframes mining {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid #e8f5e9;
-            font-size: 0.9rem;
-            color: #666666;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .header {
-                padding: 30px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contract-links {
-                flex-direction: column;
-            }
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f5f5f5;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #c8e6c9;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a5d6a7;
-        }
-
-        /* Empty state styling */
-        #emptyState {
-            color: #666666;
-        }
-
-        #emptyState div:first-child {
-            color: #4caf50;
-        }
-
-        #emptyState div:nth-child(2) {
-            color: #333333;
-        }
-
-        /* Mining status styling */
-        #miningStatus {
-            color: #666666;
-        }
-
-        #miningStatus div:first-child {
-            color: #4caf50;
-        }
-
-        #miningStatus div:nth-child(2) {
-            color: #2e7d32;
-        }
+      body {
+        font-family: "Inter", sans-serif;
+        transition: background-color 0.3s ease;
+      }
+      .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .theme-transition * {
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <h1>🔗 SafeFlow Blockchain Trust Layer</h1>
-            <p class="subtitle">Immutable fraud reporting & trust scoring on Polygon Mumbai Testnet</p>
-            <div class="network-badge">
-                <span class="polygon-logo">Polygon</span>
-                <span>•</span>
-                <span>Mumbai Testnet</span>
-                <span>•</span>
-                <span class="pulse">● LIVE</span>
-            </div>
-        </header>
+    <script src="theme.js"></script>
+  </head>
+  <body class="bg-background text-gray-900 overflow-hidden theme-transition">
+    <div class="flex h-screen w-full">
+      <!-- Theme Toggle Button (Desktop/Tablet) -->
+      <div class="fixed top-6 right-8 z-50 hidden lg:block">
+        <button
+          id="theme-toggle"
+          class="p-3 rounded-full bg-surface dark:bg-dark-surface shadow-lg hover:shadow-xl transition-all duration-300 border border-border dark:border-dark-border flex items-center justify-center"
+          aria-label="Toggle theme"
+        >
+          <span id="theme-icon" class="material-symbols-outlined text-gray-700 dark:text-dark-secondary">
+            dark_mode
+          </span>
+        </button>
+      </div>
 
-        <!-- Dashboard -->
-        <div class="dashboard">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static"
+      >
+        <div class="flex flex-col h-full p-4">
+          <!-- Mobile Close Button -->
+          <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-brand">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+          <div class="flex items-center gap-3 mb-10 px-2 mt-2">
+            <div
+              class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20"
+            >
+              <span class="material-symbols-outlined">security</span>
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight"
+              >
+                SafeFlow
+              </h1>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">
+                Financial Ecosystem
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1.5 flex-1">
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="homepage.html"
+            >
+              <span class="material-symbols-outlined" data-weight="fill"
+                >dashboard</span
+              >
+              <p class="text-sm font-semibold">Dashboard</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transaction.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >receipt_long</span
+              >
+              <p class="text-sm font-medium">Transactions</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="trustcore.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >trending_up</span
+              >
+              <p class="text-sm font-medium">Trust Score</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white group transition-all shadow-md shadow-brand/20"
+              href="securitycenter.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >shield_lock</span
+              >
+              <p class="text-sm font-medium">Security Center</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transfer.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >send</span
+              >
+              <p class="text-sm font-medium">Quick Transfer</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="education.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >school</span
+              >
+              <p class="text-sm font-medium">Education</p>
+            </a>
+          </nav>
+          <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
+            <div
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+            >
+              <div
+                class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo');
+                "
+              ></div>
+              <div class="flex flex-col">
+                <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs">Premium Member</p>
+              </div>
+              <span
+                class="material-symbols-outlined text-gray-400 ml-auto text-sm"
+                >expand_more</span
+              >
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main
+        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background"
+      >
+        <header
+          class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+        >
+          <div class="flex items-center gap-4">
+            <!-- Mobile Menu Toggle -->
+            <button id="mobile-menu-toggle" class="lg:hidden p-2 text-gray-600 dark:text-dark-secondary">
+              <span class="material-symbols-outlined">menu</span>
+            </button>
+            <div>
+              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">🔗 SafeFlow Blockchain Trust Layer</h2>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">Immutable fraud reporting & trust scoring on Polygon Mumbai Testnet</p>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 md:gap-4">
+            <!-- Theme Toggle Mobile -->
+            <button
+              class="theme-toggle-btn p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors lg:hidden"
+            >
+              <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+            <button
+              class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 hover:text-brand transition-colors relative"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-dark-surface"
+              ></span>
+            </button>
+          </div>
+        </header>
+        <div class="flex-1 overflow-y-auto p-8 scroll-smooth">
+    <div class="max-w-[1200px] w-full mx-auto flex flex-col gap-8">
+        
+        <div class="flex items-center gap-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 px-4 py-2 rounded-full w-fit">
+            <span class="font-bold text-green-600 dark:text-green-500 text-sm">Polygon</span>
+            <span class="text-gray-400">•</span>
+            <span class="text-gray-600 dark:text-gray-300 text-sm">Mumbai Testnet</span>
+            <span class="text-gray-400">•</span>
+            <span class="flex items-center gap-1 text-green-600 dark:text-green-500 font-bold text-sm">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> LIVE
+            </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Left Column -->
-            <div class="left-column">
-                <!-- Contract Info Card -->
-                <div class="card">
-                    <div class="card-title">
-                        <span class="icon">📄</span>
-                        <span>Smart Contract</span>
+            <div class="flex flex-col gap-8">
+                <!-- Contract Info -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600 to-green-400"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-green-500 text-[28px]">description</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-dark-primary">Smart Contract</h3>
                     </div>
                     
-                    <div class="contract-info">
-                        <div class="contract-label">Contract Address</div>
-                        <div class="contract-address" id="contractAddress">
-                            0x7a3d8c45f9b1a3c6e8d4f2a7b9c1e5f3a8d2c9b1
+                    <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-dark-border font-mono text-sm space-y-4">
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Contract Address</p>
+                            <p class="text-green-600 dark:text-green-400 font-bold break-all" id="contractAddress">0x7a3d8c45f9b1a3c6e8d4f2a7b9c1e5f3a8d2c9b1</p>
                         </div>
-                        
-                        <div class="contract-label">Network</div>
-                        <div>Polygon Mumbai Testnet (Chain ID: 80001)</div>
-                        
-                        <div class="contract-links">
-                            <a href="#" class="explorer-link" id="polygonscanLink" target="_blank">
-                                🔍 View on Polygonscan
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase tracking-wider mb-1">Network</p>
+                            <p class="text-gray-800 dark:text-gray-200">Polygon Mumbai Testnet (Chain ID: 80001)</p>
+                        </div>
+                        <div class="flex flex-wrap gap-3 pt-2">
+                            <a href="#" id="polygonscanLink" target="_blank" class="flex items-center gap-2 bg-gray-200 dark:bg-slate-700 hover:bg-gray-300 dark:hover:bg-slate-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg font-medium transition-colors text-xs sm:text-sm">
+                                <span class="material-symbols-outlined text-[18px]">search</span> View on Polygonscan
                             </a>
-                            <button class="btn-secondary" onclick="copyContractAddress()" style="padding: 8px 16px;">
-                                📋 Copy Address
+                            <button onclick="copyContractAddress()" class="flex items-center gap-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg font-medium transition-colors text-xs sm:text-sm">
+                                <span class="material-symbols-outlined text-[18px]">content_copy</span> Copy Address
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Report Fraud Card -->
-                <div class="card">
-                    <div class="card-title">
-                        <span class="icon">⚠️</span>
-                        <span>Report Fraudulent Account</span>
+                <!-- Report Fraud -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600 to-green-400"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-orange-500 text-[28px]">warning</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-dark-primary">Report Fraudulent Account</h3>
                     </div>
                     
-                    <div class="input-group">
-                        <label for="phoneInput">Phone Number (hashed for privacy)</label>
-                        <input type="text" id="phoneInput" placeholder="e.g., 08123456789" value="08123456789">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="reasonSelect">Fraud Type</label>
-                        <select id="reasonSelect">
-                            <option>Fake Payment Screenshot</option>
-                            <option>Advance Fee Scam</option>
-                            <option>Phishing Link</option>
-                            <option>Impersonation Fraud</option>
-                            <option>Fake Loan Offer</option>
-                            <option>Investment Scam</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label for="descriptionInput">Description (Optional)</label>
-                        <input type="text" id="descriptionInput" placeholder="Brief description of the scam...">
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button class="btn btn-primary" onclick="reportFraud()" id="reportBtn">
-                            <span>⛏️</span>
-                            <span>Record on Blockchain</span>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number (hashed for privacy)</label>
+                            <input type="text" id="phoneInput" value="08123456789" class="w-full bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 block p-3">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Fraud Type</label>
+                            <select id="reasonSelect" class="w-full bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 block p-3">
+                                <option>Fake Payment Screenshot</option>
+                                <option>Advance Fee Scam</option>
+                                <option>Phishing Link</option>
+                                <option>Impersonation Fraud</option>
+                                <option>Fake Loan Offer</option>
+                                <option>Investment Scam</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Description (Optional)</label>
+                            <input type="text" id="descriptionInput" placeholder="Brief description of the scam..." class="w-full bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 text-gray-900 dark:text-white rounded-lg focus:ring-green-500 focus:border-green-500 block p-3">
+                        </div>
+                        <button onclick="reportFraud()" id="reportBtn" class="w-full flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition-colors mt-2">
+                            <span class="material-symbols-outlined text-[20px]">precision_manufacturing</span> Record on Blockchain
                         </button>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column -->
-            <div class="right-column">
-                <!-- Transaction Results -->
-                <div class="card">
-                    <div class="card-title">
-                        <span class="icon">📊</span>
-                        <span>Live Blockchain Activity</span>
+            <div class="flex flex-col gap-8">
+                <!-- Live Blockchain Activity -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600 to-green-400"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-blue-500 text-[28px]">monitoring</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-dark-primary">Live Blockchain Activity</h3>
                     </div>
-                    
-                    <div id="transactionResult" style="display: none;">
-                        <div class="transaction-result">
-                            <div class="tx-header">
-                                <span>✅</span>
-                                <span>Transaction Confirmed</span>
+
+                    <!-- Transaction Result -->
+                    <div id="transactionResult" style="display: none;" class="animate-[fadeIn_0.5s_ease]">
+                        <div class="bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800 p-5 rounded-xl mb-4">
+                            <div class="flex items-center gap-2 text-green-700 dark:text-green-500 font-bold mb-4">
+                                <span class="material-symbols-outlined">check_circle</span> Transaction Confirmed
                             </div>
-                            
-                            <div class="tx-details">
-                                <div class="tx-row">
-                                    <div class="tx-label">TX Hash:</div>
-                                    <div class="tx-value" id="txHash">0x...</div>
+                            <div class="bg-white dark:bg-slate-800 border border-gray-100 dark:border-slate-700 rounded-lg p-4 font-mono text-sm space-y-3">
+                                <div class="flex flex-col space-y-1 pb-3 border-b border-gray-100 dark:border-slate-700">
+                                    <span class="text-gray-500 dark:text-gray-400">TX Hash:</span>
+                                    <span class="text-green-600 dark:text-green-400 break-all font-medium" id="txHash">0x...</span>
                                 </div>
-                                <div class="tx-row">
-                                    <div class="tx-label">Status:</div>
-                                    <div class="tx-value">
-                                        <span class="status-badge status-confirmed" id="txStatus">
-                                            ✅ Confirmed
-                                        </span>
-                                    </div>
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-slate-700">
+                                    <span class="text-gray-500 dark:text-gray-400">Status:</span>
+                                    <span class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-md font-bold text-xs flex items-center gap-1" id="txStatus">
+                                        <span class="material-symbols-outlined text-[14px]">check</span> Confirmed
+                                    </span>
                                 </div>
-                                <div class="tx-row">
-                                    <div class="tx-label">Block:</div>
-                                    <div class="tx-value" id="blockNumber">#0</div>
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-slate-700">
+                                    <span class="text-gray-500 dark:text-gray-400">Block:</span>
+                                    <span class="text-gray-900 dark:text-gray-200 font-medium" id="blockNumber">#0</span>
                                 </div>
-                                <div class="tx-row">
-                                    <div class="tx-label">Gas Used:</div>
-                                    <div class="tx-value" id="gasUsed">0 MATIC</div>
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-slate-700">
+                                    <span class="text-gray-500 dark:text-gray-400">Gas Used:</span>
+                                    <span class="text-gray-900 dark:text-gray-200 font-medium" id="gasUsed">0 MATIC</span>
                                 </div>
-                                <div class="tx-row">
-                                    <div class="tx-label">Timestamp:</div>
-                                    <div class="tx-value" id="txTimestamp">Just now</div>
+                                <div class="flex justify-between items-center pb-3 border-b border-gray-100 dark:border-slate-700">
+                                    <span class="text-gray-500 dark:text-gray-400">Timestamp:</span>
+                                    <span class="text-gray-900 dark:text-gray-200 font-medium" id="txTimestamp">Just now</span>
                                 </div>
-                                
-                                <a href="#" class="explorer-link" id="explorerLink" target="_blank">
-                                    🔗 View on Polygonscan Explorer
-                                </a>
                             </div>
+                            <a href="#" id="explorerLink" target="_blank" class="mt-4 flex items-center justify-center gap-2 bg-white dark:bg-slate-800 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800 py-2 rounded-lg font-medium transition-colors hover:bg-green-50 dark:hover:bg-green-900/30 text-sm">
+                                <span class="material-symbols-outlined text-[18px]">open_in_new</span> View on Polygonscan
+                            </a>
                         </div>
                     </div>
                     
-                    <div id="miningStatus" style="display: none; text-align: center; padding: 40px 20px;">
-                        <div style="font-size: 2rem; margin-bottom: 15px;">⛏️</div>
-                        <div style="font-size: 1.2rem; margin-bottom: 10px;">Mining Transaction...</div>
-                        <div style="opacity: 0.7;">This usually takes 2-5 seconds on Polygon</div>
+                    <!-- Mining Status -->
+                    <div id="miningStatus" style="display: none;" class="py-12 text-center">
+                        <span class="material-symbols-outlined text-[48px] animate-[spin_2s_linear_infinite] text-green-500 mb-4 inline-block">autorenew</span>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">Mining Transaction...</h4>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">This usually takes 2-5 seconds on Polygon</p>
                     </div>
-                    
-                    <!-- Default empty state -->
-                    <div id="emptyState" style="text-align: center; padding: 40px 20px;">
-                        <div style="font-size: 3rem; margin-bottom: 15px;">🔗</div>
-                        <div style="font-size: 1.2rem; margin-bottom: 10px;">No Recent Transactions</div>
-                        <div style="opacity: 0.7;">Report fraud above to see blockchain activity</div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="py-12 text-center">
+                        <span class="material-symbols-outlined text-[48px] text-gray-300 dark:text-gray-600 mb-4 inline-block">link</span>
+                        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2">No Recent Transactions</h4>
+                        <p class="text-gray-500 dark:text-gray-400 text-sm">Report fraud to see blockchain activity</p>
                     </div>
                 </div>
 
-                <!-- Live Stats -->
-                <div class="card">
-                    <div class="card-title">
-                        <span class="icon">📈</span>
-                        <span>Network Statistics</span>
+                <!-- Live stats -->
+                <div class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-soft dark:shadow-dark-soft relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-600 to-green-400"></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-purple-500 text-[28px]">query_stats</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-dark-primary">Network Statistics</h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-dark-border">
+                            <p class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-2">Total Fraud Reports</p>
+                            <p class="text-2xl font-bold text-green-600 dark:text-green-500 transition-transform duration-300" id="totalReports">24</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-dark-border">
+                            <p class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-2">Latest Block</p>
+                            <p class="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-500 transition-transform duration-300" id="latestBlock">#12,456,789</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-dark-border">
+                            <p class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-2">Gas Price</p>
+                            <p class="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-500 transition-transform duration-300" id="gasPrice">42.7 Gwei</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl border border-gray-100 dark:border-dark-border">
+                            <p class="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wider mb-2">Avg. Block Time</p>
+                            <p class="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-500 transition-transform duration-300" id="blockTime">2.1s</p>
+                        </div>
                     </div>
                     
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-label">Total Fraud Reports</div>
-                            <div class="stat-value" id="totalReports">24</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Latest Block</div>
-                            <div class="stat-value" id="latestBlock">#12,456,789</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Gas Price</div>
-                            <div class="stat-value" id="gasPrice">42.7 Gwei</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Avg. Block Time</div>
-                            <div class="stat-value" id="blockTime">2.1s</div>
-                        </div>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" onclick="refreshStats()">
-                            🔄 Refresh Stats
+                    <div class="flex gap-3">
+                        <button onclick="refreshStats()" class="flex-1 flex justify-center items-center gap-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-medium py-3 rounded-lg transition-colors text-sm">
+                            <span class="material-symbols-outlined text-[18px]">refresh</span> Refresh Stats
                         </button>
-                        <button class="btn btn-secondary" onclick="checkFraud()">
-                            🔍 Check Account
+                        <button onclick="checkFraud()" class="flex-1 flex justify-center items-center gap-2 bg-white dark:bg-slate-800 border border-gray-300 dark:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-200 font-medium py-3 rounded-lg transition-colors text-sm">
+                            <span class="material-symbols-outlined text-[18px]">search</span> Check Account
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Demo Notice -->
-        <div class="demo-notice">
-            <span>💡</span>
-            <span>
-                <strong>Demo Mode:</strong> This interface simulates real blockchain interactions. 
-                SafeFlow's production system integrates with Polygon Mumbai for immutable fraud reporting.
-                Transaction hashes and blocks are simulated for demonstration purposes.
-            </span>
+        <div class="bg-orange-50 dark:bg-orange-900/10 border border-orange-200 dark:border-orange-800/50 rounded-xl p-4 flex gap-4 text-orange-800 dark:text-orange-400">
+            <span class="material-symbols-outlined text-[24px]">lightbulb</span>
+            <p class="text-sm"><strong>Demo Mode:</strong> This interface simulates real blockchain interactions. SafeFlow's production system integrates with Polygon Mumbai for immutable fraud reporting. Transaction hashes and blocks are simulated for demonstration purposes.</p>
         </div>
 
-        <!-- Footer -->
-        <div class="footer">
+        <div class="text-center py-6 text-sm text-gray-500 dark:text-gray-400 border-t border-border dark:border-dark-border mt-4">
             <p>SafeFlow • Financial Protection on Blockchain • Hackathon Demo v1.0</p>
             <p>All transactions are simulated for demonstration purposes</p>
         </div>
-    </div>
 
-    <script>
+    </div>
+</div>
+</main>
+</div>
+<script>
         // Fake Blockchain Simulation
         class FakeBlockchain {
             constructor() {
@@ -931,6 +635,44 @@
             blockchain.blockNumber += Math.floor(Math.random() * 5) + 1;
             blockchain.updateStats();
         }, 30000);
+    </script>
+<script>
+      // Navigation & Sidebar Functionality
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const overlay = document.createElement('div');
+        
+        overlay.className = 'fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300 opacity-0';
+        document.body.appendChild(overlay);
+
+        function toggleSidebar(show) {
+          if (show) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.add('opacity-100'), 10);
+            document.body.style.overflow = 'hidden';
+          } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+            document.body.style.overflow = '';
+          }
+        }
+
+        mobileToggle.addEventListener('click', () => toggleSidebar(true));
+        closeSidebar.addEventListener('click', () => toggleSidebar(false));
+        overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // Close sidebar on link click (mobile)
+        const sidebarLinks = sidebar.querySelectorAll('nav a');
+        sidebarLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) toggleSidebar(false);
+          });
+        });
+      });
     </script>
 </body>
 </html>
