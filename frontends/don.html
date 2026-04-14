@@ -42,6 +42,10 @@
             fontFamily: {
               sans: ["Inter", "sans-serif"],
             },
+            boxShadow: {
+              soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
+            },
           },
         },
       };
@@ -70,56 +74,142 @@
   </head>
   <body class="bg-background dark:bg-dark-background text-gray-900 dark:text-gray-100 overflow-hidden">
     <div class="flex h-screen w-full">
-      <!-- Sidebar (Standardized) -->
-      <aside id="sidebar" class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static">
+      <!-- Sidebar (Perfectly Standardized) -->
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 w-64 flex-shrink-0 flex flex-col bg-surface dark:bg-dark-surface border-r border-border dark:border-dark-border h-full z-40 transition-transform duration-300 transform -translate-x-full lg:translate-x-0 lg:static"
+      >
         <div class="flex flex-col h-full p-4">
+          <!-- Mobile Close Button -->
           <button id="close-sidebar" class="lg:hidden absolute top-4 right-4 text-gray-400 hover:text-brand">
             <span class="material-symbols-outlined">close</span>
           </button>
           <div class="flex items-center gap-3 mb-10 px-2 mt-2">
-            <div class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20">
+            <div
+              class="bg-brand text-white rounded-lg p-2 flex items-center justify-center shadow-lg shadow-brand/20"
+            >
               <span class="material-symbols-outlined">security</span>
             </div>
             <div class="flex flex-col">
-              <h1 class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight">SafeFlow</h1>
-              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">Financial Ecosystem</p>
+              <h1
+                class="text-gray-900 dark:text-dark-primary text-xl font-bold leading-none tracking-tight"
+              >
+                SafeFlow
+              </h1>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs font-medium mt-0.5">
+                Financial Ecosystem
+              </p>
             </div>
           </div>
           <nav class="flex flex-col gap-1.5 flex-1 overflow-y-auto hide-scrollbar">
-            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="homepage.html">
-              <span class="material-symbols-outlined group-hover:text-brand transition-colors">dashboard</span>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="homepage.html"
+            >
+              <span class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >dashboard</span
+              >
               <p class="text-sm font-medium">Dashboard</p>
             </a>
-            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="transaction.html">
-              <span class="material-symbols-outlined group-hover:text-brand transition-colors">receipt_long</span>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transaction.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >receipt_long</span
+              >
               <p class="text-sm font-medium">Transactions</p>
             </a>
-            <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="trustcore.html">
-              <span class="material-symbols-outlined group-hover:text-brand transition-colors">trending_up</span>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="trustcore.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >trending_up</span
+              >
               <p class="text-sm font-medium">Trust Score</p>
             </a>
-            <a class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white shadow-md shadow-brand/20 group transition-all" href="securitycenter.html">
-              <span class="material-symbols-outlined" data-weight="fill">shield_lock</span>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg bg-brand text-white shadow-md shadow-brand/20 group transition-all"
+              href="securitycenter.html"
+            >
+              <span
+                class="material-symbols-outlined" data-weight="fill"
+                >shield_lock</span
+              >
               <p class="text-sm font-semibold">Security Center</p>
             </a>
-             <a class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group" href="transfer.html">
-              <span class="material-symbols-outlined group-hover:text-brand transition-colors">send</span>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="transfer.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >send</span
+              >
               <p class="text-sm font-medium">Quick Transfer</p>
             </a>
+            <a
+              class="flex items-center gap-3 px-3 py-3 rounded-lg text-gray-600 dark:text-dark-secondary hover:bg-gray-50 dark:hover:bg-slate-800 hover:text-brand transition-colors group"
+              href="education.html"
+            >
+              <span
+                class="material-symbols-outlined group-hover:text-brand transition-colors"
+                >school</span
+              >
+              <p class="text-sm font-medium">Education</p>
+            </a>
           </nav>
+          <div class="mt-auto pt-4 border-t border-border dark:border-dark-border">
+            <div
+              class="flex items-center gap-3 px-2 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 cursor-pointer transition-colors"
+            >
+              <div
+                class="size-10 rounded-full bg-cover bg-center border-2 border-brand-light"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB35zXFi837dBGCUqPfcahXp-z1FYoZ9vGlyaDWqrbOQbuIc0qM90Db7lce_5OmY3AapHL4-okf-nY-NdFC8kHyftlNTkXugTz5SqV0RwQYcZKxAZmp4LLFH_xc7S46W4VsbE8nw8YVR42mqXRFNS7OPc1xSZGrP9vmQMPIKb_W_GoMDJTwcco8KwKVvpwOe0Am5tFhT57Q4zH6Ig-x_E9zQ7OXhG1dtfCAE21ZmnQkQh5cSOQ-YVATzd6TLzhmzQ7eSHdGUuNNMDo');
+                "
+              ></div>
+              <div class="flex flex-col">
+                <p class="text-gray-900 dark:text-dark-primary text-sm font-bold">Chinedu O.</p>
+                <p class="text-gray-500 dark:text-dark-secondary text-xs">Premium Member</p>
+              </div>
+              <span
+                class="material-symbols-outlined text-gray-400 ml-auto text-sm"
+                >expand_more</span
+              >
+            </div>
+          </div>
         </div>
       </aside>
 
       <!-- Main Content -->
       <main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background">
-        <header class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0">
+        <header
+          class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
+        >
           <div class="flex items-center gap-4">
-             <a href="securitycenter.html" class="p-2 text-gray-500 hover:text-brand transition-colors">
+            <a href="securitycenter.html" class="p-2 text-gray-500 hover:text-brand transition-colors">
               <span class="material-symbols-outlined">arrow_back</span>
             </a>
             <div>
-              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">Security Audit</h2>
-              <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">Deep scan of your account protection factors.</p>
+              <h2 class="text-gray-900 dark:text-dark-primary text-xl md:text-2xl font-bold tracking-tight">
+                Security Audit
+              </h2>
+              <p class="text-gray-500 dark:text-dark-secondary text-xs md:text-sm">
+                System Scan & Verification Report
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 md:gap-4">
+            <button class="theme-toggle-btn p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors lg:hidden">
+              <span class="material-symbols-outlined">dark_mode</span>
+            </button>
+            <div id="status-indicator" class="flex items-center gap-2 bg-brand/10 px-3 py-1.5 rounded-full hidden">
+               <span class="size-2 rounded-full bg-brand animate-pulse"></span>
+               <span class="text-[10px] font-black text-brand uppercase tracking-widest">System Secure</span>
             </div>
           </div>
         </header>
@@ -129,7 +219,7 @@
           <div id="loading-overlay" class="flex flex-col items-center justify-center min-h-[60vh] space-y-6">
             <div class="relative size-32 bg-brand/5 rounded-2xl flex items-center justify-center overflow-hidden border border-brand/20">
                <div class="scanner-line"></div>
-               <span class="material-symbols-outlined text- brand text-5xl animate-pulse">security</span>
+               <span class="material-symbols-outlined text-brand text-5xl animate-pulse">security</span>
             </div>
             <div class="text-center">
                <h3 class="text-gray-900 dark:text-white font-black text-xl mb-2">Analyzing Account Integrity...</h3>
@@ -140,7 +230,7 @@
             </div>
           </div>
 
-          <!-- Report Content (Hidden initially) -->
+          <!-- Detailed Report Content -->
           <div id="report-content" class="hidden space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
              <div class="bg-surface dark:bg-dark-surface p-8 rounded-3xl border border-border dark:border-dark-border shadow-soft">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
@@ -150,12 +240,12 @@
                          <span class="text-[10px] font-black uppercase tracking-widest">Audit Passed</span>
                       </div>
                       <h3 class="text-gray-900 dark:text-white text-3xl font-black mb-4 tracking-tighter">Your Security is Elite</h3>
-                      <p class="text-gray-500 dark:text-dark-secondary text-base leading-relaxed">We've completed a comprehensive audit of your 14 safety checkpoints. Your overall protection score is outstanding, putting you in the top 5% of secure accounts.</p>
+                      <p class="text-gray-500 dark:text-dark-secondary text-base leading-relaxed">We've completed a comprehensive audit of your 14 safety checkpoints. Your overall protection score is outstanding.</p>
                    </div>
-                   <div class="size-48 bg-brand/5 rounded-full flex items-center justify-center border-4 border-brand/20 relative">
+                   <div class="size-48 bg-brand/5 rounded-full flex items-center justify-center border-4 border-brand/20 relative shadow-inner">
                        <svg class="size-full transform -rotate-90 absolute">
                           <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="transparent" class="text-gray-100 dark:text-slate-800" />
-                          <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="552.92" stroke-dashoffset="55" stroke-linecap="round" class="text-brand" />
+                          <circle cx="96" cy="96" r="88" stroke="currentColor" stroke-width="8" fill="transparent" stroke-dasharray="552.92" stroke-dashoffset="55" stroke-linecap="round" class="text-brand transition-all duration-1000" />
                        </svg>
                        <div class="flex flex-col items-center">
                           <span class="text-5xl font-black text-gray-900 dark:text-white leading-none">90</span>
@@ -165,54 +255,83 @@
                 </div>
              </div>
 
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Checkpoint Cards -->
-                <div class="bg-surface dark:bg-dark-surface p-6 rounded-2xl border border-border dark:border-dark-border shadow-sm">
-                   <div class="flex items-center gap-4 mb-4">
-                      <div class="size-10 bg-brand/10 text-brand rounded-xl flex items-center justify-center">
-                         <span class="material-symbols-outlined">lock_open</span>
+             <!-- In-Depth Breakdown View -->
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2 space-y-6">
+                   <div class="bg-surface dark:bg-dark-surface rounded-2xl border border-border dark:border-dark-border overflow-hidden">
+                      <div class="p-6 border-b border-border dark:border-dark-border bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center">
+                         <h4 class="text-gray-900 dark:text-white font-bold text-sm">Security Log Highlights</h4>
+                         <span class="text-[10px] font-bold text-brand uppercase tracking-widest">Last 48 Hours</span>
                       </div>
-                      <h4 class="text-gray-900 dark:text-white font-bold text-sm uppercase tracking-widest">Authentication</h4>
-                   </div>
-                   <div class="space-y-4">
-                      <div class="flex justify-between items-center text-sm font-medium">
-                         <span class="text-gray-500 dark:text-dark-secondary">2FA Status</span>
-                         <span class="text-brand">Active</span>
-                      </div>
-                      <div class="flex justify-between items-center text-sm font-medium">
-                         <span class="text-gray-500 dark:text-dark-secondary">Password Strength</span>
-                         <span class="text-brand">Strong</span>
+                      <div class="divide-y divide-border dark:divide-dark-border">
+                         <div class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                            <div class="flex items-center gap-3">
+                               <span class="size-2 rounded-full bg-brand"></span>
+                               <div>
+                                  <p class="text-xs font-bold dark:text-white">Successful Biometric Login</p>
+                                  <p class="text-[10px] text-gray-500">iPhone 15 Pro • Lagos, NG</p>
+                               </div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 font-medium">Just now</span>
+                         </div>
+                         <div class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                            <div class="flex items-center gap-3">
+                               <span class="size-2 rounded-full bg-brand"></span>
+                               <div>
+                                  <p class="text-xs font-bold dark:text-white">Encrypted Transfer PIN Verified</p>
+                                  <p class="text-[10px] text-gray-500">Transaction ID: #SF7721</p>
+                               </div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 font-medium">2h ago</span>
+                         </div>
+                         <div class="p-4 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors">
+                            <div class="flex items-center gap-3">
+                               <span class="size-2 rounded-full bg-accent-orange"></span>
+                               <div>
+                                  <p class="text-xs font-bold dark:text-white">New Device Attempt Blocked</p>
+                                  <p class="text-[10px] text-gray-500">Unknown Browser • London, GB</p>
+                               </div>
+                            </div>
+                            <span class="text-[10px] text-gray-400 font-medium">10h ago</span>
+                         </div>
                       </div>
                    </div>
                 </div>
 
-                <div class="bg-surface dark:bg-dark-surface p-6 rounded-2xl border border-border dark:border-dark-border shadow-sm">
-                   <div class="flex items-center gap-4 mb-4">
-                      <div class="size-10 bg-accent-blue/10 text-accent-blue rounded-xl flex items-center justify-center">
-                         <span class="material-symbols-outlined">devices</span>
+                <div class="space-y-6">
+                   <div class="bg-surface dark:bg-dark-surface p-6 rounded-2xl border border-border dark:border-dark-border shadow-soft">
+                      <h4 class="text-gray-900 dark:text-white font-bold text-sm mb-4">Protection Layers</h4>
+                      <div class="space-y-4">
+                         <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-brand text-xl">encrypted</span>
+                            <div class="flex-1">
+                               <div class="flex justify-between mb-1">
+                                  <span class="text-[10px] font-bold dark:text-gray-400">ENCRYPTION</span>
+                                  <span class="text-[10px] font-bold text-brand">256-BIT</span>
+                               </div>
+                               <div class="h-1 bg-gray-100 dark:bg-slate-800 rounded-full">
+                                  <div class="h-full bg-brand w-full rounded-full"></div>
+                               </div>
+                            </div>
+                         </div>
+                         <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-accent-blue text-xl">fingerprint</span>
+                            <div class="flex-1">
+                               <div class="flex justify-between mb-1">
+                                  <span class="text-[10px] font-bold dark:text-gray-400">BIOMETRICS</span>
+                                  <span class="text-[10px] font-bold text-accent-blue">VERIFIED</span>
+                               </div>
+                               <div class="h-1 bg-gray-100 dark:bg-slate-800 rounded-full">
+                                  <div class="h-full bg-accent-blue w-full rounded-full"></div>
+                               </div>
+                            </div>
+                         </div>
                       </div>
-                      <h4 class="text-gray-900 dark:text-white font-bold text-sm uppercase tracking-widest">Device Integrity</h4>
                    </div>
-                   <div class="space-y-4">
-                      <div class="flex justify-between items-center text-sm font-medium">
-                         <span class="text-gray-500 dark:text-dark-secondary">Known Devices</span>
-                         <span class="text-accent-blue">2 Verified</span>
-                      </div>
-                      <div class="flex justify-between items-center text-sm font-medium">
-                         <span class="text-gray-500 dark:text-dark-secondary">Root Check</span>
-                         <span class="text-accent-blue">Passed</span>
-                      </div>
-                   </div>
-                </div>
-             </div>
-
-             <div class="bg-accent-orange/5 border border-accent-orange/20 p-6 rounded-2xl flex items-center gap-6">
-                <div class="size-12 bg-accent-orange text-white rounded-xl flex items-center justify-center shrink-0 shadow-lg shadow-accent-orange/20">
-                   <span class="material-symbols-outlined">warning</span>
-                </div>
-                <div>
-                   <h4 class="text-accent-orange font-black text-sm uppercase tracking-widest mb-1">Recommendation</h4>
-                   <p class="text-gray-600 dark:text-gray-400 text-sm font-medium">Your biometric login is partially configured. Enable FaceID/Fingerprint for the fastest and most secure access experience.</p>
+                   
+                   <button onclick="window.location.href='securitycenter.html'" class="w-full bg-gray-900 dark:bg-white text-white dark:text-black py-3 rounded-xl font-bold text-sm shadow-xl shadow-gray-900/10 hover:scale-[1.02] transition-transform">
+                      Return to Center
+                   </button>
                 </div>
              </div>
           </div>
@@ -226,6 +345,7 @@
          const reportContent = document.getElementById('report-content');
          const loadingBar = document.getElementById('loading-bar');
          const loadingStatus = document.getElementById('loading-status');
+         const statusIndicator = document.getElementById('status-indicator');
          
          const statuses = [
             "Initializing deep scan...",
@@ -245,6 +365,7 @@
                setTimeout(() => {
                   loadingOverlay.classList.add('hidden');
                   reportContent.classList.remove('hidden');
+                  statusIndicator.classList.remove('hidden');
                }, 500);
             }
             loadingBar.style.width = `${progress}%`;

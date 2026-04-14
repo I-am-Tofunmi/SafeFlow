@@ -274,7 +274,7 @@
                               </li>
                            </ul>
                         </div>
-                        <button class="w-full bg-brand text-white py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
+                        <button id="open-analysis-btn" class="w-full bg-brand text-white py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors shadow-lg shadow-brand/20">
                            Full Analysis Report
                         </button>
                      </div>
@@ -373,6 +373,97 @@
       </main>
     </div>
 
+    <!-- Full Analysis Modal -->
+    <div id="analysis-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+       <div class="bg-surface dark:bg-dark-surface w-full max-w-2xl rounded-3xl shadow-2xl border border-border dark:border-dark-border overflow-hidden animate-in zoom-in duration-300">
+          <div class="p-6 border-b border-border dark:border-dark-border flex justify-between items-center bg-gray-50/50 dark:bg-slate-800/50">
+             <div>
+                <h3 class="text-gray-900 dark:text-white font-black uppercase tracking-widest text-sm">TrustScore Deep Analysis</h3>
+                <p class="text-gray-500 dark:text-dark-secondary text-[10px] font-bold">Comprehensive Behavioral & Financial Audit</p>
+             </div>
+             <button id="close-analysis" class="text-gray-400 hover:text-gray-600 transition-colors bg-white dark:bg-slate-700 size-8 rounded-full flex items-center justify-center shadow-sm">
+                <span class="material-symbols-outlined">close</span>
+             </button>
+          </div>
+          <div class="p-8 space-y-8 overflow-y-auto max-h-[80vh] hide-scrollbar">
+             <!-- Score Breakdown -->
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                   <h4 class="text-gray-900 dark:text-white font-bold text-sm flex items-center gap-2">
+                      <span class="material-symbols-outlined text-brand">trending_up</span>
+                      Factor Breakdown
+                   </h4>
+                   <div class="space-y-3">
+                      <div>
+                         <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-gray-500">Repayment Consistency</span>
+                            <span class="text-brand">92%</span>
+                         </div>
+                         <div class="h-1.5 w-full bg-gray-100 dark:bg-slate-800 rounded-full">
+                            <div class="h-full bg-brand w-[92%] rounded-full"></div>
+                         </div>
+                      </div>
+                      <div>
+                         <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-gray-500">Savings Rate</span>
+                            <span class="text-accent-blue">78%</span>
+                         </div>
+                         <div class="h-1.5 w-full bg-gray-100 dark:bg-slate-800 rounded-full">
+                            <div class="h-full bg-accent-blue w-[78%] rounded-full"></div>
+                         </div>
+                      </div>
+                      <div>
+                         <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-gray-500">Community Endorsement</span>
+                            <span class="text-orange-500">65%</span>
+                         </div>
+                         <div class="h-1.5 w-full bg-gray-100 dark:bg-slate-800 rounded-full">
+                            <div class="h-full bg-orange-500 w-[65%] rounded-full"></div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="bg-brand/5 dark:bg-brand/10 p-6 rounded-2xl border border-brand/20">
+                   <h4 class="text-brand font-black text-[10px] uppercase tracking-widest mb-2">AI Insights</h4>
+                   <p class="text-gray-700 dark:text-gray-300 text-xs leading-relaxed font-medium">
+                      "Your spending patterns show high impulse control in the last 60 days. This behavioural consistency adds +45 points to your base score."
+                   </p>
+                   <div class="mt-4 flex items-center gap-2">
+                      <span class="size-2 rounded-full bg-brand animate-ping"></span>
+                      <span class="text-[10px] text-brand font-black">Live Pulse Analysis Active</span>
+                   </div>
+                </div>
+             </div>
+
+             <!-- Improvement Steps -->
+             <div class="space-y-4 pt-4 border-t border-border dark:border-dark-border">
+                <h4 class="text-gray-900 dark:text-white font-bold text-sm">Next Milestones to Reach 800+</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                   <div class="p-4 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-border dark:border-dark-border flex items-start gap-3">
+                      <span class="material-symbols-outlined text-brand">add_task</span>
+                      <div>
+                         <p class="text-xs font-bold dark:text-white">Verify NIN</p>
+                         <p class="text-[10px] text-gray-500">Boosts credibility score by +30%</p>
+                      </div>
+                   </div>
+                   <div class="p-4 bg-gray-50 dark:bg-slate-800/50 rounded-xl border border-border dark:border-dark-border flex items-start gap-3">
+                      <span class="material-symbols-outlined text-brand">group</span>
+                      <div>
+                         <p class="text-xs font-bold dark:text-white">Join Savings Group</p>
+                         <p class="text-[10px] text-gray-500">Demonstrates community trust</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="p-6 bg-gray-50 dark:bg-slate-800/50 border-t border-border dark:border-dark-border">
+             <button id="close-analysis-btn" class="w-full bg-gray-900 dark:bg-white text-white dark:text-black py-3 rounded-xl font-bold text-sm transition-transform hover:scale-[1.02]">
+                Acknowledge Report
+             </button>
+          </div>
+       </div>
+    </div>
+
     <script>
       // Navigation & Sidebar Functionality
       document.addEventListener('DOMContentLoaded', () => {
@@ -409,6 +500,15 @@
             if (window.innerWidth < 1024) toggleSidebar(false);
           });
         });
+
+        // Modal Logic
+        const modal = document.getElementById('analysis-modal');
+        const openBtn = document.getElementById('open-analysis-btn');
+        const closeBtn = document.getElementById('close-analysis');
+        const closeBtnBottom = document.getElementById('close-analysis-btn');
+
+        openBtn?.addEventListener('click', () => modal.classList.remove('hidden'));
+        [closeBtn, closeBtnBottom].forEach(b => b?.addEventListener('click', () => modal.classList.add('hidden')));
       });
     </script>
   </body>
