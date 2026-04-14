@@ -19,25 +19,32 @@
         theme: {
           extend: {
             colors: {
-              background: {
-                light: "#f8fafc", // Slate 50
-                dark: "#0f172a", // Slate 900
-              },
-              surface: {
-                light: "#ffffff",
-                dark: "#1e293b", // Slate 800
-              },
+              background: "#F3F4F6",
+              "dark-background": "#0f172a",
+              surface: "#ffffff",
+              "dark-surface": "#1e293b",
               primary: "#000000",
-              secondary: "#64748b", // Slate 500
-              border: {
-                light: "#e2e8f0", // Slate 200
-                dark: "#334155", // Slate 700
+              "dark-primary": "#ffffff",
+              secondary: "#71717a",
+              "dark-secondary": "#cbd5e1",
+              border: "#e5e7eb",
+              "dark-border": "#334155",
+              brand: {
+                DEFAULT: "#059669",
+                dark: "#064e3b",
+                light: "#d1fae5",
               },
-              success: "#16a34a", // Green 600
-              brand: "#4f46e5", // Indigo 600
+              accent: {
+                blue: "#1e40af",
+                orange: "#ea580c",
+              },
             },
             fontFamily: {
               sans: ["Inter", "sans-serif"],
+            },
+            boxShadow: {
+              soft: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              "dark-soft": "0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2)",
             },
           },
         },
@@ -63,12 +70,12 @@
     </style>
     <script src="theme.js"></script>
   </head>
-  <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 overflow-hidden">
+  <body class="bg-background dark:bg-dark-background text-slate-900 dark:text-slate-100 overflow-hidden">
     <!-- Theme Toggle Button (Desktop/Tablet) -->
     <div class="fixed top-4 right-4 z-50 hidden lg:block">
       <button
         id="theme-toggle"
-        class="p-3 rounded-full bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+        class="p-3 rounded-full bg-surface dark:bg-dark-surface border border-border dark:border-dark-border shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
         aria-label="Toggle theme"
       >
         <span id="theme-icon" class="material-symbols-outlined text-slate-700 dark:text-slate-300">dark_mode</span>
@@ -186,7 +193,7 @@
         </div>
       </aside>
       <main
-        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-light dark:bg-background-dark theme-transition"
+        class="flex-1 flex flex-col h-full overflow-hidden relative bg-background dark:bg-dark-background theme-transition"
       >
         <header
           class="bg-surface/90 dark:bg-dark-surface/90 backdrop-blur-md border-b border-border dark:border-dark-border px-8 py-4 flex justify-between items-center z-10 sticky top-0"
@@ -217,7 +224,7 @@
         <div class="flex-1 overflow-y-auto p-8 scroll-smooth">
           <div class="max-w-[1200px] w-full mx-auto flex flex-col gap-6">
             <div
-              class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 border border-border-light dark:border-border-dark shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden group theme-transition"
+              class="bg-surface dark:bg-dark-surface rounded-2xl p-6 border border-border dark:border-dark-border shadow-sm flex flex-col md:flex-row items-center gap-6 relative overflow-hidden group theme-transition"
             >
               <div
                 class="absolute right-0 top-0 h-full w-1/3 bg-green-50 dark:bg-green-900/20 skew-x-12 translate-x-10 rounded-l-3xl z-0"
@@ -282,10 +289,10 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
               <div class="lg:col-span-8 flex flex-col gap-6">
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden theme-transition"
                 >
                   <div
-                    class="px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center"
+                    class="px-6 py-4 border-b border-border dark:border-dark-border bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center"
                   >
                     <div class="flex items-center gap-2">
                       <span class="material-symbols-outlined text-gray-400 dark:text-gray-500"
@@ -301,7 +308,7 @@
                       >Last updated: 2 days ago</span
                     >
                   </div>
-                  <div class="divide-y divide-border-light dark:divide-border-dark">
+                  <div class="divide-y divide-border dark:divide-dark-border">
                     <div
                       class="p-5 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors group"
                     >
@@ -401,10 +408,10 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden theme-transition"
                 >
                   <div
-                    class="px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center"
+                    class="px-6 py-4 border-b border-border dark:border-dark-border bg-gray-50/50 dark:bg-slate-800/50 flex justify-between items-center"
                   >
                     <div class="flex items-center gap-2">
                       <span class="material-symbols-outlined text-gray-400 dark:text-gray-500"
@@ -440,7 +447,7 @@
                       </p>
                     </div>
                     <div
-                      class="flex items-center justify-between p-4 border border-border-light dark:border-border-dark rounded-lg bg-gray-50 dark:bg-slate-800/50"
+                      class="flex items-center justify-between p-4 border border-border dark:border-dark-border rounded-lg bg-gray-50 dark:bg-slate-800/50"
                     >
                       <div class="flex items-center gap-3">
                         <div
@@ -471,9 +478,9 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden theme-transition"
                 >
-                  <div class="px-6 py-4 border-b border-border-light dark:border-border-dark bg-gray-50/50 dark:bg-slate-800/50">
+                  <div class="px-6 py-4 border-b border-border dark:border-dark-border bg-gray-50/50 dark:bg-slate-800/50">
                     <h4
                       class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide"
                     >
@@ -504,7 +511,7 @@
                       ></span>
                     </div>
                     <div
-                      class="flex items-center gap-4 p-3 rounded-lg border border-border-light dark:border-border-dark hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                      class="flex items-center gap-4 p-3 rounded-lg border border-border dark:border-dark-border hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
                     >
                       <span
                         class="material-symbols-outlined text-gray-400 dark:text-gray-500 text-[24px]"
@@ -527,7 +534,7 @@
                     </div>
                   </div>
                   <div
-                    class="px-6 py-3 border-t border-border-light dark:border-border-dark bg-gray-50 dark:bg-slate-800/50 text-right"
+                    class="px-6 py-3 border-t border-border dark:border-dark-border bg-gray-50 dark:bg-slate-800/50 text-right"
                   >
                     <button
                       class="text-xs font-bold text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
@@ -539,9 +546,9 @@
               </div>
               <div class="lg:col-span-4 flex flex-col gap-6">
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm overflow-hidden theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm overflow-hidden theme-transition"
                 >
-                  <div class="px-5 py-4 border-b border-border-light dark:border-border-dark bg-blue-100/50 dark:bg-blue-900/40 flex justify-between items-center">
+                  <div class="px-5 py-4 border-b border-border dark:border-dark-border bg-blue-100/50 dark:bg-blue-900/40 flex justify-between items-center">
                     <div class="flex items-center gap-2">
                        <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-[18px]">verified_user</span>
                        <h4 class="font-bold text-gray-900 dark:text-white text-xs uppercase tracking-wider">Live Protection Feed</h4>
@@ -551,7 +558,7 @@
                       MONITORING
                     </span>
                   </div>
-                  <div class="divide-y divide-border-light dark:divide-border-dark">
+                  <div class="divide-y divide-border dark:divide-dark-border">
                     <div class="p-4 flex items-start gap-3">
                       <div class="mt-0.5 text-blue-500">
                         <span class="material-symbols-outlined text-[18px]">sms</span>
@@ -622,7 +629,7 @@
                   </div>
                 </div>
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm p-6 theme-transition"
                 >
                   <h4
                     class="font-bold text-gray-900 dark:text-white text-sm uppercase tracking-wide mb-4"
@@ -680,7 +687,7 @@
                   </button>
                 </div>
                 <div
-                  class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex flex-col gap-4 theme-transition"
+                  class="bg-surface dark:bg-dark-surface rounded-xl border border-border dark:border-dark-border shadow-sm p-6 flex flex-col gap-4 theme-transition"
                 >
                   <div class="flex justify-between items-center">
                     <div class="flex gap-3">
@@ -740,7 +747,7 @@
                   </div>
                 </div>
                 <div
-                  class="rounded-xl overflow-hidden relative cursor-pointer border border-border-light dark:border-border-dark group h-32 theme-transition"
+                  class="rounded-xl overflow-hidden relative cursor-pointer border border-border dark:border-dark-border group h-32 theme-transition"
                 >
                   <div
                     class="absolute inset-0 bg-blue-600 dark:bg-blue-800 transition-colors group-hover:bg-blue-700 dark:group-hover:bg-blue-900"
@@ -789,7 +796,7 @@
         const closeSidebar = document.getElementById('close-sidebar');
         const overlay = document.createElement('div');
         
-        overlay.className = 'fixed inset-0 bg-black/50 z-50 hidden transition-opacity duration-300 opacity-0';
+        overlay.className = 'fixed inset-0 bg-black/50 z-30 hidden transition-opacity duration-300 opacity-0';
         document.body.appendChild(overlay);
 
         function toggleSidebar(show) {

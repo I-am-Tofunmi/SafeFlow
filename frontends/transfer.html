@@ -324,7 +324,7 @@
             <button class="theme-toggle-btn p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors lg:hidden">
               <span class="material-symbols-outlined">dark_mode</span>
             </button>
-            >
+            <button class="p-2 rounded-full text-gray-500 dark:text-dark-secondary hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors relative">
               <span class="material-symbols-outlined">notifications</span>
               <span
                 class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-dark-surface"
@@ -358,7 +358,7 @@
                       <label class="block text-gray-700 dark:text-dark-secondary text-sm font-medium mb-2">
                         Enter Account Number to Check
                       </label>
-                      <div class="flex gap-3">
+                      <div class="flex flex-col sm:flex-row gap-3">
                         <input
                           type="text"
                           id="accountInput"
@@ -368,7 +368,7 @@
                         />
                         <button
                           id="checkButton"
-                          class="bg-brand hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-brand/20"
+                          class="bg-brand hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand/20 w-full sm:w-auto shrink-0"
                         >
                           <span class="material-symbols-outlined">search</span>
                           Detect Scams
