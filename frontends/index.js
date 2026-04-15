@@ -7,6 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader');
     const formError = document.getElementById('formError');
     const passwordInput = document.getElementById('password');
+    const passwordHint = document.getElementById('passwordHint');
+    const passwordHintIcon = document.getElementById('passwordHintIcon');
+    const passwordHintText = document.getElementById('passwordHintText');
+
+    // Real-time validation clear
+    if (passwordInput && passwordHint) {
+        passwordInput.addEventListener('input', () => {
+             passwordHint.classList.remove('text-red-500', 'dark:text-red-400', 'animate-pulse');
+             passwordHint.classList.add('text-slate-500', 'dark:text-slate-400');
+             if (passwordHintIcon) passwordHintIcon.classList.add('hidden');
+             if (passwordHintText) passwordHintText.textContent = 'Must be at least 8 characters with 1 special character.';
+             passwordInput.classList.remove('ring-red-500', 'dark:ring-red-400', 'focus:ring-red-500');
+             passwordInput.classList.add('ring-border-light', 'dark:ring-slate-600', 'focus:ring-primary');
+             if (formError) formError.classList.add('hidden');
+        });
+    }
 
     if (signupForm && signupButton) {
         signupForm.addEventListener('submit', (e) => {
@@ -21,17 +37,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const hasSpecialChar = /[^A-Za-z0-9\s]/.test(password);
 
                 if (!minLength || !hasSpecialChar) {
-                    if (formError) {
-                        formError.textContent = 'Password must be at least 8 characters with 1 special character.';
-                        formError.classList.remove('hidden');
+                    // Inline error UI for Premium Feel
+                    if (passwordHint) {
+                        passwordHint.classList.remove('text-slate-500', 'dark:text-slate-400');
+                        passwordHint.classList.add('text-red-500', 'dark:text-red-400', 'animate-pulse');
+                        if (passwordHintIcon) passwordHintIcon.classList.remove('hidden');
+                        if (passwordHintText) passwordHintText.textContent = 'Please make sure it is at least 8 characters with 1 special character.';
+                    }
+                    if (passwordInput) {
+                        passwordInput.classList.remove('ring-border-light', 'dark:ring-slate-600', 'focus:ring-primary');
+                        passwordInput.classList.add('ring-red-500', 'dark:ring-red-400', 'focus:ring-red-500');
                     }
                     return; // Stop form submission
                 }
-            }
-
-            // Hide error if validation passes
-            if (formError) {
-                formError.classList.add('hidden');
             }
 
             // Premium Loading State

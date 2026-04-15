@@ -221,8 +221,9 @@
                   >
                 </div>
               </div>
-              <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">
-                Must be at least 8 characters with 1 special character.
+              <p id="passwordHint" class="mt-2 flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 transition-colors duration-300">
+                <span id="passwordHintIcon" class="material-symbols-outlined text-[16px] hidden">error</span>
+                <span id="passwordHintText">Must be at least 8 characters with 1 special character.</span>
               </p>
             </div>
             <div class="flex items-start gap-3">
